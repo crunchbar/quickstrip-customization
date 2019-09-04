@@ -89,12 +89,15 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
               onChange={handleChange('fullScreen')}
               value="fullScreen"
               color="primary"
-              inputProps={{'aria-label': 'fullScreen primary checkbox'}}
+              inputProps={{
+                'aria-label': 'fullScreen primary checkbox',
+                className: commonClassName,
+              }}
             />
           }
           label="Full Screen"
           labelPlacement="start"
-          className={`myo-switch ${commonClassName}`}
+          className="myo-switch"
         />
         <MYOTextField
           id="popup-text"

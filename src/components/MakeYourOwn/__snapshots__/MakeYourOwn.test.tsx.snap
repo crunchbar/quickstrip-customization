@@ -42,7 +42,7 @@ exports[`<MakeYourOwn /> renders correctly 1`] = `
       value=""
     />
     <WithStyles(ForwardRef(FormControlLabel))
-      className="myo-switch commonListItem makeYourOwnItem"
+      className="myo-switch"
       control={
         <ForwardRef(WithStyles)
           checked={false}
@@ -50,6 +50,7 @@ exports[`<MakeYourOwn /> renders correctly 1`] = `
           inputProps={
             Object {
               "aria-label": "fullScreen primary checkbox",
+              "className": "commonListItem makeYourOwnItem",
             }
           }
           onChange={[Function]}

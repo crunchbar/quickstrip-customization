@@ -3,6 +3,10 @@
     margin: 8px 0 !important;
     justify-content: space-between;
     display: flex !important;
+    input {
+      opacity: 0;
+      position: absolute;
+    }
   }
   .myo-form {
     padding-top: 0;
