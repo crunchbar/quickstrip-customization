@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MakeYourOwn /> renders correctly 1`] = `
+<WithStyles(ForwardRef(Paper))
+  className="myo vertical-space-1"
+  id="makeYourOwnBox"
+  tabIndex={0}
+>
+  <WithStyles(ForwardRef(Typography))
+    className="pad-1"
+    component="h1"
+    variant="h5"
+  >
+    Make Your Own Button
+  </WithStyles(ForwardRef(Typography))>
+  <form
+    autoComplete="off"
+    className="myo-form pad-1"
+    noValidate={true}
+  >
+    <MYOTextField
+      error={false}
+      id="button-name"
+      inputProps={
+        Object {
+          "maxLength": 20,
+        }
+      }
+      label="Name "
+      onChange={[Function]}
+      placeholder="Enter Name for Button"
+      required={true}
+      value=""
+    />
+    <MYOTextField
+      error={false}
+      id="button-data"
+      label="App Location or Web URL"
+      onChange={[Function]}
+      placeholder="Enter or paste in a web address or app location"
+      required={true}
+      value=""
+    />
+    <WithStyles(ForwardRef(FormControlLabel))
+      className="myo-switch commonListItem makeYourOwnItem"
+      control={
+        <ForwardRef(WithStyles)
+          checked={false}
+          color="primary"
+          inputProps={
+            Object {
+              "aria-label": "fullScreen primary checkbox",
+            }
+          }
+          onChange={[Function]}
+          value="fullScreen"
+        />
+      }
+      label="Full Screen"
+      labelPlacement="start"
+      value="start"
+    />
+    <MYOTextField
+      error={false}
+      id="popup-text"
+      inputProps={
+        Object {
+          "maxLength": 510,
+        }
+      }
+      label="Popup Text"
+      onChange={[Function]}
+      placeholder="Enter Popup Text"
+      required={true}
+      value=""
+    />
+    <MYOTextField
+      id="description"
+      label="Description"
+      onChange={[Function]}
+      placeholder="Enter description"
+      value=""
+    />
+    <div
+      className="myo-create-btn-container"
+    >
+      <WithStyles(ForwardRef(Button))
+        className="commonListItem makeYourOwnItem"
+        color="primary"
+        onClick={[Function]}
+        type="submit"
+        variant="contained"
+      >
+        Make
+      </WithStyles(ForwardRef(Button))>
+    </div>
+  </form>
+</WithStyles(ForwardRef(Paper))>
+`;

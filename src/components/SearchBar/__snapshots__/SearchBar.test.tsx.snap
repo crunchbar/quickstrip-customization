@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchBar /> renders correctly 1`] = `
+<div
+  className="makeStyles-root-1 "
+>
+  <WithStyles(ForwardRef(TextField))
+    InputLabelProps={
+      Object {
+        "shrink": true,
+      }
+    }
+    InputProps={
+      Object {
+        "classes": Object {
+          "input": "makeStyles-inputInput-3",
+          "root": "makeStyles-inputRoot-2",
+        },
+        "endAdornment": undefined,
+      }
+    }
+    fullWidth={true}
+    inputProps={
+      Object {
+        "className": undefined,
+      }
+    }
+    label="label"
+    onChange={[Function]}
+    placeholder="placeholder"
+    value=""
+  />
+</div>
+`;

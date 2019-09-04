@@ -1,0 +1,319 @@
+<svg id="f7111dd3-47a9-4d58-b256-6cfa71c44d45" width="100%" height="100%" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 208.64 57.6" aria-labelledby="morphicLogoID morphicLogoDesc" role="img">
+  <title id="morphicLogoID">Morphic Home</title>
+  <desc id="morphicLogoDesc">An animated Mophic logo (gear-shaped icon that has a chameleon in the center) changes colors and then winks.</desc>
+  <defs>
+    <style>
+      .letter,
+      .body-shape {
+        fill: #002957;
+      }
+
+      .start {
+        fill: url(#a847e926-1839-4afb-a337-a3ce3bffbc5b);
+      }
+
+      .transition1 {
+        fill: url(#acf1e654-f078-4925-8c66-531fbbad39a9);
+        -webkit-clip-path: circle(10% at 150% 50%);
+                clip-path: circle(10% at 150% 50%);
+        -webkit-animation: transition1 0.2s ease-out 1s 1 forwards;
+                animation: transition1 0.2s ease-out 1s 1 forwards;
+      }
+
+      .transition2 {
+        fill: url(#eeb9797f-2443-4977-9bd3-6900565e6b66);
+        -webkit-clip-path: circle(10% at -50% 50%);
+                clip-path: circle(10% at -50% 50%);
+        -webkit-animation: transition2 0.2s ease-out 1.5s 1 forwards;
+                animation: transition2 0.2s ease-out 1.5s 1 forwards;
+      }
+
+      .transition3 {
+        fill: url(#fd381496-61e5-43ad-83ae-3bbd2ad78bcf);
+        -webkit-clip-path: circle(10% at 50% -50%);
+                clip-path: circle(10% at 50% -50%);
+        -webkit-animation: transition3 0.3s ease-out 2s 1 forwards;
+                animation: transition3 0.3s ease-out 2s 1 forwards;
+      }
+
+      .transition4 {
+        fill: url(#bf20c1cf-e1c2-4824-a11e-c35275ad10b1);
+        -webkit-clip-path: circle(10% at 50% -50%);
+                clip-path: circle(10% at 50% -50%);
+        -webkit-animation: transition3 0.3s ease-out 2.5s 1 forwards;
+                animation: transition3 0.3s ease-out 2.5s 1 forwards;
+      }
+
+      .transition5 {
+        fill: #002957;
+        -webkit-clip-path: circle(10% at 125% 125%);
+                clip-path: circle(10% at 125% 125%);
+        -webkit-animation: transition5 0.2s ease-out 3s 1 forwards;
+                animation: transition5 0.2s ease-out 3s 1 forwards;
+      }
+
+      .white-eye {
+        fill: #fff;
+        -webkit-clip-path: ellipse(0px 0px at 50% 50%);
+                clip-path: ellipse(0px 0px at 50% 50%);
+        -webkit-animation: wink 2s ease-in-out 3.04s 1 forwards;
+                animation: wink 2s ease-in-out 3.04s 1 forwards;
+      }
+
+      .transition6 {
+        fill: url(#a847e926-1839-4afb-a337-a3ce3bffbc5b);
+        -webkit-clip-path: circle(10% at 125% 125%);
+                clip-path: circle(10% at 125% 125%);
+        -webkit-animation: transition6 0.2s ease-out 5.04s 1 forwards;
+                animation: transition6 0.2s ease-out 5.04s 1 forwards;
+      }
+
+      @-webkit-keyframes transition1 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @keyframes transition1 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @-webkit-keyframes transition2 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @keyframes transition2 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @-webkit-keyframes transition3 {
+        100% {
+          -webkit-clip-path: circle(100% at 50% 50%);
+                  clip-path: circle(100% at 50% 50%);
+        }
+      }
+
+      @keyframes transition3 {
+        100% {
+          -webkit-clip-path: circle(100% at 50% 50%);
+                  clip-path: circle(100% at 50% 50%);
+        }
+      }
+
+      @-webkit-keyframes transition4 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @keyframes transition4 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @-webkit-keyframes transition5 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @keyframes transition5 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @-webkit-keyframes transition6 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @keyframes transition6 {
+        100% {
+          -webkit-clip-path: circle(50% at 50% 50%);
+                  clip-path: circle(50% at 50% 50%);
+        }
+      }
+
+      @-webkit-keyframes wink {
+        0% {
+          -webkit-clip-path: ellipse(0px 0px at 50% 50%);
+                  clip-path: ellipse(0px 0px at 50% 50%);
+        }
+
+        1% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        12.5% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        15.625% {
+          -webkit-clip-path: ellipse(3.16px 3.95px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.95px at 50% 50%);
+        }
+
+        18.75% {
+          -webkit-clip-path: ellipse(3.16px 0px at 50% 50%);
+                  clip-path: ellipse(3.16px 0px at 50% 50%);
+        }
+
+        23.75% {
+          -webkit-clip-path: ellipse(3.16px 0px at 50% 50%);
+                  clip-path: ellipse(3.16px 0px at 50% 50%);
+        }
+
+        26.875% {
+          -webkit-clip-path: ellipse(3.16px 3.95px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.95px at 50% 50%);
+        }
+
+        30% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        99% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        100% {
+          -webkit-clip-path: ellipse(0px 0px at 50% 50%);
+                  clip-path: ellipse(0px 0px at 50% 50%);
+        }
+      }
+
+      @keyframes wink {
+        0% {
+          -webkit-clip-path: ellipse(0px 0px at 50% 50%);
+                  clip-path: ellipse(0px 0px at 50% 50%);
+        }
+
+        1% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        12.5% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        15.625% {
+          -webkit-clip-path: ellipse(3.16px 3.95px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.95px at 50% 50%);
+        }
+
+        18.75% {
+          -webkit-clip-path: ellipse(3.16px 0px at 50% 50%);
+                  clip-path: ellipse(3.16px 0px at 50% 50%);
+        }
+
+        23.75% {
+          -webkit-clip-path: ellipse(3.16px 0px at 50% 50%);
+                  clip-path: ellipse(3.16px 0px at 50% 50%);
+        }
+
+        26.875% {
+          -webkit-clip-path: ellipse(3.16px 3.95px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.95px at 50% 50%);
+        }
+
+        30% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        99% {
+          -webkit-clip-path: ellipse(3.16px 3.16px at 50% 50%);
+                  clip-path: ellipse(3.16px 3.16px at 50% 50%);
+        }
+
+        100% {
+          -webkit-clip-path: ellipse(0px 0px at 50% 50%);
+                  clip-path: ellipse(0px 0px at 50% 50%);
+        }
+      }
+    </style>
+    <linearGradient id="a847e926-1839-4afb-a337-a3ce3bffbc5b" x1="31.31" y1="47.28" x2="31.31" y2="6.02" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#008145"></stop>
+      <stop offset="0.23" stop-color="#2d994f"></stop>
+      <stop offset="0.46" stop-color="#53ac57"></stop>
+      <stop offset="0.67" stop-color="#6eba5c"></stop>
+      <stop offset="0.86" stop-color="#7ec360"></stop>
+      <stop offset="1" stop-color="#84c661"></stop>
+    </linearGradient>
+    <linearGradient id="acf1e654-f078-4925-8c66-531fbbad39a9" x1="31.31" y1="47.28" x2="31.31" y2="6.02" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f26724"></stop>
+      <stop offset="0.04" stop-color="#f36c23"></stop>
+      <stop offset="0.32" stop-color="#f8921d"></stop>
+      <stop offset="0.59" stop-color="#fcad19"></stop>
+      <stop offset="0.82" stop-color="#febd17"></stop>
+      <stop offset="1" stop-color="#ffc316"></stop>
+    </linearGradient>
+    <linearGradient id="eeb9797f-2443-4977-9bd3-6900565e6b66" x1="31.31" y1="47.28" x2="31.31" y2="6.02" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0d73bb"></stop>
+      <stop offset="0.3" stop-color="#1584c7"></stop>
+      <stop offset="0.69" stop-color="#1d94d2"></stop>
+      <stop offset="1" stop-color="#209ad6"></stop>
+    </linearGradient>
+    <linearGradient id="fd381496-61e5-43ad-83ae-3bbd2ad78bcf" x1="31.31" y1="47.28" x2="31.31" y2="6.02" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#972e34"></stop>
+      <stop offset="0.29" stop-color="#bc2545"></stop>
+      <stop offset="0.57" stop-color="#d71f52"></stop>
+      <stop offset="0.81" stop-color="#e71b59"></stop>
+      <stop offset="1" stop-color="#ed1a5c"></stop>
+    </linearGradient>
+    <linearGradient id="bf20c1cf-e1c2-4824-a11e-c35275ad10b1" x1="31.31" y1="47.28" x2="31.31" y2="6.02" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#922a8e"></stop>
+      <stop offset="0.07" stop-color="#973091"></stop>
+      <stop offset="0.43" stop-color="#ac4b9c"></stop>
+      <stop offset="0.75" stop-color="#b85ba3"></stop>
+      <stop offset="1" stop-color="#bd61a6"></stop>
+    </linearGradient>
+  </defs>
+  <title>animated-svg-logo</title>
+  <g id="a566d1a6-8699-44f0-8b9b-d798999aea3b" data-name="letter">
+    <path class="letter" d="M98.72,14.32l0,24.07H92.89l0-15-5.19,15H82.6L77.34,23.33l0,15.08H71.49l0-24.07h7.17L85.2,31.1l6.39-16.77Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M115.27,20.18a8.73,8.73,0,0,1,3.54,3.41,10.19,10.19,0,0,1,1.29,5.21A10.29,10.29,0,0,1,118.82,34a8.67,8.67,0,0,1-3.53,3.42,11.57,11.57,0,0,1-10.2,0A8.64,8.64,0,0,1,101.54,34a10.19,10.19,0,0,1-1.29-5.21,10.22,10.22,0,0,1,1.28-5.21,8.58,8.58,0,0,1,3.54-3.42A10.84,10.84,0,0,1,110.18,19,10.73,10.73,0,0,1,115.27,20.18Zm-7.91,5.12a4.91,4.91,0,0,0-1.15,3.52,4.84,4.84,0,0,0,1.16,3.49,3.74,3.74,0,0,0,2.83,1.2A3.7,3.7,0,0,0,113,32.3a4.91,4.91,0,0,0,1.12-3.49A5,5,0,0,0,113,25.29a3.88,3.88,0,0,0-5.64,0Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M131,20a7.31,7.31,0,0,1,3.76-1v6.27h-1.68a5.72,5.72,0,0,0-3.61,1,4,4,0,0,0-1.28,3.36v8.71H122.3l0-19.13h5.86v3.6A8.42,8.42,0,0,1,131,20Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M152.5,20.14a8.2,8.2,0,0,1,3,3.39,11.79,11.79,0,0,1,1.08,5.23A11.86,11.86,0,0,1,155.47,34a8,8,0,0,1-2.95,3.41,7.71,7.71,0,0,1-4.23,1.19,7,7,0,0,1-3.77-1,5.77,5.77,0,0,1-2.3-2.7V47.46h-5.86l0-28.26h5.86v3.46A5.79,5.79,0,0,1,144.5,20a7,7,0,0,1,3.77-1A7.7,7.7,0,0,1,152.5,20.14Zm-9.14,5.22a4.76,4.76,0,0,0-1.18,3.41,4.79,4.79,0,0,0,1.18,3.4,4,4,0,0,0,3,1.26,3.91,3.91,0,0,0,3-1.24,4.81,4.81,0,0,0,1.15-3.43,4.8,4.8,0,0,0-1.16-3.42,3.87,3.87,0,0,0-3-1.23A4,4,0,0,0,143.36,25.36Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M176.09,21.16a8.8,8.8,0,0,1,1.95,6V38.3h-5.86V27.88a4.24,4.24,0,0,0-1-3,3.46,3.46,0,0,0-2.69-1.07,3.68,3.68,0,0,0-2.83,1.13,4.57,4.57,0,0,0-1,3.22V38.31h-5.86l0-25.37h5.86v9.74A6.36,6.36,0,0,1,167,20a7.14,7.14,0,0,1,3.82-1A6.62,6.62,0,0,1,176.09,21.16Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M186.91,19.16l0,19.13h-5.86l0-19.13h5.87Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M204.94,20.94a9,9,0,0,1,3.16,5.6h-6.2a3.24,3.24,0,0,0-1.14-1.91,3.33,3.33,0,0,0-2.16-.69,3.13,3.13,0,0,0-2.53,1.22,5.52,5.52,0,0,0-1,3.55,5.44,5.44,0,0,0,1,3.55,3.13,3.13,0,0,0,2.54,1.21,3.37,3.37,0,0,0,2.15-.68,3.23,3.23,0,0,0,1.13-1.93h6.21A9.07,9.07,0,0,1,205,36.47a9.49,9.49,0,0,1-6.2,2,10.25,10.25,0,0,1-5-1.17,8.57,8.57,0,0,1-3.42-3.41,10.73,10.73,0,0,1-1.24-5.21,10.69,10.69,0,0,1,1.21-5.23,8.33,8.33,0,0,1,3.41-3.4,10.36,10.36,0,0,1,5-1.19A9.5,9.5,0,0,1,204.94,20.94Z" transform="translate(0.54)"></path>
+    <path class="letter" d="M184.08,17.05a3.16,3.16,0,1,1,3.15-3.16A3.16,3.16,0,0,1,184.08,17.05Z" transform="translate(0.54)"></path>
+  </g>
+  <circle id="e3d41eec-b0e0-4eec-85c0-cb0c4f598725" data-name="start" class="start" cx="31.31" cy="26.65" r="20.63"></circle>
+  <circle id="ac0d4120-ebc9-48fc-96f3-ca7b35ce5ae3" data-name="transition1" class="transition1" cx="31.31" cy="26.65" r="20.63"></circle>
+  <circle id="b126af85-b132-47cc-8701-3bbce5f36fad" data-name="transition2" class="transition2" cx="31.31" cy="26.65" r="20.63"></circle>
+  <circle id="ec21cb5e-2b9a-4ff2-8950-e269dedb9aae" data-name="transition3" class="transition3" cx="31.31" cy="26.65" r="20.63"></circle>
+  <circle id="b60e41ca-aed0-4db8-b45c-be53a1f99709" data-name="transition4" class="transition4" cx="31.31" cy="26.65" r="20.63"></circle>
+  <circle id="a19de865-5ce6-464d-a4d7-09dfb1577ea1" data-name="transition5" class="transition5" cx="31.31" cy="26.65" r="20.63"></circle>
+  <circle id="bd2be6e5-713f-41c0-8262-236d0ac68fb0" data-name="transition6" class="transition6" cx="31.31" cy="26.65" r="20.63"></circle>
+  <g id="f4814313-9962-455d-a847-f25e13daf412" data-name="body-shape">
+    <path class="body-shape" d="M28.26,0H24.52A.56.56,0,0,0,24,.56V5.62a.59.59,0,0,1-.45.5A22.39,22.39,0,0,0,21,6.77a.57.57,0,0,1-.64-.2l-3-4.21a.52.52,0,0,0-.69-.15L11,5.51a.54.54,0,0,0-.21.68l2.15,4.69a.55.55,0,0,1-.14.65A23.63,23.63,0,0,0,11,13.34a.58.58,0,0,1-.66.14L5.65,11.32a.52.52,0,0,0-.67.22L1.67,17.26a.53.53,0,0,0,.15.69l4.21,3a.55.55,0,0,1,.21.64A21.82,21.82,0,0,0,5.58,24a.56.56,0,0,1-.5.45L-.06,25a.54.54,0,0,0-.48.52v6.62a.54.54,0,0,0,.48.52l5.14.48a.56.56,0,0,1,.5.45A24.69,24.69,0,0,0,6.24,36a.56.56,0,0,1-.21.64l-4.21,3a.53.53,0,0,0-.15.69L5,46.06a.52.52,0,0,0,.67.22l4.69-2.16a.58.58,0,0,1,.66.14,23.65,23.65,0,0,0,1.8,1.81.55.55,0,0,1,.14.65l-2.15,4.69a.54.54,0,0,0,.21.68l5.73,3.3a.52.52,0,0,0,.69-.15l3-4.21a.59.59,0,0,1,.64-.21,24.42,24.42,0,0,0,2.47.67A.57.57,0,0,1,24,52l.48,5.13a.52.52,0,0,0,.52.48h6.61a.52.52,0,0,0,.52-.48L32.57,52a.59.59,0,0,1,.45-.5,23,23,0,0,0,2.47-.65.57.57,0,0,1,.64.2l3,4.21a.52.52,0,0,0,.69.15l5.73-3.3a.54.54,0,0,0,.21-.68l-2.15-4.69a.54.54,0,0,1,.14-.65,23.63,23.63,0,0,0,1.8-1.81.58.58,0,0,1,.66-.14l4.69,2.16a.52.52,0,0,0,.67-.22l3.31-5.72a.53.53,0,0,0-.15-.69l-4.21-3a.55.55,0,0,1-.21-.64A21.82,21.82,0,0,0,51,33.56a.55.55,0,0,1,.5-.45h5a.56.56,0,0,0,.56-.56V28.8A28.79,28.79,0,0,0,28.26,0ZM50.6,28.79H38.74a1.31,1.31,0,0,1-.89-.33,10,10,0,0,0-6.7-2.56,7.93,7.93,0,0,0-7.93,7.92,6.31,6.31,0,0,0,6.3,6.3,5,5,0,0,0,3.72-1.62,2.06,2.06,0,0,0-1-3.41.41.41,0,0,0-.5.33,2.21,2.21,0,0,1-2.18,1.82,3.42,3.42,0,0,1-3.42-3.42,5.05,5.05,0,0,1,5-5,7.21,7.21,0,0,1,7.2,7.2A10.11,10.11,0,0,1,28.26,46.08h0A17.28,17.28,0,0,1,11,28.79h0A17.29,17.29,0,0,1,27.73,11.51H29.2a.57.57,0,0,0,.57-.57V6.48a.46.46,0,0,1,.5-.46A22.9,22.9,0,0,1,51.15,28.24.54.54,0,0,1,50.6,28.79Z" transform="translate(0.54)"></path>
+  </g>
+  <path id="fd2660b7-2f6d-4282-ab14-64262ee663a2" data-name="blue-eye" class="body-shape" d="M42.53,26a3.17,3.17,0,1,1,3.16-3.17A3.17,3.17,0,0,1,42.53,26Z" transform="translate(0.54)"></path>
+  <ellipse id="b5d1fe69-558e-48f7-82ff-328f3ed8fa7c" data-name="white-eye" class="white-eye" cx="43.07" cy="22.84" rx="3.95" ry="3.95"></ellipse>
+</svg>

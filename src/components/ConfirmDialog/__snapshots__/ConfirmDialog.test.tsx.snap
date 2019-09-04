@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ConfirmDialog /> renders correctly 1`] = `
+<WithStyles(ForwardRef(Dialog))
+  aria-describedby="confirm-dialog-description"
+  aria-labelledby="confirm-dialog-title"
+  onClose={[Function]}
+  open={true}
+>
+  <WithStyles(ForwardRef(DialogTitle))
+    id="confirm-dialog-title"
+  >
+    Confirm
+  </WithStyles(ForwardRef(DialogTitle))>
+  <WithStyles(ForwardRef(DialogContent))>
+    <WithStyles(ForwardRef(DialogContentText))
+      id="confirm-dialog-description"
+    >
+      description
+    </WithStyles(ForwardRef(DialogContentText))>
+  </WithStyles(ForwardRef(DialogContent))>
+  <WithStyles(ForwardRef(DialogActions))>
+    <WithStyles(ForwardRef(Button))
+      color="primary"
+      id="confirm-dialog-no-btn"
+      onClick={[Function]}
+    >
+      No
+    </WithStyles(ForwardRef(Button))>
+    <WithStyles(ForwardRef(Button))
+      autoFocus={true}
+      color="primary"
+      id="confirm-dialog-yes-btn"
+      onClick={[Function]}
+    >
+      Yes
+    </WithStyles(ForwardRef(Button))>
+  </WithStyles(ForwardRef(DialogActions))>
+</WithStyles(ForwardRef(Dialog))>
+`;

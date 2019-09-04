@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AllChoicesList /> renders correctly 1`] = `
+<WithStyles(ForwardRef(Paper))
+  className="all-choices-container vertical-space-1"
+  id="allChoicesList"
+  tabIndex={0}
+>
+  <Connect(Droppable)
+    direction="vertical"
+    droppableId="allChoicesList"
+    getContainerForClone={[Function]}
+    ignoreContainerClipping={false}
+    isCombineEnabled={false}
+    isDropDisabled={false}
+    mode="STANDARD"
+    type="DEFAULT"
+    whenDraggingClone={null}
+  >
+    <Component />
+  </Connect(Droppable)>
+</WithStyles(ForwardRef(Paper))>
+`;

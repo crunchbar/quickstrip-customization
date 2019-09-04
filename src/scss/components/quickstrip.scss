@@ -1,0 +1,114 @@
+.quickstrip-container {
+  display: flex;
+  flex-direction: row;
+  border: 5px solid rgb(11,41,86);
+  .logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    svg {
+      width: 100px;
+      height: auto;
+    }
+  }
+}
+
+.quickstrip-droppable {
+  flex: 1;
+  &:after {
+    content: "Drop Your Next Button Choice Here";
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px dashed black;
+    width: 96px;
+    height: 96px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &.show-final:after {
+    display: none;
+  }
+}
+
+.quickstrip-more-btns {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 8px;
+  width: 320px;
+  height: 112px;
+  overflow: hidden;
+  > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    overflow: hidden;
+    width: 96px;
+    min-width: 96px;
+    height: 43px;
+    user-select: none;
+    padding: 16px;
+    margin: 0 8px 0 0;
+    border-radius: 5px;
+    background: rgb(63,94,130);
+    color: rgb(255,255,255);
+    &:first-child {
+      height: 96px;
+    }
+    &:nth-child(even) {
+      margin-bottom: 10px;
+    }
+    &.save {
+      background: rgb(168,169,172);
+    }
+    &.empty {
+      background: rgb(177,189,205);
+    }
+    &.small-text {
+      font-size: 12px;
+    }
+  }
+}
+
+.quikstrip-close-icon {
+  padding: 8px 0;
+  svg {
+    height: 35px;
+    width: 35px;
+  }
+}
+
+.quickstrip-scale-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 10px 10px 0;
+  cursor: pointer;
+  svg {
+    transform: rotate(-45deg) translateY(-4px);
+    color: #405E81;
+  }
+}
+
+.quickstrip-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.quickstrip-absolute-items {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: -25px;
+  cursor: pointer;
+  button {
+    vertical-align: top;
+    padding: 2px 8px;
+  }
+}

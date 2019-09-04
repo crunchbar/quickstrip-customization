@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DragDropContainer /> renders correctly 1`] = `
+<div>
+  <DragDropContext
+    onDragEnd={[Function]}
+  >
+    <Quickstrip
+      handleMenuOpen={[Function]}
+      onDownload={[Function]}
+      quickstripList={Array []}
+    />
+    <WithStyles(ForwardRef(Grid))
+      container={true}
+      spacing={2}
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        xs={8}
+      >
+        <HoldingBox
+          handleMenuOpen={[Function]}
+          holdingBoxChunks={
+            Array [
+              Array [],
+              Array [],
+              Array [],
+            ]
+          }
+        />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        xs={4}
+      >
+        <MakeYourOwn
+          names={Array []}
+          onSubmit={[Function]}
+        />
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <AllChoicesList
+      checked={Array []}
+      list={Array []}
+      onToggle={[Function]}
+    />
+  </DragDropContext>
+  <WithStyles(ForwardRef(Menu))
+    anchorEl={null}
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    id="quickstrip-item-menu"
+    keepMounted={true}
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(ForwardRef(MenuItem))
+      key="Move to QuickStrip"
+      onClick={[Function]}
+    >
+      Move to QuickStrip
+    </WithStyles(ForwardRef(MenuItem))>
+    <WithStyles(ForwardRef(MenuItem))
+      key="Remove from My Choices"
+      onClick={[Function]}
+    >
+      Remove from My Choices
+    </WithStyles(ForwardRef(MenuItem))>
+  </WithStyles(ForwardRef(Menu))>
+  <ConfirmDialog
+    description="Are you sure you want to ?"
+    onClose={[Function]}
+    onSubmit={[Function]}
+    open={false}
+  />
+</div>
+`;

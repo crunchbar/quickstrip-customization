@@ -1,0 +1,17 @@
+.myo {
+  .myo-switch {
+    margin: 8px 0 !important;
+    justify-content: space-between;
+    display: flex !important;
+  }
+  .myo-form {
+    padding-top: 0;
+    > div:first-child {
+      margin-top: 0;
+    }
+  }
+  .myo-create-btn-container {
+    text-align: right;
+    margin: 16px 0 8px;
+  }
+}
