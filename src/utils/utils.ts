@@ -135,19 +135,9 @@ export const downloadSiteConfig = (
   saveAs(blob, 'siteconfig.json5');
 };
 
-export const addMYOData = ({
-  buttonData,
-  ...rest
-}: MYOButtonInterface) => ({
-  ...rest,
-  buttonData,
-  buttonId: 'MakeYourOwn',
-  buttonType: buttonData.indexOf('htt') === 0 || buttonData.indexOf('www') === 0 ? 'WEB' : 'APP',
-});
-
 export const mYODataToListItem = ({
   buttonName,
-  buttonData,
+  buttonData = '',
   buttonType,
   description,
   popupText,

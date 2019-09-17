@@ -3,7 +3,7 @@ import {DragDropContext} from 'react-beautiful-dnd';
 import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
 import {chunk} from 'lodash/fp';
 import useWindowSize from '../../hooks/useWindowSize';
-import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
+import {Link, Menu, MenuItem} from '@material-ui/core';
 import {ALL_CHOICES_ID, MENU_EVENTS} from '../../constants';
 import {
   GRID,
@@ -55,6 +55,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const [checked, setChecked] = React.useState<string[]>(userButtonList);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
+  const [myoDialogOpen, setMYODialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
   const [currentElDetails, setCurrentElDetails] = React.useState<any>({
     droppableId: HOLDING_BOX_ID,
@@ -88,13 +89,13 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       return newChecked;
     });
   };
-  const containerWidth = (windowSize.width > 1280 ? 1280 : windowSize.width) * (2 / 3);
+  const containerWidth = windowSize.width > 1280 ? 1280 : windowSize.width;
   const chunkMultiplier = containerWidth > 600
     ? (containerWidth > 960 ? 20 : 16)
     : 9;
   const itemsPerChunk = (containerWidth - (GRID * chunkMultiplier)) / (GRID * 12);
   let holdingBoxChunks = chunk(itemsPerChunk, holdingBoxList);
-  while (holdingBoxChunks.length < 3) {
+  while (holdingBoxChunks.length < 2) {
     holdingBoxChunks = [
       ...holdingBoxChunks,
       [],
@@ -239,6 +240,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const onDownload = () => {
     downloadSiteConfig(quickstripList.map(item => item.id));
   };
+  const handleMYODialogClose = () => setMYODialogOpen(false);
+  const handleMYODialogOpen = () => setMYODialogOpen(true);
   const handleMakeYourOwnSubmit = (buttonData: MYOButtonInterface) => {
     const listItem = mYODataToListItem(buttonData);
     if (allChoicesList.some(choice => choice.id === listItem.id)) {
@@ -249,19 +252,14 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       ...prevState,
     ]));
     toggleChecked(listItem.id, listItem);
+    handleMYODialogClose();
+    focusFirstHoldingBoxItem();
   };
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Quickstrip {...{handleMenuOpen, onDownload, quickstripList}} />
-        <Grid container spacing={2}>
-          <Grid item xs={8}>
-            <HoldingBox {...{handleMenuOpen, holdingBoxChunks}} />
-          </Grid>
-          <Grid item xs={4}>
-            <MakeYourOwn names={allChoicesList.map(c => c.label)} onSubmit={handleMakeYourOwnSubmit} />
-          </Grid>
-        </Grid>
+        <HoldingBox {...{handleMenuOpen, holdingBoxChunks, handleMakeYourOwnButton: handleMYODialogOpen}} />
         <AllChoicesList {...{checked, list: allChoicesList, onToggle: toggleChecked}} />
       </DragDropContext>
       <Menu
@@ -306,6 +304,11 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         open={confirmDialogOpen}
         onClose={handleConfirmDialogClose}
         onSubmit={handleConfirmDialogSubmit} />
+      <MakeYourOwn
+        names={allChoicesList.map(c => c.label)}
+        onClose={handleMYODialogClose}
+        onSubmit={handleMakeYourOwnSubmit}
+        open={myoDialogOpen} />
     </div>
   );
 }

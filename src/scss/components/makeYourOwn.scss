@@ -8,14 +8,50 @@
       position: absolute;
     }
   }
-  .myo-form {
-    padding-top: 0;
-    > div:first-child {
-      margin-top: 0;
+  .myo-header {
+    text-align: center;
+    padding-bottom: 0;
+
+    h2 {
+      position: relative;
+      button {
+        position: absolute;
+        right: 0;
+        top: -8px;
+      }
     }
   }
-  .myo-create-btn-container {
-    text-align: right;
-    margin: 16px 0 8px;
+  .actions-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .button {
+    margin-top: 8px;
+    margin-right: 8px;
+    width: 120px;
+  }
+  .flex-center {
+    display: flex;
+    justify-content: center;
+  }
+  .demo-quickstrip-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 16px;
+    border: 0;
+    background: rgb(11, 41, 86);
+    color: rgb(255, 255, 255);
+    width: 96px;
+    height: 96px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 8px;
+  }
+  .input-container {
+    margin-top: 16px;
+    margin-bottom: 8px;
   }
 }

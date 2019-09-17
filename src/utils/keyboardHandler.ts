@@ -1,14 +1,12 @@
 import {
   ALL_CHOICES_ID,
   HOLDING_BOX_ID,
-  MAKE_YOUR_OWN_ID,
   QUICK_STRIP_ID,
   COMMON_ITEM_CLASS,
   IS_DRAGGING_CLASS,
   CONFIRM_DIALOG_YES_BTN_ID,
   CONFIRM_DIALOG_NO_BTN_ID,
   HOLDING_BOX_ITEM_CLASS,
-  MAKE_YOUR_OWN_ITEM_CLASS,
   QUICK_STRIP_ITEM_CLASS,
   ALL_CHOICES_ITEM_CLASS,
 } from '../constants/constants';
@@ -16,13 +14,11 @@ import {
 const mainFocusList = [
   QUICK_STRIP_ID,
   HOLDING_BOX_ID,
-  MAKE_YOUR_OWN_ID,
   ALL_CHOICES_ID,
 ];
 const previousChildElementIndex = [
   -1, // QUICK_STRIP_ID
   -1, // HOLDING_BOX_ID
-  -1, // MAKE_YOUR_OWN_ID
   -1, // ALL_CHOICES_ID
 ];
 const dialogBtns = [
@@ -46,15 +42,10 @@ const getParentFocusIndex = () => {
     previousChildElementIndex[1] = indexOfHoldingBoxItem;
     return 1;
   }
-  const indexOfMakeYourOwnItem = indexOfActiveElementWithin(MAKE_YOUR_OWN_ITEM_CLASS);
-  if (indexOfMakeYourOwnItem > -1) {
-    previousChildElementIndex[2] = indexOfMakeYourOwnItem;
-    return 2;
-  }
   const indexOfAllChoicesItem = indexOfActiveElementWithin(ALL_CHOICES_ITEM_CLASS);
   if (indexOfAllChoicesItem > -1) {
-    previousChildElementIndex[3] = indexOfAllChoicesItem;
-    return 3;
+    previousChildElementIndex[2] = indexOfAllChoicesItem;
+    return 2;
   }
   return focusedOnList(mainFocusList);
 };
@@ -162,7 +153,7 @@ export function focusFirstQuickStripItem() {
 
 export function focusFirstHoldingBoxItem() {
   setTimeout(() => {
-    (document.querySelector(`.${HOLDING_BOX_ITEM_CLASS}`) as HTMLElement).focus();
+    (document.querySelector(`#holdingBoxList0 .${HOLDING_BOX_ITEM_CLASS}`) as HTMLElement).focus();
   }, 100);
 }
 

@@ -15,3 +15,7 @@ export const LABEL = 'label';
 export const GRID = 8;
 export const CONFIRM_DIALOG_NO_BTN_ID = 'confirm-dialog-no-btn';
 export const CONFIRM_DIALOG_YES_BTN_ID = 'confirm-dialog-yes-btn';
+export const BUTTON_TYPE_APP = 'APP';
+export const BUTTON_TYPE_WEB = 'WEB';
+export const BUTTON_TYPE_KEYBOARD = 'KEYBOARD';
+export const OTHER = 'Other';

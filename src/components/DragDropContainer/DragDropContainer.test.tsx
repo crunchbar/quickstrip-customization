@@ -4,6 +4,7 @@ import DragDropContainer, {DragDropContainerProps} from './DragDropContainer';
 
 const props: DragDropContainerProps = {
   allChoicesList: [],
+  downloadSiteConfig: () => {},
 };
 
 describe('<DragDropContainer />', () => {

@@ -1,0 +1,26 @@
+#holdingBoxList {
+  .make-your-own-button-add-container {
+    display: inline-flex;
+    vertical-align: top;
+    background: lightgrey;
+    > button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      font-size: 16px;
+      border: 1px dashed black;
+      width: 96px;
+      height: 96px;
+      text-align: center;
+      border-radius: 5px;
+      margin: 8px;
+      cursor: pointer;
+    }
+    + div {
+      display: inline-flex !important;
+      width: calc(100% - 112px) !important;
+      vertical-align: top;
+    }
+  }
+}

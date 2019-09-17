@@ -10,35 +10,16 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
       onDownload={[Function]}
       quickstripList={Array []}
     />
-    <WithStyles(ForwardRef(Grid))
-      container={true}
-      spacing={2}
-    >
-      <WithStyles(ForwardRef(Grid))
-        item={true}
-        xs={8}
-      >
-        <HoldingBox
-          handleMenuOpen={[Function]}
-          holdingBoxChunks={
-            Array [
-              Array [],
-              Array [],
-              Array [],
-            ]
-          }
-        />
-      </WithStyles(ForwardRef(Grid))>
-      <WithStyles(ForwardRef(Grid))
-        item={true}
-        xs={4}
-      >
-        <MakeYourOwn
-          names={Array []}
-          onSubmit={[Function]}
-        />
-      </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
+    <HoldingBox
+      handleMakeYourOwnButton={[Function]}
+      handleMenuOpen={[Function]}
+      holdingBoxChunks={
+        Array [
+          Array [],
+          Array [],
+        ]
+      }
+    />
     <AllChoicesList
       checked={Array []}
       list={Array []}
@@ -73,6 +54,12 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
   </WithStyles(ForwardRef(Menu))>
   <ConfirmDialog
     description="Are you sure you want to ?"
+    onClose={[Function]}
+    onSubmit={[Function]}
+    open={false}
+  />
+  <MakeYourOwn
+    names={Array []}
     onClose={[Function]}
     onSubmit={[Function]}
     open={false}

@@ -19,10 +19,10 @@ export interface Setting {
 }
 
 export interface MYOButtonInterface {
-  buttonId?: string;
+  buttonId: string;
   buttonName: string;
-  buttonType?: string;
-  buttonData: string;
+  buttonType: string;
+  buttonData?: string;
   fullScreen: boolean;
   popupText: string;
   description: string;

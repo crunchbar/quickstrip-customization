@@ -48,6 +48,7 @@
     "json5": "^2.1.0",
     "json5-writer": "^0.1.7",
     "lodash": "^4.17.15",
+    "material-ui-chip-input": "^2.0.0-beta.1",
     "mini-css-extract-plugin": "0.8.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
