@@ -5,6 +5,7 @@ import {ListItemInterface} from '../../interfaces';
 import ScaleText from 'react-scale-text';
 import {ALL_CHOICES_ID, GRID, IS_DRAGGING_CLASS} from '../../constants/constants';
 import Tooltip from '@material-ui/core/Tooltip';
+import {QUICKSTRIP_SPACER_ID, THIN_SPACER_ID} from '../../constants';
 
 export interface QuickstripItemProps extends React.HTMLProps<HTMLDivElement> {
   item: ListItemInterface;
@@ -47,6 +48,9 @@ const QuickstripItem: React.FC<QuickstripItemProps> = ({
   onDoubleClick = () => {},
   ...htmlDivProps
 }) => {
+  const spacerClassName = item.id.includes(QUICKSTRIP_SPACER_ID) ? 'spacer-style' : '';
+  const thinSpacerClassName = item.id.includes(THIN_SPACER_ID) ? 'thin-spacer-style' : '';
+  const hasClassName = className ? className : '';
   const handleClick = (e: any) => {
     // if already active, act as a double click
     if (document.activeElement === e.currentTarget) {
@@ -64,7 +68,7 @@ const QuickstripItem: React.FC<QuickstripItemProps> = ({
             element,
             document.getElementById('root-draggable-portal')!,
           )}
-          <div className={`${className ? className : ''} ${IS_DRAGGING_CLASS}`} />
+          <div className={`${hasClassName} ${IS_DRAGGING_CLASS}`} />
         </React.Fragment>
       );
     }
@@ -82,9 +86,9 @@ const QuickstripItem: React.FC<QuickstripItemProps> = ({
                 {...provided.dragHandleProps}
                 style={getItemStyle(snapshot, provided)}
                 onClick={handleClick}
-                className={`${className ? className : ''} ${snapshot.isDragging
-                  ? IS_DRAGGING_CLASS
-                  : ''}`}
+                className={
+                  `${hasClassName} ${thinSpacerClassName} ${spacerClassName} ${snapshot.isDragging ? IS_DRAGGING_CLASS : ''}`
+                }
                 {...htmlDivProps}
               >
                 <ScaleText maxFontSize={16}>{item.label}</ScaleText>

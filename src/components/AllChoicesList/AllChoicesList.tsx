@@ -47,12 +47,14 @@ export interface AllChoicesListProps {
   list: ListItemInterface[];
   checked: string[];
   onToggle: (id: string) => void;
+  isDropDisabled?: boolean;
 }
 
 const AllChoicesList: React.FC<AllChoicesListProps> = ({
   list,
   checked,
   onToggle,
+  isDropDisabled = false,
 }) => {
   const [searchValue, setSearchValue] = React.useState('');
   const [sortOrder, setSortOrder] = React.useState(ASCENDING);
@@ -73,7 +75,7 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
     prevState => prevState === ASCENDING ? DESCENDING : ASCENDING);
   return (
     <Paper id={ALL_CHOICES_ID} tabIndex={0} className="all-choices-container vertical-space-1">
-      <Droppable droppableId={ALL_CHOICES_ID}>
+      <Droppable droppableId={ALL_CHOICES_ID} isDropDisabled={isDropDisabled}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef}>
             <Grid container>

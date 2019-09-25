@@ -1,14 +1,17 @@
 import React from 'react';
-import {DragDropContext} from 'react-beautiful-dnd';
+import {DragDropContext, DragStart} from 'react-beautiful-dnd';
 import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
 import {chunk} from 'lodash/fp';
 import useWindowSize from '../../hooks/useWindowSize';
-import {Link, Menu, MenuItem} from '@material-ui/core';
+import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
 import {ALL_CHOICES_ID, MENU_EVENTS} from '../../constants';
 import {
   GRID,
   HOLDING_BOX_ID,
   QUICK_STRIP_ID,
+  QUICKSTRIP_SPACER_ID,
+  THIN_SPACER_ID,
+  WIDE_SPACER_ID,
 } from '../../constants/constants';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -18,6 +21,8 @@ import {
   moveItem,
   mYODataToListItem,
   reorderItems,
+  newThinSpacer,
+  newWideSpacer,
 } from '../../utils/utils';
 import {
   focusFirstQuickStripItem,
@@ -27,6 +32,7 @@ import Quickstrip from '../Quickstrip/Quickstrip';
 import HoldingBox from '../HoldingBox/HoldingBox';
 import AllChoicesList from '../AllChoicesList/AllChoicesList';
 import MakeYourOwn from '../MakeYourOwn/MakeYourOwn';
+import Spacers from '../Spacers/Spacers';
 
 export interface DragDropContainerProps {
   allChoicesList: ListItemInterface[];
@@ -55,7 +61,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const [checked, setChecked] = React.useState<string[]>(userButtonList);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
-  const [myoDialogOpen, setMYODialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
   const [currentElDetails, setCurrentElDetails] = React.useState<any>({
     droppableId: HOLDING_BOX_ID,
@@ -63,6 +68,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     item: {id: '', label: ''},
   });
   const windowSize = useWindowSize();
+  const [isDropDisabled, setIsDropDisabled] = React.useState(false);
   const toggleChecked = (id: string, choice?: ListItemInterface) => {
     // add to holding box
     if (checked.indexOf(id) === -1) {
@@ -89,7 +95,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       return newChecked;
     });
   };
-  const containerWidth = windowSize.width > 1280 ? 1280 : windowSize.width;
+  const containerWidth = (windowSize.width > 1280 ? 1280 : windowSize.width) * (7 / 12);
   const chunkMultiplier = containerWidth > 600
     ? (containerWidth > 960 ? 20 : 16)
     : 9;
@@ -121,10 +127,22 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     droppableId,
     replacementChunk
   ).flat();
-  const onDragEnd = (result: any) => {
+  const handleDragEnd = (result: any) => {
     const { source, destination } = result;
     // dropped outside the list
     if (!destination) {
+      return;
+    }
+    const newSpacer = source.droppableId === THIN_SPACER_ID
+      ? newThinSpacer()
+      : source.droppableId === WIDE_SPACER_ID
+      ? newWideSpacer()
+      : null;
+    // add spacer to quickstrip
+    if (newSpacer) {
+      const quickstripClone = Array.from(quickstripList);
+      quickstripClone.splice(destination.index, 0, newSpacer);
+      setQuickstripList(quickstripClone);
       return;
     }
     // dropped on all choices (remove)
@@ -189,13 +207,16 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       setAnchorEl(event.currentTarget);
     }
   };
+  const handleMenuCloseClick = () => {
+    setAnchorEl(null);
+  };
   const handleMenuItemClick = (label: string) => {
     setCurrentMenuItem(label);
-    setAnchorEl(null);
+    handleMenuCloseClick();
     const source = currentElDetails;
     switch(label) {
       case MENU_EVENTS.HOLDING_BOX.MOVE_TO_QUICK_STRIP:
-        onDragEnd({ source, destination: {
+        handleDragEnd({ source, destination: {
           droppableId: QUICK_STRIP_ID,
           index: 0,
         }});
@@ -206,20 +227,20 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         setConfirmDialogOpen(true);
         break;
       case MENU_EVENTS.QUICK_STRIP.MOVE_TO_HOLDING_BOX:
-        onDragEnd({ source, destination: {
+        handleDragEnd({ source, destination: {
           droppableId: `${HOLDING_BOX_ID}${0}`,
           index: 0,
         }});
         focusFirstHoldingBoxItem();
         break;
       case MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT:
-        onDragEnd({ source, destination: {
+        handleDragEnd({ source, destination: {
           ...source,
           index: source.index + 1,
         }});
         break;
       case MENU_EVENTS.QUICK_STRIP.MOVE_LEFT:
-        onDragEnd({ source, destination: {
+        handleDragEnd({ source, destination: {
           ...source,
           index: source.index - 1,
         }});
@@ -227,9 +248,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       default:
         break;
     }
-  };
-  const handleMenuCloseClick = () => {
-    setAnchorEl(null);
   };
   const handleConfirmDialogClose = () => setConfirmDialogOpen(false);
   const handleConfirmDialogSubmit = () => {
@@ -240,8 +258,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const onDownload = () => {
     downloadSiteConfig(quickstripList.map(item => item.id));
   };
-  const handleMYODialogClose = () => setMYODialogOpen(false);
-  const handleMYODialogOpen = () => setMYODialogOpen(true);
   const handleMakeYourOwnSubmit = (buttonData: MYOButtonInterface) => {
     const listItem = mYODataToListItem(buttonData);
     if (allChoicesList.some(choice => choice.id === listItem.id)) {
@@ -252,15 +268,34 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       ...prevState,
     ]));
     toggleChecked(listItem.id, listItem);
-    handleMYODialogClose();
     focusFirstHoldingBoxItem();
+  };
+  const handleDragStart = (initial: DragStart) => {
+    setIsDropDisabled(initial.draggableId.includes(QUICKSTRIP_SPACER_ID));
+  };
+  const removeCurrentElementFromQuickstrip = () => {
+    handleMenuCloseClick();
+    setQuickstripList(prevState => prevState.filter(i => i.id !== currentElDetails.item.id));
   };
   return (
     <div>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <Quickstrip {...{handleMenuOpen, onDownload, quickstripList}} />
-        <HoldingBox {...{handleMenuOpen, holdingBoxChunks, handleMakeYourOwnButton: handleMYODialogOpen}} />
-        <AllChoicesList {...{checked, list: allChoicesList, onToggle: toggleChecked}} />
+        <Grid container spacing={2}>
+          <Grid item xs={7}>
+            <HoldingBox {...{handleMenuOpen, holdingBoxChunks, isDropDisabled}} />
+          </Grid>
+          <Grid item xs={2}>
+            <Spacers />
+          </Grid>
+          <Grid item xs={3}>
+            <MakeYourOwn
+              names={allChoicesList.map(c => c.label)}
+              onSubmit={handleMakeYourOwnSubmit}
+            />
+          </Grid>
+        </Grid>
+        <AllChoicesList {...{checked, isDropDisabled, list: allChoicesList, onToggle: toggleChecked}} />
       </DragDropContext>
       <Menu
         id="quickstrip-item-menu"
@@ -271,7 +306,13 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         anchorOrigin={{vertical: 'top', horizontal: 'right'}}
       >
         {
-          currentMenuItems.map((label, index) => (
+          currentElDetails.item.id.includes(QUICKSTRIP_SPACER_ID)
+          ? <MenuItem
+              ref={focusMenuItem}
+              onClick={removeCurrentElementFromQuickstrip}>
+              Remove Spacer
+            </MenuItem>
+          : currentMenuItems.map((label, index) => (
             <MenuItem
               {...(index === 0 ? {ref: focusMenuItem} : {})}
               key={label}
@@ -304,11 +345,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         open={confirmDialogOpen}
         onClose={handleConfirmDialogClose}
         onSubmit={handleConfirmDialogSubmit} />
-      <MakeYourOwn
-        names={allChoicesList.map(c => c.label)}
-        onClose={handleMYODialogClose}
-        onSubmit={handleMakeYourOwnSubmit}
-        open={myoDialogOpen} />
     </div>
   );
 }

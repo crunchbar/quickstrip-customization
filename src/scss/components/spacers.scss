@@ -1,0 +1,43 @@
+.spacers {
+  height: calc(100% - 2rem);
+  background-color: lightgrey !important;
+
+  > h1:first-child {
+    background-color: white;
+  }
+
+  .spacer-container {
+    display: flex;
+    padding: 8px;
+    overflow: hidden;
+    height: 112px;
+    justify-content: center;
+
+    > span:first-child {
+      display: inline-block;
+      width: 5rem;
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+  }
+}
+.spacer-style {
+  border: 1px dashed black;
+  background-color: white !important;
+  color: black !important;
+
+  &.thin-spacer-style {
+    width: 16px !important;
+    min-width: 16px !important;
+    color: white !important;
+  }
+  &.is-dragging {
+    color: white !important;
+  }
+}
+
+.quickstrip-droppable {
+  .spacer-style {
+    color: white !important;
+  }
+}

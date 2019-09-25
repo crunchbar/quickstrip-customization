@@ -1,19 +1,15 @@
 import {
   Button,
   Dialog,
+  DialogContent,
   DialogTitle,
   FormControl,
   FormControlLabel,
   IconButton,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
+  Paper,
   Select,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
   Switch,
   Typography,
 } from '@material-ui/core';
@@ -44,15 +40,12 @@ const baseData: MYOButtonInterface = Object.freeze({
 });
 
 const buttonTypeLabels: {[key: string]: string} = {
-  [BUTTON_TYPE_APP]: 'A button to launch an application',
-  [BUTTON_TYPE_WEB]: 'A button to open a webpage',
-  [BUTTON_TYPE_KEYBOARD]: 'A button to trigger a keyboard shortcut',
+  [BUTTON_TYPE_WEB]: 'That Opens A Web Site',
+  [BUTTON_TYPE_APP]: 'That Launches An App',
+  [BUTTON_TYPE_KEYBOARD]: 'That Sends A Keyboard Shortcut',
 };
 
-const steps = [
-  'Choose the type of button',
-  'Customize your button',
-];
+const buttonTypes = Object.keys(buttonTypeLabels);
 
 const programList = [
   {name: 'Notepad', path: 'C:\\Windows\\System32\\notepad.exe'},
@@ -60,21 +53,16 @@ const programList = [
 
 export interface MakeYourOwnProps {
   names?: string[];
-  onClose?: () => void;
   onSubmit?: (bd: MYOButtonInterface) => void;
-  open?: boolean;
 }
 
 const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
   names = [],
-  onClose,
   onSubmit = () => undefined,
-  open = false,
 }) => {
+  const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState<MYOButtonInterface>({...baseData});
   const [dirty, setDirty] = React.useState(false);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const isLastStep = activeStep === steps.length - 1;
   const commonClassName = `${COMMON_ITEM_CLASS} ${MAKE_YOUR_OWN_ITEM_CLASS}`;
   const isNameTaken = names.indexOf(values.buttonName) > -1;
   const selectedProgram = programList.find(p => p.path === values.buttonData);
@@ -83,19 +71,13 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     setValues({...baseData});
     setDirty(false);
   };
-  const handleChange = (name: keyof MYOButtonInterface) => (event: React.ChangeEvent<{ name?: string; checked?: boolean; value: unknown; }>) => {
+  const handleClose = () => setOpen(false);
+  const handleChange = (name: keyof MYOButtonInterface) => (event: { target: { name?: string; checked?: boolean; value: unknown; }}) => {
     const {checked, value} = event.target;
     setValues(v => ({
       ...v,
       [name]: name === 'fullScreen' ? checked : value,
     }));
-  };
-  const handleNext = () => {
-    setActiveStep(1);
-  };
-  const handleBack = () => {
-    setActiveStep(0);
-    resetForm();
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -104,8 +86,9 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     if (!buttonData || buttonData === OTHER || !buttonName || !popupText || isNameTaken) {
       return;
     }
+    handleClose();
     onSubmit(values);
-    handleBack();
+    resetForm();
   };
   const handleDeleteChip = (chip: string) => {
     setValues(v => ({
@@ -129,24 +112,47 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       };
     });
   };
-  const getStepContent = (step: number) => {
-    switch (step) {
-      case 0:
-        return (
-          <FormControl>
-            <RadioGroup
-              aria-label="Button Type"
-              name="buttonType"
-              value={values.buttonType}
-              onChange={handleChange('buttonType')}>
-              <FormControlLabel value={BUTTON_TYPE_APP} control={<Radio color="primary" />} label={buttonTypeLabels[BUTTON_TYPE_APP]} />
-              <FormControlLabel value={BUTTON_TYPE_WEB} control={<Radio color="primary" />} label={buttonTypeLabels[BUTTON_TYPE_WEB]} />
-              <FormControlLabel value={BUTTON_TYPE_KEYBOARD} control={<Radio color="primary" />} label={buttonTypeLabels[BUTTON_TYPE_KEYBOARD]} />
-            </RadioGroup>
-          </FormControl>
-        );
-      case 1:
-        return (
+  const handleButtonTypeClick = (buttonType: string) => {
+    handleChange('buttonType')({target: {value: buttonType}});
+    setOpen(true);
+  };
+  return (
+    <React.Fragment>
+      <Paper id={MAKE_YOUR_OWN_ID} tabIndex={0} className="myo vertical-space-1">
+        <Typography variant="h5" component="h1" className="pad-1">
+          Make Your Own Button
+        </Typography>
+        <div className="myo-button-list">
+          {buttonTypes.map(type => (
+            <Button
+              key={type}
+              className={commonClassName}
+              variant="contained"
+              onClick={() => handleButtonTypeClick(type)}
+            >
+              {buttonTypeLabels[type]}
+            </Button>
+          ))}
+        </div>
+      </Paper>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="Customize Your Button"
+        className="myo-dialog"
+        fullWidth={true}
+      >
+        <DialogTitle className="myo-header">
+          Customize Your Button
+          <IconButton
+            edge="end"
+            aria-label="Close Customize Your Button Dialog"
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
           <form noValidate autoComplete="off">
             <Typography align="center">
               {buttonTypeLabels[values.buttonType]}
@@ -274,58 +280,22 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
               className="myo-switch"
             />
           </form>
-        );
-      default:
-        return 'Unknown step';
-    }
-  };
-  return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      aria-labelledby="Make Your Own Button"
-      className="myo"
-      id={MAKE_YOUR_OWN_ID}
-      fullWidth={true}
-    >
-      <DialogTitle className="myo-header">
-        Make Your Own Button
-        <IconButton
-          edge="end"
-          aria-label="Close Make Your Own Button Dialog"
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              {getStepContent(index)}
-              <div className="actions-container">
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className="button"
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={isLastStep ? handleSubmit : handleNext}
-                  className="button"
-                >
-                  {isLastStep ? 'Make' : 'Next'}
-                </Button>
-              </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-    </Dialog>
+          <div className="actions-container">
+            <Button onClick={resetForm} className="button">
+              Reset
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              className="button"
+            >
+              Make
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </React.Fragment>
   );
 }
 

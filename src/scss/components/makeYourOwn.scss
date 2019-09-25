@@ -1,4 +1,14 @@
 .myo {
+  height: calc(100% - 2rem);
+  .myo-button-list {
+    display: flex;
+    height: 12rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+}
+.myo-dialog {
   .myo-switch {
     margin: 8px 0 !important;
     justify-content: space-between;
@@ -22,7 +32,7 @@
     }
   }
   .actions-container {
-    margin-top: 16px;
+    margin: 1rem 0;
     display: flex;
     justify-content: flex-end;
   }

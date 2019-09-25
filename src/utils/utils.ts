@@ -5,6 +5,9 @@ import {
   LABEL,
   HOLDING_BOX_ID,
   MENU_EVENTS,
+  QUICKSTRIP_SPACER_ID,
+  THIN_SPACER_ID,
+  WIDE_SPACER_ID,
 } from '../constants';
 import {
   HoldingBoxState,
@@ -15,6 +18,7 @@ import {
 import {deburr, includes, orderBy, startCase} from 'lodash/fp';
 import json5Writer from 'json5-writer';
 import {saveAs} from 'file-saver';
+import v4 from 'uuid/v4';
 
 export const orderByAscLabel = (list: ListItemInterface[]) => orderBy([LABEL], [ASCENDING], list);
 export const orderByDescLabel = (list: ListItemInterface[]) => orderBy([LABEL], [DESCENDING], list);
@@ -173,3 +177,15 @@ export function sanitizeUrl(url: string): string {
   }
   return sanitizedUrl;
 }
+
+export const newWideSpacer = (): ListItemInterface => ({
+  description: 'Wide Spacer',
+  label: 'Wide Spacer',
+  id: `${QUICKSTRIP_SPACER_ID} ${WIDE_SPACER_ID} ${v4()}`,
+});
+
+export const newThinSpacer = (): ListItemInterface => ({
+  description: 'Narrow Spacer',
+  label: 'Narrow Spacer',
+  id: `${QUICKSTRIP_SPACER_ID} ${THIN_SPACER_ID} ${v4()}`,
+});
