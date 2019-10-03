@@ -103,7 +103,10 @@ const Quickstrip: React.FC<QuickstripProps> = ({
         <div className="logo pad-1">
           <Logo />
         </div>
-        <Droppable droppableId={QUICK_STRIP_ID} direction="horizontal">
+        <Droppable
+          droppableId={QUICK_STRIP_ID}
+          direction="horizontal"
+          isDropDisabled={showFinal}>
           {(provided, snapshot) => (
             <div
               ref={ref => {provided.innerRef(ref); quickStripRef.current = ref;}}
