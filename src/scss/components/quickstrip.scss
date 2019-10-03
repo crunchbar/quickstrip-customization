@@ -31,8 +31,14 @@
     align-items: center;
     justify-content: center;
   }
-  &.show-final:after {
-    display: none;
+  &.show-final {
+    pointer-events: none;
+    &:after {
+      display: none;
+    }
+    .spacer-style {
+      border-color: transparent;
+    }
   }
 }
 

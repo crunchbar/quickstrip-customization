@@ -30,9 +30,11 @@
     width: 16px !important;
     min-width: 16px !important;
     color: white !important;
+    padding: 0 !important;
   }
   &.is-dragging {
-    color: white !important;
+    color: lightgreen !important;
+    background-color: lightgreen !important;
   }
 }
 

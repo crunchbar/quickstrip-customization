@@ -4,15 +4,16 @@ import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
 import {chunk} from 'lodash/fp';
 import useWindowSize from '../../hooks/useWindowSize';
 import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
-import {ALL_CHOICES_ID, MENU_EVENTS} from '../../constants';
 import {
+  ALL_CHOICES_ID,
   GRID,
   HOLDING_BOX_ID,
+  MENU_EVENTS,
   QUICK_STRIP_ID,
   QUICKSTRIP_SPACER_ID,
   THIN_SPACER_ID,
   WIDE_SPACER_ID,
-} from '../../constants/constants';
+} from '../../constants';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
   filterEventsByState,
@@ -50,6 +51,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   downloadSiteConfig,
   userButtonList = [],
 }) => {
+  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>([]);
   const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>(acl);
   const [holdingBoxList, setHoldingBoxList] = React.useState<ListItemInterface[]>([]);
   const [
@@ -69,6 +71,9 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   });
   const windowSize = useWindowSize();
   const [isDropDisabled, setIsDropDisabled] = React.useState(false);
+  const currentElIsSpacer = currentElDetails && currentElDetails.item.id.includes(QUICKSTRIP_SPACER_ID);
+  const currentElIsMYOB = currentElDetails && myobList.some(d => d.buttonName === currentElDetails.item.id);
+  const [myobData, setMYOBData] = React.useState<MYOButtonInterface>();
   const toggleChecked = (id: string, choice?: ListItemInterface) => {
     // add to holding box
     if (checked.indexOf(id) === -1) {
@@ -110,7 +115,9 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const currentMenuItems = currentElDetails.droppableId.includes(HOLDING_BOX_ID)
     ? menuItems[HOLDING_BOX_ID]
     : filterEventsByState(
-      menuItems[QUICK_STRIP_ID],
+      currentElIsSpacer
+      ? [MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT, MENU_EVENTS.QUICK_STRIP.MOVE_LEFT]
+      : menuItems[QUICK_STRIP_ID],
       quickstripList.length,
       currentElDetails.index
     );
@@ -258,11 +265,44 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const onDownload = () => {
     downloadSiteConfig(quickstripList.map(item => item.id));
   };
-  const handleMakeYourOwnSubmit = (buttonData: MYOButtonInterface) => {
-    const listItem = mYODataToListItem(buttonData);
-    if (allChoicesList.some(choice => choice.id === listItem.id)) {
+  const handleMakeYourOwnSubmit = (buttonData?: MYOButtonInterface) => {
+    if (!!!buttonData) {
+      setMYOBData(undefined);
       return;
     }
+    const listItem = mYODataToListItem(buttonData);
+    // update myob data
+    if (myobData) {
+      setAllChoicesList(prevState => prevState.map(
+        item => item.id === myobData.buttonName
+        ? listItem
+        : item
+      ));
+      setHoldingBoxList(prevState => prevState.map(
+        item => item.id === myobData.buttonName
+        ? listItem
+        : item
+      ));
+      setQuickstripList(prevState => prevState.map(
+        item => item.id === myobData.buttonName
+        ? listItem
+        : item
+      ));
+      setMYOBList(prevState => prevState.map(
+        item => item.buttonName === myobData.buttonName
+        ? buttonData
+        : item
+      ));
+      setChecked(prevChecked => {
+        const currentIndex = prevChecked.indexOf(myobData.buttonName);
+        const newChecked = [...prevChecked];
+        newChecked.splice(currentIndex, 1, listItem.id);
+        return newChecked;
+      });
+      setMYOBData(undefined);
+      return;
+    }
+    setMYOBList(prevState => [...prevState, buttonData]);
     setAllChoicesList(prevState => ([
       listItem,
       ...prevState,
@@ -276,6 +316,11 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const removeCurrentElementFromQuickstrip = () => {
     handleMenuCloseClick();
     setQuickstripList(prevState => prevState.filter(i => i.id !== currentElDetails.item.id));
+    focusFirstQuickStripItem();
+  };
+  const handleMYOBEdit = () => {
+    handleMenuCloseClick();
+    setMYOBData(myobList.find(d => d.buttonName === currentElDetails.item.id));
   };
   return (
     <div>
@@ -290,6 +335,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
           </Grid>
           <Grid item xs={3}>
             <MakeYourOwn
+              data={myobData}
               names={allChoicesList.map(c => c.label)}
               onSubmit={handleMakeYourOwnSubmit}
             />
@@ -305,22 +351,24 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         onClose={handleMenuCloseClick}
         anchorOrigin={{vertical: 'top', horizontal: 'right'}}
       >
-        {
-          currentElDetails.item.id.includes(QUICKSTRIP_SPACER_ID)
-          ? <MenuItem
-              ref={focusMenuItem}
-              onClick={removeCurrentElementFromQuickstrip}>
-              Remove Spacer
-            </MenuItem>
-          : currentMenuItems.map((label, index) => (
-            <MenuItem
-              {...(index === 0 ? {ref: focusMenuItem} : {})}
-              key={label}
-              onClick={() => handleMenuItemClick(label)}>
-              {label}
-            </MenuItem>
-          ))
-        }
+        {currentMenuItems.map((label, index) => (
+          <MenuItem
+            {...(index === 0 ? {ref: focusMenuItem} : {})}
+            key={label}
+            onClick={() => handleMenuItemClick(label)}>
+            {label}
+          </MenuItem>
+        ))}
+        {currentElIsSpacer && (
+          <MenuItem onClick={removeCurrentElementFromQuickstrip}>
+            Remove Spacer
+          </MenuItem>
+        )}
+        {currentElIsMYOB && (
+          <MenuItem onClick={handleMYOBEdit}>
+            Edit Button
+          </MenuItem>
+        )}
         {currentElDetails.item.learnMoreLink && (
           <MenuItem
             onClick={() => window.open(currentElDetails.item.learnMoreLink, '_blank')}

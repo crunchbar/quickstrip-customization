@@ -13,6 +13,7 @@ import {
   ALL_CHOICES_ITEM_CLASS,
   SPACERS_ID,
   SPACER_ITEM_CLASS,
+  MYOB_DIALOG_CLASS,
 } from '../constants/constants';
 
 const mainFocusList = [
@@ -69,6 +70,9 @@ const getParentFocusIndex = () => {
 };
 
 const tabHandler = () => {
+  if (document.querySelector('.MuiDialog-root')) {
+    return;
+  }
   const currentDOMIndex = getParentFocusIndex();
   const mainFocusListIndex =
     // base tabbing logic
@@ -94,6 +98,24 @@ const tabHandler = () => {
 };
 
 const getCommonNodes = () => {
+  // escape if select
+  if (document.getElementById('menu-buttonData')) {
+    return {
+      currentNodeIndex: -1,
+      nodes: [],
+      shouldNotHandle: true,
+    };
+  }
+  // handle myob dialog navigation
+  if (document.querySelector(`.${MYOB_DIALOG_CLASS}`)) {
+    const btnNodes = Array.from(document.querySelectorAll(`.${MYOB_DIALOG_CLASS} .${MAKE_YOUR_OWN_ITEM_CLASS}`));
+    const btnNodeIndex = btnNodes.indexOf(document.activeElement!);
+    return {
+      currentNodeIndex: btnNodeIndex,
+      nodes: btnNodes,
+      shouldNotHandle: false,
+    };
+  }
   // handle confirm dialog navigation
   if (focusedOnList(dialogBtns) !== -1) {
     const btnNodes = dialogBtns.map(id => document.querySelector(`#${id}`));

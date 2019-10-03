@@ -83,7 +83,7 @@ const Quickstrip: React.FC<QuickstripProps> = ({
   React.useEffect(() => {
     const numOfThinSpacers = quickstripList.filter(i => i.id.includes(THIN_SPACER_ID)).length;
     const numOfItems = (quickstripList.length - (showFinal ? 1 : 0) - numOfThinSpacers);
-    setWidth(610 + (numOfItems * 104) + (numOfThinSpacers * 42));
+    setWidth(610 + (numOfItems * 104) + (numOfThinSpacers * 24));
   }, [quickstripList, showFinal]);
   return (
     <div className="quickstrip-wrapper">

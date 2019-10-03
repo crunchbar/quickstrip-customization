@@ -5,13 +5,14 @@ import {
   MAKE_YOUR_OWN_ITEM_CLASS,
 } from '../../constants/constants';
 
-const MYOTextField: React.FC<TextFieldProps> = ({
+const MYOTextField: React.FC<TextFieldProps> = React.forwardRef(({
   inputProps = {},
   ...restProps
-}) => {
+}, ref) => {
   const commonClassName = `${COMMON_ITEM_CLASS} ${MAKE_YOUR_OWN_ITEM_CLASS}`;
   return (
     <TextField
+      inputRef={ref}
       margin="normal"
       fullWidth
       InputLabelProps={{
@@ -24,6 +25,6 @@ const MYOTextField: React.FC<TextFieldProps> = ({
       {...restProps}
     />
   );
-}
+});
 
 export default MYOTextField;

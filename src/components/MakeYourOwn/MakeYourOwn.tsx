@@ -20,6 +20,8 @@ import {
   BUTTON_TYPE_KEYBOARD,
   BUTTON_TYPE_WEB,
   COMMON_ITEM_CLASS,
+  KEY_MODIFIERS,
+  MYOB_DIALOG_CLASS,
   MAKE_YOUR_OWN_ID,
   MAKE_YOUR_OWN_ITEM_CLASS,
   OTHER,
@@ -42,7 +44,7 @@ const baseData: MYOButtonInterface = Object.freeze({
 const buttonTypeLabels: {[key: string]: string} = {
   [BUTTON_TYPE_WEB]: 'That Opens A Web Site',
   [BUTTON_TYPE_APP]: 'That Launches An App',
-  [BUTTON_TYPE_KEYBOARD]: 'That Sends A Keyboard Shortcut',
+  [BUTTON_TYPE_KEYBOARD]: 'That Send Keystrokes',
 };
 
 const buttonTypes = Object.keys(buttonTypeLabels);
@@ -52,26 +54,36 @@ const programList = [
 ];
 
 export interface MakeYourOwnProps {
+  data?: MYOButtonInterface,
   names?: string[];
-  onSubmit?: (bd: MYOButtonInterface) => void;
+  onSubmit?: (bd?: MYOButtonInterface) => void;
 }
 
 const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
+  data,
   names = [],
   onSubmit = () => undefined,
 }) => {
+  const keyStore = React.useRef('');
+  const firstInputRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState<MYOButtonInterface>({...baseData});
   const [dirty, setDirty] = React.useState(false);
   const commonClassName = `${COMMON_ITEM_CLASS} ${MAKE_YOUR_OWN_ITEM_CLASS}`;
-  const isNameTaken = names.indexOf(values.buttonName) > -1;
+  const isNameTaken = !data && names.indexOf(values.buttonName) > -1;
   const selectedProgram = programList.find(p => p.path === values.buttonData);
   const isOtherProgram = selectedProgram === undefined && values.buttonData !== undefined;
   const resetForm = () => {
-    setValues({...baseData});
+    setValues(prevState => ({
+      ...(data || baseData),
+      buttonType: prevState.buttonType,
+    }));
     setDirty(false);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    onSubmit(undefined);
+  };
   const handleChange = (name: keyof MYOButtonInterface) => (event: { target: { name?: string; checked?: boolean; value: unknown; }}) => {
     const {checked, value} = event.target;
     setValues(v => ({
@@ -86,7 +98,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     if (!buttonData || buttonData === OTHER || !buttonName || !popupText || isNameTaken) {
       return;
     }
-    handleClose();
+    setOpen(false)
     onSubmit(values);
     resetForm();
   };
@@ -104,18 +116,39 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       : e.key === ' '
       ? 'Space'
       : e.key;
+    const isKeyModifier = KEY_MODIFIERS.includes(key);
+    if (isKeyModifier) {
+      keyStore.current += `${key}-`;
+      return;
+    }
+    keyStore.current += key;
     setValues(v => {
       const chips = v.buttonData ? v.buttonData.split('+') : [];
       return {
         ...v,
-        buttonData: [...chips, key].join('+'),
+        buttonData: [...chips, keyStore.current].join('+'),
       };
     });
+    keyStore.current = '';
   };
   const handleButtonTypeClick = (buttonType: string) => {
+    resetForm();
     handleChange('buttonType')({target: {value: buttonType}});
     setOpen(true);
   };
+  React.useEffect(() => {
+    if (data) {
+      setValues({...data});
+      setDirty(false);
+      setOpen(true);
+    }
+  }, [data]);
+  React.useEffect(() => {
+    if (open) {
+      // @ts-ignore
+      setTimeout(() => firstInputRef.current.focus());
+    }
+  }, [open]);
   return (
     <React.Fragment>
       <Paper id={MAKE_YOUR_OWN_ID} tabIndex={0} className="myo vertical-space-1">
@@ -139,7 +172,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
         open={open}
         onClose={handleClose}
         aria-labelledby="Customize Your Button"
-        className="myo-dialog"
+        className={MYOB_DIALOG_CLASS}
         fullWidth={true}
       >
         <DialogTitle className="myo-header">
@@ -163,6 +196,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
               </div>
             </div>
             <MYOTextField
+              ref={firstInputRef}
               id="button-name"
               label={`Name ${dirty && isNameTaken ? 'Taken' : ''}`}
               value={values.buttonName}
@@ -188,6 +222,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
                     name="buttonData"
                     inputProps={{
                       id: 'button-data',
+                      className: commonClassName,
                     }}
                     displayEmpty={true}
                     renderValue={() => {
@@ -240,6 +275,9 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
                 placeholder="Press a key to add it to the shortcut"
                 required
                 value={values.buttonData ? values.buttonData.split('+') : []}
+                InputProps={{
+                  inputProps: {className: commonClassName},
+                }}
               />
             )}
             <MYOTextField
@@ -281,16 +319,16 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
             />
           </form>
           <div className="actions-container">
-            <Button onClick={resetForm} className="button">
+            <Button onClick={resetForm} className={`button ${commonClassName}`}>
               Reset
             </Button>
             <Button
               variant="contained"
               color="primary"
               onClick={handleSubmit}
-              className="button"
+              className={`button ${commonClassName}`}
             >
-              Make
+              {!!data ? 'Update' : 'Make'}
             </Button>
           </div>
         </DialogContent>
