@@ -13,21 +13,5 @@ exports[`<HoldingBoxDND /> renders correctly 1`] = `
   >
     My Choices
   </WithStyles(ForwardRef(Typography))>
-  <div
-    className="make-your-own-button-add-container"
-  >
-    <WithStyles(Tooltip)
-      title="Make Your Own Button"
-    >
-      <button
-        aria-label="Make Your Own Button"
-        className="commonListItem holdingBoxListItem"
-        onKeyPress={[Function]}
-        tabIndex={0}
-      >
-        <AddIcon />
-      </button>
-    </WithStyles(Tooltip)>
-  </div>
 </WithStyles(ForwardRef(Paper))>
 `;

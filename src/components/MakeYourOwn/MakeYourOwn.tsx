@@ -299,24 +299,26 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
               onChange={handleChange('description')}
               placeholder="Enter description"
             />
-            <FormControlLabel
-              value="start"
-              control={
-                <Switch
-                  checked={values.fullScreen}
-                  onChange={handleChange('fullScreen')}
-                  value="fullScreen"
-                  color="primary"
-                  inputProps={{
-                    'aria-label': 'fullScreen primary checkbox',
-                    className: commonClassName,
-                  }}
-                />
-              }
-              label="Full Screen"
-              labelPlacement="start"
-              className="myo-switch"
-            />
+            {values.buttonType !== BUTTON_TYPE_KEYBOARD && (
+              <FormControlLabel
+                value="start"
+                control={
+                  <Switch
+                    checked={values.fullScreen}
+                    onChange={handleChange('fullScreen')}
+                    value="fullScreen"
+                    color="primary"
+                    inputProps={{
+                      'aria-label': 'fullScreen primary checkbox',
+                      className: commonClassName,
+                    }}
+                  />
+                }
+                label="Full Screen"
+                labelPlacement="start"
+                className="myo-switch"
+              />
+            )}
           </form>
           <div className="actions-container">
             <Button onClick={resetForm} className={`button ${commonClassName}`}>

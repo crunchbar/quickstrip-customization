@@ -4,24 +4,51 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
 <div>
   <DragDropContext
     onDragEnd={[Function]}
+    onDragStart={[Function]}
   >
     <Quickstrip
       handleMenuOpen={[Function]}
       onDownload={[Function]}
       quickstripList={Array []}
     />
-    <HoldingBox
-      handleMakeYourOwnButton={[Function]}
-      handleMenuOpen={[Function]}
-      holdingBoxChunks={
-        Array [
-          Array [],
-          Array [],
-        ]
-      }
-    />
+    <WithStyles(ForwardRef(Grid))
+      container={true}
+      spacing={2}
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        xs={7}
+      >
+        <HoldingBox
+          handleMenuOpen={[Function]}
+          holdingBoxChunks={
+            Array [
+              Array [],
+              Array [],
+            ]
+          }
+          isDropDisabled={false}
+        />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        xs={2}
+      >
+        <Spacers />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        xs={3}
+      >
+        <MakeYourOwn
+          names={Array []}
+          onSubmit={[Function]}
+        />
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
     <AllChoicesList
       checked={Array []}
+      isDropDisabled={false}
       list={Array []}
       onToggle={[Function]}
     />
@@ -54,12 +81,6 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
   </WithStyles(ForwardRef(Menu))>
   <ConfirmDialog
     description="Are you sure you want to ?"
-    onClose={[Function]}
-    onSubmit={[Function]}
-    open={false}
-  />
-  <MakeYourOwn
-    names={Array []}
     onClose={[Function]}
     onSubmit={[Function]}
     open={false}

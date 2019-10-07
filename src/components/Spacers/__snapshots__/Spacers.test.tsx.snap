@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Spacers /> renders correctly 1`] = `
+<WithStyles(ForwardRef(Paper))
+  className="spacers vertical-space-1"
+  id="spacers"
+  tabIndex={0}
+>
+  <WithStyles(ForwardRef(Typography))
+    className="pad-1"
+    component="h1"
+    variant="h5"
+  >
+    Spacers
+  </WithStyles(ForwardRef(Typography))>
+  <div
+    className="spacer-container"
+  >
+    <Connect(Droppable)
+      direction="vertical"
+      droppableId="wideSpacer"
+      getContainerForClone={[Function]}
+      ignoreContainerClipping={false}
+      isCombineEnabled={false}
+      isDropDisabled={true}
+      mode="STANDARD"
+      type="DEFAULT"
+      whenDraggingClone={null}
+    >
+      <Component />
+    </Connect(Droppable)>
+  </div>
+  <div
+    className="spacer-container"
+  >
+    <span>
+      Narrow Spacer
+    </span>
+    <Connect(Droppable)
+      direction="vertical"
+      droppableId="thinSpacer"
+      getContainerForClone={[Function]}
+      ignoreContainerClipping={false}
+      isCombineEnabled={false}
+      isDropDisabled={true}
+      mode="STANDARD"
+      type="DEFAULT"
+      whenDraggingClone={null}
+    >
+      <Component />
+    </Connect(Droppable)>
+  </div>
+</WithStyles(ForwardRef(Paper))>
+`;

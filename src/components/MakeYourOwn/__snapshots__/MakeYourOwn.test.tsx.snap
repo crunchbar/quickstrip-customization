@@ -1,235 +1,203 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<MakeYourOwn /> renders correctly 1`] = `
-<WithStyles(ForwardRef(Dialog))
-  aria-labelledby="Make Your Own Button"
-  className="myo"
-  fullWidth={true}
-  id="makeYourOwnBox"
-  open={false}
->
-  <WithStyles(ForwardRef(DialogTitle))
-    className="myo-header"
+<Fragment>
+  <WithStyles(ForwardRef(Paper))
+    className="myo vertical-space-1"
+    id="makeYourOwnBox"
+    tabIndex={0}
   >
-    Make Your Own Button
-    <WithStyles(ForwardRef(IconButton))
-      aria-label="Close Make Your Own Button Dialog"
-      edge="end"
+    <WithStyles(ForwardRef(Typography))
+      className="pad-1"
+      component="h1"
+      variant="h5"
     >
-      <CloseIcon />
-    </WithStyles(ForwardRef(IconButton))>
-  </WithStyles(ForwardRef(DialogTitle))>
-  <WithStyles(ForwardRef(Stepper))
-    activeStep={0}
-    orientation="vertical"
+      Make Your Own Button
+    </WithStyles(ForwardRef(Typography))>
+    <div
+      className="myo-button-list"
+    >
+      <WithStyles(ForwardRef(Button))
+        className="commonListItem makeYourOwnItem"
+        key="WEB"
+        onClick={[Function]}
+        variant="contained"
+      >
+        That Opens A Web Site
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        className="commonListItem makeYourOwnItem"
+        key="APP"
+        onClick={[Function]}
+        variant="contained"
+      >
+        That Launches An App
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        className="commonListItem makeYourOwnItem"
+        key="KEYBOARD"
+        onClick={[Function]}
+        variant="contained"
+      >
+        That Send Keystrokes
+      </WithStyles(ForwardRef(Button))>
+    </div>
+  </WithStyles(ForwardRef(Paper))>
+  <WithStyles(ForwardRef(Dialog))
+    aria-labelledby="Customize Your Button"
+    className="myo-dialog"
+    fullWidth={true}
+    onClose={[Function]}
+    open={false}
   >
-    <WithStyles(ForwardRef(Step))
-      key="Choose the type of button"
+    <WithStyles(ForwardRef(DialogTitle))
+      className="myo-header"
     >
-      <WithStyles(ForwardRef(StepLabel))>
-        Choose the type of button
-      </WithStyles(ForwardRef(StepLabel))>
-      <WithStyles(ForwardRef(StepContent))>
-        <WithStyles(ForwardRef(FormControl))>
-          <ForwardRef(RadioGroup)
-            aria-label="Button Type"
-            name="buttonType"
-            onChange={[Function]}
-            value="APP"
-          >
-            <WithStyles(ForwardRef(FormControlLabel))
-              control={
-                <ForwardRef(WithStyles)
-                  color="primary"
-                />
-              }
-              label="A button to launch an application"
-              value="APP"
-            />
-            <WithStyles(ForwardRef(FormControlLabel))
-              control={
-                <ForwardRef(WithStyles)
-                  color="primary"
-                />
-              }
-              label="A button to open a webpage"
-              value="WEB"
-            />
-            <WithStyles(ForwardRef(FormControlLabel))
-              control={
-                <ForwardRef(WithStyles)
-                  color="primary"
-                />
-              }
-              label="A button to trigger a keyboard shortcut"
-              value="KEYBOARD"
-            />
-          </ForwardRef(RadioGroup)>
-        </WithStyles(ForwardRef(FormControl))>
+      Customize Your Button
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="Close Customize Your Button Dialog"
+        edge="end"
+        onClick={[Function]}
+      >
+        <CloseIcon />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(DialogTitle))>
+    <WithStyles(ForwardRef(DialogContent))>
+      <form
+        autoComplete="off"
+        noValidate={true}
+      >
+        <WithStyles(ForwardRef(Typography))
+          align="center"
+        >
+          That Launches An App
+        </WithStyles(ForwardRef(Typography))>
         <div
-          className="actions-container"
+          className="flex-center"
         >
-          <WithStyles(ForwardRef(Button))
-            className="button"
-            disabled={true}
-            onClick={[Function]}
-          >
-            Back
-          </WithStyles(ForwardRef(Button))>
-          <WithStyles(ForwardRef(Button))
-            className="button"
-            color="primary"
-            onClick={[Function]}
-            variant="contained"
-          >
-            Next
-          </WithStyles(ForwardRef(Button))>
-        </div>
-      </WithStyles(ForwardRef(StepContent))>
-    </WithStyles(ForwardRef(Step))>
-    <WithStyles(ForwardRef(Step))
-      key="Customize your button"
-    >
-      <WithStyles(ForwardRef(StepLabel))>
-        Customize your button
-      </WithStyles(ForwardRef(StepLabel))>
-      <WithStyles(ForwardRef(StepContent))>
-        <form
-          autoComplete="off"
-          noValidate={true}
-        >
-          <WithStyles(ForwardRef(Typography))
-            align="center"
-          >
-            A button to launch an application
-          </WithStyles(ForwardRef(Typography))>
           <div
-            className="flex-center"
+            className="demo-quickstrip-item"
           >
-            <div
-              className="demo-quickstrip-item"
-            >
-              <ScaleText
-                maxFontSize={16}
-                minFontSize={-Infinity}
-                widthOnly={false}
-              />
-            </div>
+            <ScaleText
+              maxFontSize={16}
+              minFontSize={-Infinity}
+              widthOnly={false}
+            />
           </div>
-          <MYOTextField
-            error={false}
-            id="button-name"
+        </div>
+        <ForwardRef
+          error={false}
+          id="button-name"
+          inputProps={
+            Object {
+              "maxLength": 20,
+            }
+          }
+          label="Name "
+          onChange={[Function]}
+          placeholder="Enter Name for Button"
+          required={true}
+          value=""
+        />
+        <WithStyles(ForwardRef(FormControl))
+          className="input-container"
+          error={false}
+          fullWidth={true}
+          required={true}
+        >
+          <WithStyles(ForwardRef(InputLabel))
+            htmlFor="button-data"
+            shrink={true}
+          >
+            Name of the application
+          </WithStyles(ForwardRef(InputLabel))>
+          <WithStyles(ForwardRef(Select))
+            displayEmpty={true}
             inputProps={
               Object {
-                "maxLength": 20,
+                "className": "commonListItem makeYourOwnItem",
+                "id": "button-data",
               }
             }
-            label="Name "
+            name="buttonData"
             onChange={[Function]}
-            placeholder="Enter Name for Button"
-            required={true}
+            renderValue={[Function]}
             value=""
-          />
-          <WithStyles(ForwardRef(FormControl))
-            className="input-container"
-            error={false}
-            fullWidth={true}
-            required={true}
           >
-            <WithStyles(ForwardRef(InputLabel))
-              htmlFor="button-data"
-              shrink={true}
+            <WithStyles(ForwardRef(MenuItem))
+              value="Other"
             >
-              Name of the application
-            </WithStyles(ForwardRef(InputLabel))>
-            <WithStyles(ForwardRef(Select))
-              displayEmpty={true}
+              Other
+            </WithStyles(ForwardRef(MenuItem))>
+            <WithStyles(ForwardRef(MenuItem))
+              key="Notepad"
+              value="C:\\\\Windows\\\\System32\\\\notepad.exe"
+            >
+              Notepad
+            </WithStyles(ForwardRef(MenuItem))>
+          </WithStyles(ForwardRef(Select))>
+        </WithStyles(ForwardRef(FormControl))>
+        <ForwardRef
+          error={false}
+          id="popup-text"
+          inputProps={
+            Object {
+              "maxLength": 510,
+            }
+          }
+          label="Popup Text"
+          onChange={[Function]}
+          placeholder="Enter Popup Text"
+          required={true}
+          value=""
+        />
+        <ForwardRef
+          id="description"
+          label="Description"
+          onChange={[Function]}
+          placeholder="Enter description"
+          value=""
+        />
+        <WithStyles(ForwardRef(FormControlLabel))
+          className="myo-switch"
+          control={
+            <ForwardRef(WithStyles)
+              checked={false}
+              color="primary"
               inputProps={
                 Object {
-                  "id": "button-data",
+                  "aria-label": "fullScreen primary checkbox",
+                  "className": "commonListItem makeYourOwnItem",
                 }
               }
-              name="buttonData"
               onChange={[Function]}
-              renderValue={[Function]}
-              value=""
-            >
-              <WithStyles(ForwardRef(MenuItem))
-                value="Other"
-              >
-                Other
-              </WithStyles(ForwardRef(MenuItem))>
-              <WithStyles(ForwardRef(MenuItem))
-                key="Notepad"
-                value="C:\\\\Windows\\\\System32\\\\notepad.exe"
-              >
-                Notepad
-              </WithStyles(ForwardRef(MenuItem))>
-            </WithStyles(ForwardRef(Select))>
-          </WithStyles(ForwardRef(FormControl))>
-          <MYOTextField
-            error={false}
-            id="popup-text"
-            inputProps={
-              Object {
-                "maxLength": 510,
-              }
-            }
-            label="Popup Text"
-            onChange={[Function]}
-            placeholder="Enter Popup Text"
-            required={true}
-            value=""
-          />
-          <MYOTextField
-            id="description"
-            label="Description"
-            onChange={[Function]}
-            placeholder="Enter description"
-            value=""
-          />
-          <WithStyles(ForwardRef(FormControlLabel))
-            className="myo-switch"
-            control={
-              <ForwardRef(WithStyles)
-                checked={false}
-                color="primary"
-                inputProps={
-                  Object {
-                    "aria-label": "fullScreen primary checkbox",
-                    "className": "commonListItem makeYourOwnItem",
-                  }
-                }
-                onChange={[Function]}
-                value="fullScreen"
-              />
-            }
-            label="Full Screen"
-            labelPlacement="start"
-            value="start"
-          />
-        </form>
-        <div
-          className="actions-container"
+              value="fullScreen"
+            />
+          }
+          label="Full Screen"
+          labelPlacement="start"
+          value="start"
+        />
+      </form>
+      <div
+        className="actions-container"
+      >
+        <WithStyles(ForwardRef(Button))
+          className="button commonListItem makeYourOwnItem"
+          onClick={[Function]}
         >
-          <WithStyles(ForwardRef(Button))
-            className="button"
-            disabled={true}
-            onClick={[Function]}
-          >
-            Back
-          </WithStyles(ForwardRef(Button))>
-          <WithStyles(ForwardRef(Button))
-            className="button"
-            color="primary"
-            onClick={[Function]}
-            variant="contained"
-          >
-            Next
-          </WithStyles(ForwardRef(Button))>
-        </div>
-      </WithStyles(ForwardRef(StepContent))>
-    </WithStyles(ForwardRef(Step))>
-  </WithStyles(ForwardRef(Stepper))>
-</WithStyles(ForwardRef(Dialog))>
+          Reset
+        </WithStyles(ForwardRef(Button))>
+        <WithStyles(ForwardRef(Button))
+          className="button commonListItem makeYourOwnItem"
+          color="primary"
+          onClick={[Function]}
+          variant="contained"
+        >
+          Make
+        </WithStyles(ForwardRef(Button))>
+      </div>
+    </WithStyles(ForwardRef(DialogContent))>
+  </WithStyles(ForwardRef(Dialog))>
+</Fragment>
 `;
