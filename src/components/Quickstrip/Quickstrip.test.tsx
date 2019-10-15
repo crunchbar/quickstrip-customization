@@ -5,6 +5,7 @@ import Quickstrip, {QuickstripProps} from './Quickstrip';
 const props: QuickstripProps = {
   quickstripList: [],
   handleMenuOpen: () => {},
+  onSave: () => {},
 };
 
 describe('<Quickstrip />', () => {

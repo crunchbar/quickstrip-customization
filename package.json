@@ -26,7 +26,6 @@
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "^2.0.1",
     "file-loader": "4.2.0",
-    "file-saver": "^2.0.2",
     "fs-extra": "8.1.0",
     "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
@@ -35,8 +34,6 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
-    "json5": "^2.1.0",
-    "json5-writer": "^0.1.7",
     "lodash": "^4.17.15",
     "material-ui-chip-input": "^2.0.0-beta.1",
     "mini-css-extract-plugin": "0.8.0",
@@ -52,6 +49,7 @@
     "react": "^16.9.0",
     "react-app-polyfill": "^1.0.2",
     "react-beautiful-dnd": "12.0.0-alpha.7",
+    "react-cookie": "^4.0.1",
     "react-dev-utils": "^9.0.3",
     "react-dom": "^16.9.0",
     "react-scale-text": "^1.2.2",
@@ -112,7 +110,6 @@
       "enzymeAdapter": "react16"
     },
     "transform": {
-      "^.+\\.json5$": "<rootDir>/config/jest/rawTransform.js",
       "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
@@ -134,7 +131,6 @@
       "web.tsx",
       "tsx",
       "json",
-      "json5",
       "web.jsx",
       "jsx",
       "node"
@@ -151,9 +147,7 @@
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.3",
-    "@types/file-saver": "^2.0.1",
     "@types/jest": "24.0.18",
-    "@types/json5": "0.0.30",
     "@types/lodash": "^4.14.138",
     "@types/node": "12.7.4",
     "@types/react": "16.9.2",

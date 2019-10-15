@@ -86,9 +86,10 @@ exports[`<Quickstrip /> renders correctly 1`] = `
       Preview
     </WithStyles(ForwardRef(Button))>
     <WithStyles(ForwardRef(Button))
+      onClick={[Function]}
       size="small"
     >
-      Download
+      Save
     </WithStyles(ForwardRef(Button))>
     <ZoomInIcon
       onClick={[Function]}

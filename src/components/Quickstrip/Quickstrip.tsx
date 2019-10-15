@@ -19,13 +19,13 @@ import Button from '@material-ui/core/Button';
 
 export interface QuickstripProps {
   handleMenuOpen: (e: any, o: any) => void;
-  onDownload: () => void;
+  onSave: () => void;
   quickstripList: ListItemInterface[];
 }
 
 const Quickstrip: React.FC<QuickstripProps> = ({
   handleMenuOpen,
-  onDownload,
+  onSave,
   quickstripList,
 }) => {
   const quickStripRef = React.useRef<HTMLDivElement | null>(null);
@@ -156,8 +156,8 @@ const Quickstrip: React.FC<QuickstripProps> = ({
         <Button size="small" onClick={toggleShowFinal}>
           {showFinal ? 'Edit' : 'Preview'}
         </Button>
-        <Button size="small" onClick={onDownload}>
-          Download
+        <Button size="small" onClick={onSave}>
+          Save
         </Button>
         <ZoomInIcon onClick={incrementScaleFactor} />
         <ZoomOutIcon onClick={decrementScaleFactor} />

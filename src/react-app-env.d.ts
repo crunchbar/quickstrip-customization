@@ -64,5 +64,3 @@ declare module '*.module.sass' {
 }
 
 declare module 'react-scale-text';
-
-declare module 'json5-writer';

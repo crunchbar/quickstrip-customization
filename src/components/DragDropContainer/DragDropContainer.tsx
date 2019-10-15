@@ -1,4 +1,5 @@
 import React from 'react';
+import {useCookies} from 'react-cookie';
 import {DragDropContext, DragStart} from 'react-beautiful-dnd';
 import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
 import {chunk} from 'lodash/fp';
@@ -6,6 +7,8 @@ import useWindowSize from '../../hooks/useWindowSize';
 import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
 import {
   ALL_CHOICES_ID,
+  BUTTON_LIST,
+  COOKIE_OPTIONS,
   GRID,
   HOLDING_BOX_ID,
   MENU_EVENTS,
@@ -37,8 +40,6 @@ import Spacers from '../Spacers/Spacers';
 
 export interface DragDropContainerProps {
   allChoicesList: ListItemInterface[];
-  downloadSiteConfig: (buttonList: string[]) => void;
-  userButtonList?: string[];
 }
 
 const menuItems: {[key: string]: string[]} = {
@@ -48,19 +49,18 @@ const menuItems: {[key: string]: string[]} = {
 
 const DragDropContainer: React.FC<DragDropContainerProps> = ({
   allChoicesList: acl = [],
-  downloadSiteConfig,
-  userButtonList = [],
 }) => {
-  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>([]);
-  const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>(acl);
+  const [cookies, setCookie] = useCookies([BUTTON_LIST]);
+  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b !== 'string') : []);
+  const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>([...acl, ...myobList.map(m => mYODataToListItem(m))]);
   const [holdingBoxList, setHoldingBoxList] = React.useState<ListItemInterface[]>([]);
+  const [checked, setChecked] = React.useState<string[]>(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].map((b: any) => typeof b === 'string' ? b : b.buttonName) : []);
   const [
     quickstripList,
     setQuickstripList
   ] = React.useState<ListItemInterface[]>(allChoicesList.filter(
-    c => userButtonList.indexOf(c.id) > -1 ? true : false
+    c => checked.indexOf(c.id) > -1 ? true : false
   ));
-  const [checked, setChecked] = React.useState<string[]>(userButtonList);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
@@ -262,8 +262,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     handleConfirmDialogClose();
   };
   const focusMenuItem = (el: any) => Boolean(anchorEl) && el && el.focus();
-  const onDownload = () => {
-    downloadSiteConfig(quickstripList.map(item => item.id));
+  const onSave = () => {
+    setCookie(BUTTON_LIST, quickstripList.map(item => {
+      const myob = myobList.find(m => m.buttonName === item.id);
+      return myob ? myob : item.id;
+    }), COOKIE_OPTIONS);
+    window.close();
   };
   const handleMakeYourOwnSubmit = (buttonData?: MYOButtonInterface) => {
     if (!!!buttonData) {
@@ -325,7 +329,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   return (
     <div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <Quickstrip {...{handleMenuOpen, onDownload, quickstripList}} />
+        <Quickstrip {...{handleMenuOpen, onSave, quickstripList}} />
         <Grid container spacing={2}>
           <Grid item xs={7}>
             <HoldingBox {...{handleMenuOpen, holdingBoxChunks, isDropDisabled}} />

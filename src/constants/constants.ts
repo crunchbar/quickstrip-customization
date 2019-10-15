@@ -31,3 +31,8 @@ export const KEY_MODIFIERS = [
   'Alt',
   'Shift',
 ];
+export const BUTTON_LIST = 'buttonList';
+export const COOKIE_OPTIONS = {
+  domain: window.location.hostname === 'localhost' ? 'localhost' : '.herokuapp.com',
+  path: '/',
+};

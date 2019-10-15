@@ -16,8 +16,6 @@ import {
   Setting,
 } from '../interfaces';
 import {deburr, includes, orderBy, startCase} from 'lodash/fp';
-import json5Writer from 'json5-writer';
-import {saveAs} from 'file-saver';
 import v4 from 'uuid/v4';
 
 export const orderByAscLabel = (list: ListItemInterface[]) => orderBy([LABEL], [ASCENDING], list);
@@ -112,32 +110,6 @@ export const settingsToAllChoicesList = (settings: Setting[]): ListItemInterface
     learnMoreLink,
     id,
   }));
-
-export const getUpdatedJSON5SiteConfig = (
-  siteConfigString: string,
-  siteConfigObj: any,
-  buttonList: string[],
-): string => {
-  const j5WriterInstance = json5Writer.load(siteConfigString);
-  j5WriterInstance.write({
-    ...siteConfigObj,
-    qss: {
-      ...siteConfigObj.qss,
-      buttonList,
-    }
-  });
-  return j5WriterInstance.toSource();
-};
-
-export const downloadSiteConfig = (
-  siteConfigString: string,
-  siteConfigObj: any,
-  buttonList: string[],
-) => {
-  const siteConfig = getUpdatedJSON5SiteConfig(siteConfigString, siteConfigObj, buttonList);
-  const blob = new Blob([siteConfig], {type: 'application/json5;charset=utf-8'});
-  saveAs(blob, 'siteconfig.json5');
-};
 
 export const mYODataToListItem = ({
   buttonName,
