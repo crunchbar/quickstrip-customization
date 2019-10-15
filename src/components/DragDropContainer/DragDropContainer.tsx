@@ -2,7 +2,7 @@ import React from 'react';
 import {useCookies} from 'react-cookie';
 import {DragDropContext, DragStart} from 'react-beautiful-dnd';
 import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
-import {chunk} from 'lodash/fp';
+import {chunk, startCase} from 'lodash/fp';
 import useWindowSize from '../../hooks/useWindowSize';
 import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
 import {
@@ -58,8 +58,20 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const [
     quickstripList,
     setQuickstripList
-  ] = React.useState<ListItemInterface[]>(allChoicesList.filter(
-    c => checked.indexOf(c.id) > -1 ? true : false
+  ] = React.useState<ListItemInterface[]>(checked.map(c =>
+    allChoicesList.find(a => a.id === c) || (c.includes(WIDE_SPACER_ID) && ({
+      id: c,
+      label: 'Wide Spacer',
+      description: 'Wide Spacer',
+    })) || (c.includes(THIN_SPACER_ID) && ({
+      id: c,
+      label: 'Narrow Spacer',
+      description: 'Narrow Spacer',
+    })) || ({
+      id: c,
+      label: startCase(c),
+      description: 'Button Not Available Within Settings',
+    })
   ));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
