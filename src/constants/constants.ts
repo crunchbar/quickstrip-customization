@@ -33,6 +33,6 @@ export const KEY_MODIFIERS = [
 ];
 export const BUTTON_LIST = 'buttonList';
 export const COOKIE_OPTIONS = {
-  domain: window.location.hostname === 'localhost' ? 'localhost' : '.herokuapp.com',
+  domain: window.location.hostname === 'localhost' ? 'localhost' : '.morphic.xyz',
   path: '/',
 };
