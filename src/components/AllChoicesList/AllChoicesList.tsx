@@ -74,7 +74,7 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
   const toggleSortOrder = () => setSortOrder(
     prevState => prevState === ASCENDING ? DESCENDING : ASCENDING);
   return (
-    <Paper id={ALL_CHOICES_ID} tabIndex={0} className="all-choices-container vertical-space-1">
+    <Paper id={ALL_CHOICES_ID} tabIndex={0} className="all-choices-container vertical-space-1 border">
       <Droppable droppableId={ALL_CHOICES_ID} isDropDisabled={isDropDisabled}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef}>

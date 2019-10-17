@@ -151,7 +151,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
   }, [open]);
   return (
     <React.Fragment>
-      <Paper id={MAKE_YOUR_OWN_ID} tabIndex={0} className="myo vertical-space-1">
+      <Paper id={MAKE_YOUR_OWN_ID} tabIndex={0} className="myo vertical-space-1 border">
         <Typography variant="h5" component="h1" className="pad-1">
           Make Your Own Button
         </Typography>

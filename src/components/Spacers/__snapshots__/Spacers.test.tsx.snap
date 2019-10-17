@@ -2,7 +2,7 @@
 
 exports[`<Spacers /> renders correctly 1`] = `
 <WithStyles(ForwardRef(Paper))
-  className="spacers vertical-space-1"
+  className="spacers vertical-space-1 border"
   id="spacers"
   tabIndex={0}
 >

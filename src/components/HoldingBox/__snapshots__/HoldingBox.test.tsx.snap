@@ -2,7 +2,7 @@
 
 exports[`<HoldingBoxDND /> renders correctly 1`] = `
 <WithStyles(ForwardRef(Paper))
-  className="vertical-space-1"
+  className="vertical-space-1 border"
   id="holdingBoxList"
   tabIndex={0}
 >

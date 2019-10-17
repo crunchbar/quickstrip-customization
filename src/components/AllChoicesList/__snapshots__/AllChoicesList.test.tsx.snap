@@ -2,7 +2,7 @@
 
 exports[`<AllChoicesList /> renders correctly 1`] = `
 <WithStyles(ForwardRef(Paper))
-  className="all-choices-container vertical-space-1"
+  className="all-choices-container vertical-space-1 border"
   id="allChoicesList"
   tabIndex={0}
 >

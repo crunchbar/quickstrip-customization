@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 export interface InstructionsProps {}
 
 const Instructions: React.FC<InstructionsProps> = () => (
-  <Paper className="instructions-container">
+  <Paper className="instructions-container border">
     <Typography variant="h5" component="h1" className="pad-1">
       Instructions
     </Typography>

@@ -28,7 +28,7 @@ const HoldingBox: React.FC<HoldingBoxProps> = ({
   ] = useState<{[key: number]: boolean | undefined}>({});
   const commonClassName = `${COMMON_ITEM_CLASS} ${HOLDING_BOX_ITEM_CLASS}`;
   return (
-    <Paper id={HOLDING_BOX_ID} tabIndex={0} className="vertical-space-1">
+    <Paper id={HOLDING_BOX_ID} tabIndex={0} className="vertical-space-1 border">
       <Typography variant="h5" component="h1" className="pad-1">
         My Choices
       </Typography>

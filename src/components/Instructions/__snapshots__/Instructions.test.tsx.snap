@@ -2,7 +2,7 @@
 
 exports[`<Instructions /> renders correctly 1`] = `
 <WithStyles(ForwardRef(Paper))
-  className="instructions-container"
+  className="instructions-container border"
 >
   <WithStyles(ForwardRef(Typography))
     className="pad-1"

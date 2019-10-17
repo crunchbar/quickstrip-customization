@@ -16,7 +16,7 @@ const Spacers: React.FC = () => {
   const [wideSpacer] = React.useState(newWideSpacer());
   const commonClassName = `${COMMON_ITEM_CLASS} ${SPACER_ITEM_CLASS}`;
   return (
-    <Paper id={SPACERS_ID} tabIndex={0} className="spacers vertical-space-1">
+    <Paper id={SPACERS_ID} tabIndex={0} className="spacers vertical-space-1 border">
       <Typography variant="h5" component="h1" className="pad-1">
         Spacers
       </Typography>

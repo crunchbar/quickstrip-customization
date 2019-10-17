@@ -3,7 +3,7 @@
 exports[`<MakeYourOwn /> renders correctly 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Paper))
-    className="myo vertical-space-1"
+    className="myo vertical-space-1 border"
     id="makeYourOwnBox"
     tabIndex={0}
   >
