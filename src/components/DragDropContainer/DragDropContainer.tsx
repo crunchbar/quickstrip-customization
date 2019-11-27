@@ -51,10 +51,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   allChoicesList: acl = [],
 }) => {
   const [cookies, setCookie] = useCookies([BUTTON_LIST]);
-  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b !== 'string') : []);
+  const [buttonListCookie] = React.useState(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && !b.startsWith('service-')) : []);
+  const [serviceButtonList] = React.useState(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-')) : []);
+  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>(buttonListCookie.filter((b: any) => typeof b !== 'string'));
   const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>([...acl, ...myobList.map(m => mYODataToListItem(m))]);
   const [holdingBoxList, setHoldingBoxList] = React.useState<ListItemInterface[]>([]);
-  const [checked, setChecked] = React.useState<string[]>(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].map((b: any) => typeof b === 'string' ? b : b.buttonName) : []);
+  const [checked, setChecked] = React.useState<string[]>(buttonListCookie.map((b: any) => typeof b === 'string' ? b : b.buttonName));
   const [
     quickstripList,
     setQuickstripList
@@ -275,10 +277,10 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   };
   const focusMenuItem = (el: any) => Boolean(anchorEl) && el && el.focus();
   const onSave = () => {
-    setCookie(BUTTON_LIST, quickstripList.map(item => {
+    setCookie(BUTTON_LIST, [...quickstripList.map(item => {
       const myob = myobList.find(m => m.buttonName === item.id);
       return myob ? myob : item.id;
-    }), COOKIE_OPTIONS);
+    }), ...serviceButtonList], COOKIE_OPTIONS);
     window.close();
   };
   const handleMakeYourOwnSubmit = (buttonData?: MYOButtonInterface) => {
