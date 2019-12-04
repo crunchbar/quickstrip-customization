@@ -1,6 +1,6 @@
 {
   "name": "quickstrip-customization",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.5.5",
