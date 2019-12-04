@@ -6,7 +6,7 @@ import {
   COMMON_ITEM_CLASS,
   QUICK_STRIP_ID,
   QUICK_STRIP_ITEM_CLASS,
-  THIN_SPACER_ID,
+  QUICKSTRIP_SPACER_ID,
 } from '../../constants/constants';
 import {getListStyle} from '../../utils/utils';
 import QuickstripItem from '../QuickstripItem/QuickstripItem';
@@ -81,9 +81,9 @@ const Quickstrip: React.FC<QuickstripProps> = ({
   };
   // make sure quickstrip can fit all items
   React.useEffect(() => {
-    const numOfThinSpacers = quickstripList.filter(i => i.id.includes(THIN_SPACER_ID)).length;
-    const numOfItems = (quickstripList.length - (showFinal ? 1 : 0) - numOfThinSpacers);
-    setWidth(610 + (numOfItems * 104) + (numOfThinSpacers * 24));
+    const numOfSpacers = quickstripList.filter(i => i.id.includes(QUICKSTRIP_SPACER_ID)).length;
+    const numOfItems = (quickstripList.length - (showFinal ? 1 : 0) - numOfSpacers);
+    setWidth(610 + (numOfItems * 104) + (numOfSpacers * 24));
   }, [quickstripList, showFinal]);
   return (
     <div className="quickstrip-wrapper">

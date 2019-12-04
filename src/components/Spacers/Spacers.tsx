@@ -5,15 +5,15 @@ import {
   COMMON_ITEM_CLASS,
   SPACERS_ID,
   SPACER_ITEM_CLASS,
-  THIN_SPACER_ID,
-  WIDE_SPACER_ID,
+  VISIBLE_SPACER_ID,
+  SPACER_ID,
 } from '../../constants/constants';
-import { newThinSpacer, newWideSpacer } from '../../utils/utils';
+import { newVisibleSpacer, newSpacer } from '../../utils/utils';
 import QuickstripItem from '../QuickstripItem/QuickstripItem';
 
 const Spacers: React.FC = () => {
-  const [thinSpacer] = React.useState(newThinSpacer());
-  const [wideSpacer] = React.useState(newWideSpacer());
+  const [visibleSpacer] = React.useState(newVisibleSpacer());
+  const [spacer] = React.useState(newSpacer());
   const commonClassName = `${COMMON_ITEM_CLASS} ${SPACER_ITEM_CLASS}`;
   return (
     <Paper id={SPACERS_ID} tabIndex={0} className="spacers vertical-space-1 border">
@@ -21,15 +21,16 @@ const Spacers: React.FC = () => {
         Spacers
       </Typography>
       <div className="spacer-container">
-        <Droppable droppableId={WIDE_SPACER_ID} isDropDisabled={true}>
+        <span>Spacer</span>
+        <Droppable droppableId={SPACER_ID} isDropDisabled={true}>
           {(provided) => (
             <div
-              id={WIDE_SPACER_ID}
+              id={SPACER_ID}
               ref={provided.innerRef}
               {...provided.droppableProps}>
               <QuickstripItem
                 className={commonClassName}
-                item={wideSpacer}
+                item={spacer}
                 index={0}
               />
               {provided.placeholder}
@@ -38,16 +39,16 @@ const Spacers: React.FC = () => {
         </Droppable>
       </div>
       <div className="spacer-container">
-        <span>Narrow Spacer</span>
-        <Droppable droppableId={THIN_SPACER_ID} isDropDisabled={true}>
+        <span>Visible Spacer</span>
+        <Droppable droppableId={VISIBLE_SPACER_ID} isDropDisabled={true}>
           {(provided) => (
             <div
-              id={THIN_SPACER_ID}
+              id={VISIBLE_SPACER_ID}
               ref={provided.innerRef}
               {...provided.droppableProps}>
               <QuickstripItem
                 className={commonClassName}
-                item={thinSpacer}
+                item={visibleSpacer}
                 index={0}
               />
               {provided.placeholder}

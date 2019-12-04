@@ -16,9 +16,12 @@ exports[`<Spacers /> renders correctly 1`] = `
   <div
     className="spacer-container"
   >
+    <span>
+      Spacer
+    </span>
     <Connect(Droppable)
       direction="vertical"
-      droppableId="wideSpacer"
+      droppableId="separator"
       getContainerForClone={[Function]}
       ignoreContainerClipping={false}
       isCombineEnabled={false}
@@ -34,11 +37,11 @@ exports[`<Spacers /> renders correctly 1`] = `
     className="spacer-container"
   >
     <span>
-      Narrow Spacer
+      Visible Spacer
     </span>
     <Connect(Droppable)
       direction="vertical"
-      droppableId="thinSpacer"
+      droppableId="separator-visible"
       getContainerForClone={[Function]}
       ignoreContainerClipping={false}
       isCombineEnabled={false}

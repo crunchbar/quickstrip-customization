@@ -5,7 +5,7 @@ import {ListItemInterface} from '../../interfaces';
 import ScaleText from 'react-scale-text';
 import {ALL_CHOICES_ID, GRID, IS_DRAGGING_CLASS} from '../../constants/constants';
 import Tooltip from '@material-ui/core/Tooltip';
-import {QUICKSTRIP_SPACER_ID, THIN_SPACER_ID} from '../../constants';
+import {QUICKSTRIP_SPACER_ID, VISIBLE_SPACER_ID} from '../../constants';
 
 export interface QuickstripItemProps extends React.HTMLProps<HTMLDivElement> {
   item: ListItemInterface;
@@ -49,7 +49,7 @@ const QuickstripItem: React.FC<QuickstripItemProps> = ({
   ...htmlDivProps
 }) => {
   const spacerClassName = item.id.includes(QUICKSTRIP_SPACER_ID) ? 'spacer-style' : '';
-  const thinSpacerClassName = item.id.includes(THIN_SPACER_ID) ? 'thin-spacer-style' : '';
+  const visibleSpacerClassName = item.id.includes(VISIBLE_SPACER_ID) ? 'visible-spacer-style' : '';
   const hasClassName = className ? className : '';
   const handleClick = (e: any) => {
     // if already active, act as a double click
@@ -87,7 +87,7 @@ const QuickstripItem: React.FC<QuickstripItemProps> = ({
                 style={getItemStyle(snapshot, provided)}
                 onClick={handleClick}
                 className={
-                  `${hasClassName} ${thinSpacerClassName} ${spacerClassName} ${snapshot.isDragging ? IS_DRAGGING_CLASS : ''}`
+                  `${hasClassName} ${visibleSpacerClassName} ${spacerClassName} ${snapshot.isDragging ? IS_DRAGGING_CLASS : ''}`
                 }
                 {...htmlDivProps}
               >

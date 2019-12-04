@@ -24,22 +24,18 @@
 .spacer-style {
   border: 1px dashed black;
   background-color: white !important;
-  color: black !important;
+  width: 16px !important;
+  min-width: 16px !important;
+  color: white !important;
+  padding: 0 !important;
 
-  &.thin-spacer-style {
-    width: 16px !important;
-    min-width: 16px !important;
-    color: white !important;
-    padding: 0 !important;
+  &.visible-spacer-style {
+    background-color: #a8a9ac !important;
+    color: #a8a9ac !important;
   }
+
   &.is-dragging {
     color: lightgreen !important;
     background-color: lightgreen !important;
-  }
-}
-
-.quickstrip-droppable {
-  .spacer-style {
-    color: white !important;
   }
 }

@@ -291,7 +291,7 @@ exports[`<App /> renders correctly 1`] = `
         className="app-header"
       >
         <ForwardRef(SvgLogo) />
-        v1.0.4
+        v1.1.0
       </header>
       <Instructions />
       <DragDropContainer
@@ -335,6 +335,12 @@ exports[`<App /> renders correctly 1`] = `
             },
             Object {
               "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "id": "snipping-tool",
+              "label": "Snipping Tool",
+              "learnMoreLink": "https://morphic.world/",
+            },
+            Object {
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
               "id": "office-simplification",
               "label": "Office Simplification",
               "learnMoreLink": "https://morphic.world/help/qsshelp#office-simplification",
@@ -347,9 +353,39 @@ exports[`<App /> renders correctly 1`] = `
             },
             Object {
               "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "id": "mouse",
+              "label": "Mouse",
+              "learnMoreLink": "https://morphic.world/help/qsshelp#mouse",
+            },
+            Object {
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
               "id": "read-aloud",
               "label": "Read Aloud",
               "learnMoreLink": "https://morphic.world/basics/learn-more-about-quickstrip#readaloud",
+            },
+            Object {
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "id": "url-google-drive",
+              "label": "Url Google Drive",
+              "learnMoreLink": "https://morphic.world/",
+            },
+            Object {
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "id": "url-one-drive",
+              "label": "Url One Drive",
+              "learnMoreLink": "https://morphic.world/",
+            },
+            Object {
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "id": "url-dropbox",
+              "label": "Url Dropbox",
+              "learnMoreLink": "https://morphic.world/",
+            },
+            Object {
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "id": "url-customize-qss",
+              "label": "Url Customize Qss",
+              "learnMoreLink": "https://morphic.world/",
             },
             Object {
               "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -367,54 +403,6 @@ exports[`<App /> renders correctly 1`] = `
               "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
               "id": "launch-documorph",
               "label": "Launch Documorph",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "separator",
-              "label": "Separator",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "separator-visible",
-              "label": "Separator Visible",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "service-more",
-              "label": "Service More",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "service-save",
-              "label": "Service Save",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "service-undo",
-              "label": "Service Undo",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "service-saved-settings",
-              "label": "Service Saved Settings",
-              "learnMoreLink": "https://morphic.world/basics/learn-more-about-quickstrip#mysavedsettings",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "service-reset-all",
-              "label": "Service Reset All",
-              "learnMoreLink": "https://morphic.world/",
-            },
-            Object {
-              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              "id": "service-close",
-              "label": "Service Close",
               "learnMoreLink": "https://morphic.world/",
             },
           ]

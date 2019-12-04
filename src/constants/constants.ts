@@ -22,8 +22,8 @@ export const OTHER = 'Other';
 export const QUICKSTRIP_SPACER_ID = 'quickStripSpacer';
 export const SPACERS_ID = 'spacers';
 export const SPACER_ITEM_CLASS = 'spacerItem';
-export const THIN_SPACER_ID = 'thinSpacer';
-export const WIDE_SPACER_ID = 'wideSpacer';
+export const VISIBLE_SPACER_ID = 'separator-visible';
+export const SPACER_ID = 'separator';
 export const MYOB_DIALOG_CLASS = 'myo-dialog';
 export const KEY_MODIFIERS = [
   'Control',

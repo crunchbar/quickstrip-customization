@@ -6,8 +6,8 @@ import {
   HOLDING_BOX_ID,
   MENU_EVENTS,
   QUICKSTRIP_SPACER_ID,
-  THIN_SPACER_ID,
-  WIDE_SPACER_ID,
+  VISIBLE_SPACER_ID,
+  SPACER_ID,
 } from '../constants';
 import {
   HoldingBoxState,
@@ -101,7 +101,7 @@ export const getListStyle = (isDraggingOver: boolean, bgColor?: string, dragBgCo
 });
 
 export const settingsToAllChoicesList = (settings: Setting[]): ListItemInterface[] =>
-  settings.filter(({id}) => id ? true : false).map(({
+  settings.filter(({id}) => id && (!id.startsWith('service-') && !id.startsWith('separator')) ? true : false).map(({
     id = '',
     learnMoreLink = 'https://morphic.world/',
   }) => ({
@@ -150,14 +150,14 @@ export function sanitizeUrl(url: string): string {
   return sanitizedUrl;
 }
 
-export const newWideSpacer = (): ListItemInterface => ({
-  description: 'Wide Spacer',
-  label: 'Wide Spacer',
-  id: `${QUICKSTRIP_SPACER_ID} ${WIDE_SPACER_ID} ${v4()}`,
+export const newSpacer = (): ListItemInterface => ({
+  description: 'Spacer',
+  label: 'Spacer',
+  id: `${QUICKSTRIP_SPACER_ID} ${SPACER_ID} ${v4()}`,
 });
 
-export const newThinSpacer = (): ListItemInterface => ({
-  description: 'Narrow Spacer',
-  label: 'Narrow Spacer',
-  id: `${QUICKSTRIP_SPACER_ID} ${THIN_SPACER_ID} ${v4()}`,
+export const newVisibleSpacer = (): ListItemInterface => ({
+  description: 'Visible Spacer',
+  label: 'Visible Spacer',
+  id: `${QUICKSTRIP_SPACER_ID} ${VISIBLE_SPACER_ID} ${v4()}`,
 });

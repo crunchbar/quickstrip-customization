@@ -14,8 +14,8 @@ import {
   MENU_EVENTS,
   QUICK_STRIP_ID,
   QUICKSTRIP_SPACER_ID,
-  THIN_SPACER_ID,
-  WIDE_SPACER_ID,
+  VISIBLE_SPACER_ID,
+  SPACER_ID,
 } from '../../constants';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -25,8 +25,8 @@ import {
   moveItem,
   mYODataToListItem,
   reorderItems,
-  newThinSpacer,
-  newWideSpacer,
+  newVisibleSpacer,
+  newSpacer,
 } from '../../utils/utils';
 import {
   focusFirstQuickStripItem,
@@ -61,15 +61,10 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     quickstripList,
     setQuickstripList
   ] = React.useState<ListItemInterface[]>(checked.map(c =>
-    allChoicesList.find(a => a.id === c) || (c.includes(WIDE_SPACER_ID) && ({
-      id: c,
-      label: 'Wide Spacer',
-      description: 'Wide Spacer',
-    })) || (c.includes(THIN_SPACER_ID) && ({
-      id: c,
-      label: 'Narrow Spacer',
-      description: 'Narrow Spacer',
-    })) || ({
+    allChoicesList.find(a => a.id === c)
+    || (c.includes(VISIBLE_SPACER_ID) && newVisibleSpacer())
+    || (c.includes(SPACER_ID) && newSpacer())
+    || ({
       id: c,
       label: startCase(c),
       description: 'Button Not Available Within Settings',
@@ -154,15 +149,15 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     if (!destination) {
       return;
     }
-    const newSpacer = source.droppableId === THIN_SPACER_ID
-      ? newThinSpacer()
-      : source.droppableId === WIDE_SPACER_ID
-      ? newWideSpacer()
+    const newSpacerItem = source.droppableId === VISIBLE_SPACER_ID
+      ? newVisibleSpacer()
+      : source.droppableId === SPACER_ID
+      ? newSpacer()
       : null;
     // add spacer to quickstrip
-    if (newSpacer) {
+    if (newSpacerItem) {
       const quickstripClone = Array.from(quickstripList);
-      quickstripClone.splice(destination.index, 0, newSpacer);
+      quickstripClone.splice(destination.index, 0, newSpacerItem);
       setQuickstripList(quickstripClone);
       return;
     }
@@ -279,7 +274,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const onSave = () => {
     setCookie(BUTTON_LIST, [...quickstripList.map(item => {
       const myob = myobList.find(m => m.buttonName === item.id);
-      return myob ? myob : item.id;
+      return myob ? myob : (item.id.includes(QUICKSTRIP_SPACER_ID) ? item.id.split(' ')[1] : item.id);
     }), ...serviceButtonList], COOKIE_OPTIONS);
     window.close();
   };

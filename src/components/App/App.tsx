@@ -33,7 +33,7 @@ const App: React.FC = () => {
         <Container maxWidth={false}>
           <header className="app-header">
             <Logo />
-            v1.0.4
+            v1.1.0
           </header>
           <Instructions />
           <DragDropContainer {...dragDropContainerProps} />
