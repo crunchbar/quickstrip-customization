@@ -1,5 +1,10 @@
 .all-choices-container {
   position: relative;
+
+  .switch-input {
+    opacity: 0;
+    position: absolute;
+  }
 }
 
 .all-choices-remove-wrapper {
@@ -31,12 +36,23 @@
 
 .all-choices-sort-button-container {
   padding: 1rem;
-  text-align: right;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
 }
 
 .all-choices-list-item {
   display: flex;
   padding: 2px 0;
+}
+
+.allChoicesListItem {
+  * {
+    pointer-events: none;
+  }
+  a {
+    pointer-events: auto;
+  }
 }
 
 .button-like {
@@ -49,6 +65,8 @@
   border-radius: 5px;
   background: rgb(11,41,86);
   color: rgb(255,255,255);
+  transform: scale(.75);
+  margin: -12px;
 }
 
 .secondary-text {
@@ -65,4 +83,20 @@
   .secondary-text {
     padding: 0 1rem;
   }
+}
+
+@keyframes flyUp {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(96px, -700px, 0);
+  }
+}
+
+.flyUp {
+  animation-name: flyUp;
+  animation-duration: 0.75s;
 }

@@ -1,18 +1,22 @@
 import * as React from 'react';
-import Paper from '@material-ui/core/Paper';
-import {makeStyles} from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+  Paper,
+  Switch,
+  Typography,
+} from '@material-ui/core';
 import ScaleText from 'react-scale-text';
-import Typography from '@material-ui/core/Typography';
 import {ListItemInterface} from '../../interfaces';
 import SearchBar from '../SearchBar/SearchBar';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 import {
   ALL_CHOICES_ID,
@@ -60,6 +64,7 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
   const [sortOrder, setSortOrder] = React.useState(ASCENDING);
   const [sortedList, setSortedList] = React.useState<ListItemInterface[]>([]);
   const [filteredList, setFilteredList] = React.useState<ListItemInterface[]>([]);
+  const [hideSelected, setHideSelected] = React.useState(false)
   const classes = useStyles();
   React.useEffect(() => {
     const orderFunction = sortOrder === ASCENDING
@@ -74,7 +79,7 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
   const toggleSortOrder = () => setSortOrder(
     prevState => prevState === ASCENDING ? DESCENDING : ASCENDING);
   return (
-    <Paper id={ALL_CHOICES_ID} tabIndex={0} className="all-choices-container vertical-space-1 border">
+    <Paper id={ALL_CHOICES_ID} tabIndex={0} className={`all-choices-container vertical-space-1 border${hideSelected ? ' hideSelected' : ''}`}>
       <Droppable droppableId={ALL_CHOICES_ID} isDropDisabled={isDropDisabled}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef}>
@@ -96,6 +101,22 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
               </Grid>
               <Grid item xs className={classes.mobileOrder}>
                 <div className="all-choices-sort-button-container">
+                  <FormControlLabel
+                    value="start"
+                    control={
+                      <Switch
+                        checked={hideSelected}
+                        onChange={e => setHideSelected(e.target.checked)}
+                        color="primary"
+                        inputProps={{
+                          'aria-label': 'Hide selected buttons primary checkbox',
+                          className: `${commonClassName} switch-input`,
+                        }}
+                      />
+                    }
+                    label="Hide selected buttons"
+                    labelPlacement="start"
+                  />
                   <Button
                     className={commonClassName}
                     variant="contained"
@@ -109,43 +130,74 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
               </Grid>
             </Grid>
             <List className={classes.root}>
-              {filteredList.map(({description, label, learnMoreLink, id}) => (
-                <ListItem className={commonClassName} key={id} role={undefined} dense button onClick={() => onToggle(id)}>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(id) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      color="primary"
+              {filteredList.map(({description, label, learnMoreLink, id}) => {
+                const isChecked = checked.indexOf(id) !== -1;
+                if (isChecked && hideSelected) {
+                  return <React.Fragment key={id} />;
+                }
+                return (
+                  <ListItem
+                    className={commonClassName}
+                    key={id}
+                    role={undefined}
+                    dense
+                    button
+                    onClick={e => {
+                      const t: any = e.nativeEvent!.target;
+                      if (!isChecked) {
+                        const buttonLikeEl = t.querySelector('.button-like');
+                        buttonLikeEl.classList.add('flyUp');
+                        setTimeout(() => {
+                          buttonLikeEl.classList.remove('flyUp');
+                          if (hideSelected) {
+                            onToggle(id);
+                          }
+                        }, hideSelected ? 200 : 750);
+                      }
+                      if (!hideSelected) {
+                        onToggle(id);
+                      }
+                      if (hideSelected && t.nextSibling) {
+                        t.nextSibling.focus();
+                      }
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={isChecked}
+                        tabIndex={-1}
+                        disableRipple
+                        color="primary"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <div className="all-choices-list-item">
+                          <div className="button-like">
+                            <ScaleText maxFontSize={16}>{label}</ScaleText>
+                          </div>
+                          <div className="secondary-text">
+                            {description}&nbsp;
+                            {learnMoreLink && (
+                              <Link
+                                href={learnMoreLink}
+                                variant="body2"
+                                target="_blank"
+                                rel="noopener"
+                                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                                onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
+                              >
+                                Learn More
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      }
                     />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <div className="all-choices-list-item">
-                        <div className="button-like">
-                          <ScaleText maxFontSize={16}>{label}</ScaleText>
-                        </div>
-                        <div className="secondary-text">
-                          {description}&nbsp;
-                          {learnMoreLink && (
-                            <Link
-                              href={learnMoreLink}
-                              variant="body2"
-                              target="_blank"
-                              rel="noopener"
-                              onClick={(e: React.MouseEvent) => e.stopPropagation()}
-                              onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
-                            >
-                              Learn More
-                            </Link>
-                          )}
-                        </div>
-                      </div>
-                    }
-                  />
-                </ListItem>
-              ))}
+                  </ListItem>
+                );
+              })}
             </List>
             <div className={`all-choices-remove-wrapper ${snapshot.isDraggingOver ? 'show' : ''}`}>
               {snapshot.isDraggingOver && (
