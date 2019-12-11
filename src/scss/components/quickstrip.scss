@@ -19,17 +19,18 @@
   &:after {
     content: "Drop Your Next Button Choice Here";
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 12px;
     border: 1px dashed black;
-    min-width: 96px;
-    min-height: 96px;
-    width: 96px;
-    height: 96px;
+    min-width: 72px;
+    min-height: 72px;
+    width: 72px;
+    height: 72px;
     text-align: center;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
   &.show-final {
     pointer-events: none;
@@ -46,27 +47,28 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  padding: 8px;
-  width: 320px;
-  height: 112px;
+  padding: 6px;
+  width: 240px;
+  height: 84px;
   overflow: hidden;
+  font-size: 12px;
   > div {
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-align: center;
     overflow: hidden;
-    width: 96px;
-    min-width: 96px;
-    height: 43px;
+    width: 72px;
+    min-width: 72px;
+    height: 31px;
     user-select: none;
-    padding: 16px;
-    margin: 0 8px 0 0;
+    padding: 12px;
+    margin: 0 6px 0 0;
     border-radius: 5px;
     background: rgb(63,94,130);
     color: rgb(255,255,255);
     &:first-child {
-      height: 96px;
+      height: 72px;
     }
     &:nth-child(even) {
       margin-bottom: 10px;
@@ -78,7 +80,7 @@
       background: rgb(177,189,205);
     }
     &.small-text {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 }

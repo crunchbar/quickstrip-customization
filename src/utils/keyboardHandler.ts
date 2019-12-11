@@ -94,7 +94,10 @@ const tabHandler = () => {
     }
   }
   // focus on element within main list
-  (document.getElementById(mainFocusList[mainFocusListIndex]) as HTMLElement).focus();
+  const el = document.getElementById(mainFocusList[mainFocusListIndex]) as HTMLElement;
+  if (el) {
+    el.focus();
+  }
 };
 
 const getCommonNodes = () => {
@@ -187,13 +190,19 @@ const keyHandlerMap: {[key:string]: Function} = {
 
 export function focusFirstQuickStripItem() {
   setTimeout(() => {
-    (document.querySelector(`.${QUICK_STRIP_ITEM_CLASS}`) as HTMLElement).focus();
+    const el = document.querySelector(`.${QUICK_STRIP_ITEM_CLASS}`) as HTMLElement;
+    if (el) {
+      el.focus();
+    }
   }, 100);
 }
 
 export function focusFirstHoldingBoxItem() {
   setTimeout(() => {
-    (document.querySelector(`#holdingBoxList0 .${HOLDING_BOX_ITEM_CLASS}`) as HTMLElement).focus();
+    const el = document.querySelector(`#holdingBoxList0 .${HOLDING_BOX_ITEM_CLASS}`) as HTMLElement;
+    if (el) {
+      el.focus();
+    }
   }, 100);
 }
 

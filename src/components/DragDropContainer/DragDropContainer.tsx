@@ -113,9 +113,9 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const chunkMultiplier = containerWidth > 600
     ? (containerWidth > 960 ? 20 : 16)
     : 9;
-  const itemsPerChunk = (containerWidth - (GRID * chunkMultiplier)) / (GRID * 12);
+  const itemsPerChunk = (containerWidth - (GRID * chunkMultiplier)) / (GRID * 13);
   let holdingBoxChunks = chunk(itemsPerChunk, holdingBoxList);
-  while (holdingBoxChunks.length < 2) {
+  while (holdingBoxChunks.length < 3) {
     holdingBoxChunks = [
       ...holdingBoxChunks,
       [],

@@ -4,6 +4,7 @@ import {ListItemInterface} from '../../interfaces';
 import Paper from '@material-ui/core/Paper';
 import {
   COMMON_ITEM_CLASS,
+  GRID,
   QUICK_STRIP_ID,
   QUICK_STRIP_ITEM_CLASS,
   QUICKSTRIP_SPACER_ID,
@@ -83,7 +84,7 @@ const Quickstrip: React.FC<QuickstripProps> = ({
   React.useEffect(() => {
     const numOfSpacers = quickstripList.filter(i => i.id.includes(QUICKSTRIP_SPACER_ID)).length;
     const numOfItems = (quickstripList.length - (showFinal ? 1 : 0) - numOfSpacers);
-    setWidth(610 + (numOfItems * 104) + (numOfSpacers * 24));
+    setWidth(501 + (numOfItems * (GRID * 13)) + (numOfSpacers * (GRID * 3)));
   }, [quickstripList, showFinal]);
   return (
     <div className="quickstrip-wrapper">
