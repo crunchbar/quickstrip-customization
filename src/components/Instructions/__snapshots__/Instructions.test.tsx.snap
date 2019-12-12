@@ -10,18 +10,17 @@ exports[`<Instructions /> renders correctly 1`] = `
     variant="h5"
   >
     Instructions
-    <WithStyles(ForwardRef(IconButton))
+    <WithStyles(ForwardRef(Button))
       aria-expanded={false}
       aria-label="show instructions"
-      className="expand"
       onClick={[Function]}
       size="small"
     >
-      <ExpandMoreIcon />
-    </WithStyles(ForwardRef(IconButton))>
-    <small>
+      <ExpandMoreIcon
+        className="expand"
+      />
       (Expand for full instructions)
-    </small>
+    </WithStyles(ForwardRef(Button))>
   </WithStyles(ForwardRef(Typography))>
   <WithStyles(ForwardRef(Collapse))
     in={false}

@@ -1,8 +1,8 @@
 import React from 'react';
 import {
+  Button,
   Collapse,
   Divider,
-  IconButton,
   Paper,
   Typography,
 } from '@material-ui/core';
@@ -17,16 +17,15 @@ const Instructions: React.FC<InstructionsProps> = () => {
     <Paper className="instructions-container border">
       <Typography variant="h5" component="h1" className="pad-1">
         Instructions
-        <IconButton
-          className={`expand${expanded ? ' open' : ''}`}
+        <Button
           onClick={toggleExpanded}
           aria-expanded={expanded}
-          aria-label="show instructions"
+          aria-label={`${expanded ? 'hide' : 'show'} instructions`}
           size="small"
         >
-          <ExpandMoreIcon />
-        </IconButton>
-        <small>(Expand for full instructions)</small>
+          <ExpandMoreIcon className={`expand${expanded ? ' open' : ''}`} />
+          (Expand for full instructions)
+        </Button>
       </Typography>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Divider />
