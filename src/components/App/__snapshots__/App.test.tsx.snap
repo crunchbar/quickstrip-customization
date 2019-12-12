@@ -291,7 +291,7 @@ exports[`<App /> renders correctly 1`] = `
         className="app-header"
       >
         <ForwardRef(SvgLogo) />
-        v1.4.0
+        v1.5.0
       </header>
       <Instructions />
       <DragDropContainer
