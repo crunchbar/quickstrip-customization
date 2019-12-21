@@ -12,6 +12,7 @@ import {
   GRID,
   HOLDING_BOX_ID,
   MENU_EVENTS,
+  MORE_PANEL_ID,
   QUICK_STRIP_ID,
   QUICKSTRIP_SPACER_ID,
   VISIBLE_SPACER_ID,
@@ -70,6 +71,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       description: 'Button Not Available Within Settings',
     })
   ));
+  const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[]>([])
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
@@ -133,6 +135,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const getList = (id: string): ListItemInterface[] => (
     id === QUICK_STRIP_ID
     ? quickstripList
+    : id === MORE_PANEL_ID
+    ? morePanelList
     : holdingBoxChunks[Number(id.split(HOLDING_BOX_ID).pop())]
   );
   const getUpdatedHBList = (
@@ -209,6 +213,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       }
       if (destination.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(result[destination.droppableId] || []);
+      }
+      if (source.droppableId === MORE_PANEL_ID) {
+        setMorePanelList(result[source.droppableId] || []);
+      }
+      if (destination.droppableId === MORE_PANEL_ID) {
+        setMorePanelList(result[destination.droppableId] || []);
       }
     }
   }
@@ -338,7 +348,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   return (
     <div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <Quickstrip {...{handleMenuOpen, onSave, quickstripList}} />
+        <Quickstrip {...{handleMenuOpen, morePanelList, onSave, quickstripList}} />
         <Grid container spacing={2}>
           <Grid item xs={7}>
             <HoldingBox {...{handleMenuOpen, holdingBoxChunks, isDropDisabled}} />

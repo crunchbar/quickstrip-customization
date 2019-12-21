@@ -8,6 +8,7 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
   >
     <Quickstrip
       handleMenuOpen={[Function]}
+      morePanelList={Array []}
       onSave={[Function]}
       quickstripList={Array []}
     />
@@ -23,6 +24,7 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
           handleMenuOpen={[Function]}
           holdingBoxChunks={
             Array [
+              Array [],
               Array [],
               Array [],
             ]

@@ -1,102 +1,107 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Quickstrip /> renders correctly 1`] = `
-<div
-  className="quickstrip-wrapper"
->
-  <WithStyles(ForwardRef(Paper))
-    className="quickstrip-container"
-    elevation={0}
-    id="quickstripList"
-    onKeyDown={[Function]}
-    square={true}
-    style={
-      Object {
-        "transform": "scale(1)",
-        "transformOrigin": "bottom right",
-        "width": 610,
-      }
-    }
-    tabIndex={0}
+<Fragment>
+  <div
+    className="quickstrip-wrapper"
   >
-    <div
-      className="logo pad-1"
+    <WithStyles(ForwardRef(Paper))
+      className="quickstrip-container"
+      elevation={0}
+      id="quickstripList"
+      onKeyDown={[Function]}
+      square={true}
+      style={
+        Object {
+          "transform": "scale(1)",
+          "transformOrigin": "bottom right",
+          "width": 610,
+        }
+      }
+      tabIndex={0}
     >
-      <ForwardRef(SvgQuickstripLogo) />
-    </div>
-    <Connect(Droppable)
-      direction="horizontal"
-      droppableId="quickstripList"
-      getContainerForClone={[Function]}
-      ignoreContainerClipping={false}
-      isCombineEnabled={false}
-      isDropDisabled={false}
-      mode="STANDARD"
-      type="DEFAULT"
-      whenDraggingClone={null}
-    >
-      <Component />
-    </Connect(Droppable)>
-    <div
-      className="quickstrip-more-btns"
-    >
-      <div>
-        MORE...
-        <br />
-        <br />
-        (& HELP)
+      <div
+        className="logo pad-1"
+      >
+        <ForwardRef(SvgQuickstripLogo) />
+      </div>
+      <Connect(Droppable)
+        direction="horizontal"
+        droppableId="quickstripList"
+        getContainerForClone={[Function]}
+        ignoreContainerClipping={false}
+        isCombineEnabled={false}
+        isDropDisabled={false}
+        mode="STANDARD"
+        type="DEFAULT"
+        whenDraggingClone={null}
+      >
+        <Component />
+      </Connect(Droppable)>
+      <div
+        className="quickstrip-more-btns"
+      >
+        <div
+          className="more-btn"
+          onClick={[Function]}
+        >
+          MORE...
+          <br />
+          <br />
+          (& HELP)
+        </div>
+        <div
+          className="save"
+        >
+          Save
+        </div>
+        <div>
+          Undo
+        </div>
+        <div
+          className="empty"
+        />
+        <div
+          className="small-text"
+        >
+          Reset to Standard
+        </div>
       </div>
       <div
-        className="save"
+        className="quikstrip-close-icon"
+      >
+        <CloseIcon />
+      </div>
+      <div
+        className="quickstrip-scale-handle"
+        onMouseMove={[Function]}
+        onTouchMove={[Function]}
+      >
+        <DragHandleIcon />
+      </div>
+    </WithStyles(ForwardRef(Paper))>
+    <div
+      className="quickstrip-absolute-items"
+    >
+      <WithStyles(ForwardRef(Button))
+        onClick={[Function]}
+        size="small"
+      >
+        Preview
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        onClick={[Function]}
+        size="small"
       >
         Save
-      </div>
-      <div>
-        Undo
-      </div>
-      <div
-        className="empty"
+      </WithStyles(ForwardRef(Button))>
+      <ZoomInIcon
+        onClick={[Function]}
       />
-      <div
-        className="small-text"
-      >
-        Reset to Standard
-      </div>
+      <ZoomOutIcon
+        onClick={[Function]}
+      />
     </div>
-    <div
-      className="quikstrip-close-icon"
-    >
-      <CloseIcon />
-    </div>
-    <div
-      className="quickstrip-scale-handle"
-      onMouseMove={[Function]}
-      onTouchMove={[Function]}
-    >
-      <DragHandleIcon />
-    </div>
-  </WithStyles(ForwardRef(Paper))>
-  <div
-    className="quickstrip-absolute-items"
-  >
-    <WithStyles(ForwardRef(Button))
-      onClick={[Function]}
-      size="small"
-    >
-      Preview
-    </WithStyles(ForwardRef(Button))>
-    <WithStyles(ForwardRef(Button))
-      onClick={[Function]}
-      size="small"
-    >
-      Save
-    </WithStyles(ForwardRef(Button))>
-    <ZoomInIcon
-      onClick={[Function]}
-    />
-    <ZoomOutIcon
-      onClick={[Function]}
-    />
   </div>
-</div>
+</Fragment>
 `;

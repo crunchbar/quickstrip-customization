@@ -1,11 +1,13 @@
 export const HOLDING_BOX_ID = 'holdingBoxList';
 export const MAKE_YOUR_OWN_ID = 'makeYourOwnBox';
+export const MORE_PANEL_ID = 'morePanel';
 export const QUICK_STRIP_ID = 'quickstripList';
 export const ALL_CHOICES_ID = 'allChoicesList';
 export const ALL_CHOICES_SEARCH_FIELD_ID = 'all-choices-search-field';
 export const COMMON_ITEM_CLASS = 'commonListItem';
 export const IS_DRAGGING_CLASS = 'is-dragging';
 export const HOLDING_BOX_ITEM_CLASS = 'holdingBoxListItem';
+export const MORE_PANEL_ITEM_CLASS = 'morePanelItem';
 export const QUICK_STRIP_ITEM_CLASS = 'quickstripListItem';
 export const ALL_CHOICES_ITEM_CLASS = 'allChoicesListItem';
 export const MAKE_YOUR_OWN_ITEM_CLASS = 'makeYourOwnItem';
