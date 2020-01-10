@@ -94,10 +94,12 @@ const MorePanel: React.FC<MorePanelProps> = ({
             </div>
           );
         })}
-        <Button onClick={onAddRow}>
-          <AddIcon fontSize="small" />
-          Add Row
-        </Button>
+        {editable && (
+          <Button onClick={onAddRow}>
+            <AddIcon fontSize="small" />
+            Add Row
+          </Button>
+        )}
       </div>
     )
     : null;
