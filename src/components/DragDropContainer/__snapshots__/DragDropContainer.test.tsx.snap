@@ -6,11 +6,132 @@ exports[`<DragDropContainer /> renders correctly 1`] = `
     onDragEnd={[Function]}
     onDragStart={[Function]}
   >
+    <MorePanel
+      editable={true}
+      isDropDisabled={false}
+      items={
+        Array [
+          Array [
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+          ],
+        ]
+      }
+      onAddRow={[Function]}
+      open={true}
+    />
     <Quickstrip
       handleMenuOpen={[Function]}
-      morePanelList={Array []}
+      morePanelList={
+        Array [
+          Array [
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+            Object {
+              "description": "",
+              "id": "",
+              "label": "",
+            },
+          ],
+        ]
+      }
+      morePanelOpen={true}
       onSave={[Function]}
       quickstripList={Array []}
+      showFinal={false}
+      toggleMorePanel={[Function]}
+      toggleShowFinal={[Function]}
     />
     <WithStyles(ForwardRef(Grid))
       container={true}

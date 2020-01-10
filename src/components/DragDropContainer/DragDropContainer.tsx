@@ -21,8 +21,11 @@ import {
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
   filterEventsByState,
+  generateMorePanelRow,
   getMenuItems,
+  getIndexes,
   getUpdatedHBChunks,
+  getUpdatedMorePanelList,
   moveItem,
   mYODataToListItem,
   reorderItems,
@@ -37,6 +40,7 @@ import Quickstrip from '../Quickstrip/Quickstrip';
 import HoldingBox from '../HoldingBox/HoldingBox';
 import AllChoicesList from '../AllChoicesList/AllChoicesList';
 import MakeYourOwn from '../MakeYourOwn/MakeYourOwn';
+import MorePanel from '../MorePanel/MorePanel';
 import Spacers from '../Spacers/Spacers';
 
 export interface DragDropContainerProps {
@@ -51,6 +55,9 @@ const menuItems: {[key: string]: string[]} = {
 const DragDropContainer: React.FC<DragDropContainerProps> = ({
   allChoicesList: acl = [],
 }) => {
+  const [showFinal, setShowFinal] = React.useState(false);
+  const [morePanelOpen, setMorePanelOpen] = React.useState(true);
+  const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[][]>([generateMorePanelRow()])
   const [cookies, setCookie] = useCookies([BUTTON_LIST]);
   const [buttonListCookie] = React.useState(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && !b.startsWith('service-')) : []);
   const [serviceButtonList] = React.useState(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-')) : []);
@@ -71,7 +78,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       description: 'Button Not Available Within Settings',
     })
   ));
-  const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[]>([])
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
@@ -99,6 +105,11 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       // remove from holding box and quickstrip
       setHoldingBoxList(prevHoldingBoxList => prevHoldingBoxList.filter(l => l.id !== id));
       setQuickstripList(prevQuickstripList => prevQuickstripList.filter(l => l.id !== id));
+      setMorePanelList(prevMorePanelList => prevMorePanelList.map(row => row.map(item => item.id !== id ? item : ({
+        description: '',
+        label: '',
+        id: '',
+      }))));
     }
     setChecked(prevChecked => {
       const currentIndex = prevChecked.indexOf(id);
@@ -135,8 +146,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const getList = (id: string): ListItemInterface[] => (
     id === QUICK_STRIP_ID
     ? quickstripList
-    : id === MORE_PANEL_ID
-    ? morePanelList
+    : id.includes(MORE_PANEL_ID)
+    ? morePanelList[Number(id.split('-')[1])]
     : holdingBoxChunks[Number(id.split(HOLDING_BOX_ID).pop())]
   );
   const getUpdatedHBList = (
@@ -153,6 +164,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     if (!destination) {
       return;
     }
+    const [srcRowIndex, srcItemIndex] = getIndexes(source.droppableId, source.index);
+    const [destRowIndex, destItemIndex] = getIndexes(destination.droppableId, destination.index);
     const newSpacerItem = source.droppableId === VISIBLE_SPACER_ID
       ? newVisibleSpacer()
       : source.droppableId === SPACER_ID
@@ -168,18 +181,23 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     // dropped on all choices (remove)
     if (destination.droppableId === ALL_CHOICES_ID) {
       const sourceList = getList(source.droppableId);
-      toggleChecked(sourceList[source.index].id);
+      toggleChecked(sourceList[srcItemIndex].id);
       return;
     }
     // dropped within same box therefore reorder
-    if (source.droppableId === destination.droppableId) {
+    if (
+      source.droppableId === destination.droppableId
+      || (srcRowIndex !== undefined && srcRowIndex === destRowIndex)
+    ) {
       const items = reorderItems(
         getList(source.droppableId),
-        source.index,
-        destination.index
+        srcItemIndex,
+        destItemIndex,
       );
       if (source.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(items || []);
+      } else if (source.droppableId.includes(MORE_PANEL_ID)) {
+        setMorePanelList(rows => rows.map((r, i) => i === srcRowIndex ? items : r));
       } else {
         setHoldingBoxList(getUpdatedHBList(source.droppableId, items));
       }
@@ -187,8 +205,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       const result = moveItem(
         getList(source.droppableId),
         getList(destination.droppableId),
-        source,
-        destination
+        {...source, index: srcItemIndex},
+        {...destination, index: destItemIndex},
       );
       let updatedHBChunks;
       if (source.droppableId.includes(HOLDING_BOX_ID)) {
@@ -208,17 +226,29 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       if (updatedHBChunks) {
         setHoldingBoxList(updatedHBChunks.flat());
       }
+      let updatedMorePanelList;
+      if (source.droppableId.includes(MORE_PANEL_ID)) {
+        updatedMorePanelList = getUpdatedMorePanelList(
+          morePanelList,
+          srcRowIndex!,
+          result[source.droppableId]
+        );
+      }
+      if (destination.droppableId.includes(MORE_PANEL_ID)) {
+        updatedMorePanelList = getUpdatedMorePanelList(
+          updatedMorePanelList || morePanelList,
+          destRowIndex!,
+          result[destination.droppableId]
+        );
+      }
+      if (updatedMorePanelList) {
+        setMorePanelList(updatedMorePanelList);
+      }
       if (source.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(result[source.droppableId] || []);
       }
       if (destination.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(result[destination.droppableId] || []);
-      }
-      if (source.droppableId === MORE_PANEL_ID) {
-        setMorePanelList(result[source.droppableId] || []);
-      }
-      if (destination.droppableId === MORE_PANEL_ID) {
-        setMorePanelList(result[destination.droppableId] || []);
       }
     }
   }
@@ -345,10 +375,31 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     handleMenuCloseClick();
     setMYOBData(myobList.find(d => d.buttonName === currentElDetails.item.id));
   };
+  const toggleMorePanel = () => setMorePanelOpen(prevState => !prevState);
+  const toggleShowFinal = () => setShowFinal(prevState => !prevState);
+  const addMorePanelRow = () => setMorePanelList(prevState => [...prevState, generateMorePanelRow()]);
   return (
     <div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <Quickstrip {...{handleMenuOpen, morePanelList, onSave, quickstripList}} />
+        <MorePanel
+          isDropDisabled={isDropDisabled}
+          onAddRow={addMorePanelRow}
+          open={morePanelOpen}
+          editable={!showFinal}
+          items={morePanelList}
+        />
+        <Quickstrip
+          {...{
+            handleMenuOpen,
+            morePanelList,
+            morePanelOpen,
+            toggleMorePanel,
+            onSave,
+            quickstripList,
+            showFinal,
+            toggleShowFinal,
+          }}
+        />
         <Grid container spacing={2}>
           <Grid item xs={7}>
             <HoldingBox {...{handleMenuOpen, holdingBoxChunks, isDropDisabled}} />

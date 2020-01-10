@@ -13,9 +13,9 @@ exports[`<AllChoicesList /> renders correctly 1`] = `
     ignoreContainerClipping={false}
     isCombineEnabled={false}
     isDropDisabled={false}
-    mode="STANDARD"
+    mode="standard"
+    renderClone={null}
     type="DEFAULT"
-    whenDraggingClone={null}
   >
     <Component />
   </Connect(Droppable)>

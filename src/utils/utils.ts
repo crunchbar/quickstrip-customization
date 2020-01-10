@@ -8,6 +8,7 @@ import {
   QUICKSTRIP_SPACER_ID,
   VISIBLE_SPACER_ID,
   SPACER_ID,
+  MORE_PANEL_ID,
 } from '../constants';
 import {
   HoldingBoxState,
@@ -50,8 +51,21 @@ export const moveItem = (
 ): HoldingBoxState => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
-  destClone.splice(droppableDestination.index, 0, removed);
+  let removed;
+  if (droppableSource.droppableId.includes(MORE_PANEL_ID)) {
+    removed = sourceClone.splice(droppableSource.index, 1, {
+      description: '',
+      label: '',
+      id: '',
+    })[0];
+  } else {
+    removed = sourceClone.splice(droppableSource.index, 1)[0];
+  }
+  destClone.splice(
+    droppableDestination.index,
+    droppableDestination.droppableId.includes(MORE_PANEL_ID) ? 1 : 0,
+    removed
+  );
   return {
     [droppableSource.droppableId]: sourceClone,
     [droppableDestination.droppableId]: destClone,
@@ -67,6 +81,27 @@ export const getUpdatedHBChunks = (
   ? (replacementChunk || [])
   : chunk
 ));
+
+export const getUpdatedMorePanelList = (
+  rows: ListItemInterface[][],
+  rowIndex: number,
+  replacementRow?: ListItemInterface[],
+): ListItemInterface[][] => rows.map((row, index) => (
+  rowIndex === index
+  ? (replacementRow || [])
+  : row
+));
+
+export const getIndexes = (droppableId: string, itemIndex: number): [number | undefined, number] => {
+  if (!droppableId.includes(MORE_PANEL_ID)) {
+    return [undefined, itemIndex];
+  }
+  const split = droppableId.split('-');
+  return [
+    Number(split[1]), // row index
+    Number(split[2]), // item index
+  ];
+};
 
 export const filterEventsByState = (
   events: string[],
@@ -161,3 +196,11 @@ export const newVisibleSpacer = (): ListItemInterface => ({
   label: 'Visible Spacer',
   id: `${QUICKSTRIP_SPACER_ID} ${VISIBLE_SPACER_ID} ${v4()}`,
 });
+
+export function generateMorePanelRow(): ListItemInterface[] {
+  return Array.from(Array(10).keys()).map(() => ({
+    description: '',
+    label: '',
+    id: '',
+  }));
+}

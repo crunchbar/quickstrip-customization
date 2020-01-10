@@ -26,9 +26,9 @@ exports[`<Spacers /> renders correctly 1`] = `
       ignoreContainerClipping={false}
       isCombineEnabled={false}
       isDropDisabled={true}
-      mode="STANDARD"
+      mode="standard"
+      renderClone={null}
       type="DEFAULT"
-      whenDraggingClone={null}
     >
       <Component />
     </Connect(Droppable)>
@@ -46,9 +46,9 @@ exports[`<Spacers /> renders correctly 1`] = `
       ignoreContainerClipping={false}
       isCombineEnabled={false}
       isDropDisabled={true}
-      mode="STANDARD"
+      mode="standard"
+      renderClone={null}
       type="DEFAULT"
-      whenDraggingClone={null}
     >
       <Component />
     </Connect(Droppable)>

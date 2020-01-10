@@ -14,7 +14,6 @@
   }
 }
 
-.more-panel-droppable,
 .quickstrip-droppable {
   flex: 1;
   &:after {
@@ -128,53 +127,5 @@
   button {
     vertical-align: top;
     padding: 2px 8px;
-  }
-}
-
-.more-panel {
-  min-height: 290px;
-  max-height: 400px;
-  width: 80%;
-  margin-left: auto;
-  margin-bottom: 27px;
-  border: 1px solid rgba(0, 0, 0, 0.87);
-  overflow-y: scroll;
-  padding: 5px;
-  .static-row {
-    display: flex;
-    flex-direction: row;
-    h3 {
-      margin: 5px 0;
-    }
-    .button {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-      padding: 8px;
-      border-radius: 5px;
-      background: #3f5e82;
-      color: white;
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-    > div {
-      flex: 1;
-      margin-left: 5px;
-    }
-    .tell-me-more-box {
-      background: rgb(242,242,242);
-      border: 1px solid rgba(0, 0, 0, 0.87);
-      margin-left: 0;
-      padding: 5px;
-      ul {
-        margin: 5px 0 10px 0;
-        padding-left: 30px;
-        li {
-          text-decoration: underline;
-          font-size: 14px;
-        }
-      }
-    }
   }
 }
