@@ -2,11 +2,16 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 5px;
-  justify-content: space-between;
+  margin-bottom: 11px;
   .more-panel-droppable {
-    width: 84px;
+    width: 72px;
+    height: 72px !important;
     position: relative;
+    padding: 0 !important;
+    margin-right: 6px;
+    &:last-child {
+      margin-right: 0;
+    }
     &:after {
       content: "";
       position: absolute;
@@ -40,7 +45,7 @@
 .more-panel {
   min-height: 290px;
   max-height: 400px;
-  width: 80%;
+  width: 786px;
   margin-left: auto;
   margin-bottom: 27px;
   border: 1px solid rgba(0, 0, 0, 0.87);
@@ -49,6 +54,7 @@
   .static-row {
     display: flex;
     flex-direction: row;
+    margin-bottom: 11px;
     h3 {
       margin: 5px 0;
     }

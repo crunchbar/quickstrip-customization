@@ -69,7 +69,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
                     key={index}
                     droppableId={droppableId}
                     direction="horizontal"
-                    isDropDisabled={isDropDisabled || !editable}>
+                    isDropDisabled={!!item.id || isDropDisabled || !editable}>
                     {(provided, snapshot) => (
                       <div
                         id={droppableId}
