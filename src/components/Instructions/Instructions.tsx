@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {COMMON_ITEM_CLASS, INSTRUCTIONS_ID, INSTRUCTIONS_ITEM_CLASS} from '../../constants'
 
 export interface InstructionsProps {}
 
@@ -14,7 +15,11 @@ const Instructions: React.FC<InstructionsProps> = () => {
   const [expanded, setExpanded] = React.useState(false);
   const toggleExpanded = () => setExpanded(prevState => !prevState);
   return (
-    <Paper className="instructions-container border">
+    <Paper
+      id={INSTRUCTIONS_ID}
+      tabIndex={0}
+      className="instructions-container border"
+    >
       <Typography variant="h5" component="h1" className="pad-1">
         Instructions
         <Button
@@ -22,6 +27,7 @@ const Instructions: React.FC<InstructionsProps> = () => {
           aria-expanded={expanded}
           aria-label={`${expanded ? 'hide' : 'show'} instructions`}
           size="small"
+          className={`${INSTRUCTIONS_ITEM_CLASS} ${COMMON_ITEM_CLASS}`}
         >
           <ExpandMoreIcon className={`expand${expanded ? ' open' : ''}`} />
           (Expand for full instructions)

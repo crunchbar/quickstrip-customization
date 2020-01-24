@@ -181,6 +181,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
             edge="end"
             aria-label="Close Customize Your Button Dialog"
             onClick={handleClose}
+            className={commonClassName}
           >
             <CloseIcon />
           </IconButton>

@@ -4,11 +4,15 @@ import {
   MAKE_YOUR_OWN_ID,
   QUICK_STRIP_ID,
   COMMON_ITEM_CLASS,
+  INSTRUCTIONS_ID,
+  INSTRUCTIONS_ITEM_CLASS,
   IS_DRAGGING_CLASS,
   CONFIRM_DIALOG_YES_BTN_ID,
   CONFIRM_DIALOG_NO_BTN_ID,
   HOLDING_BOX_ITEM_CLASS,
   MAKE_YOUR_OWN_ITEM_CLASS,
+  MORE_PANEL_ID,
+  MORE_PANEL_ITEM_CLASS,
   QUICK_STRIP_ITEM_CLASS,
   ALL_CHOICES_ITEM_CLASS,
   SPACERS_ID,
@@ -17,13 +21,26 @@ import {
 } from '../constants/constants';
 
 const mainFocusList = [
+  INSTRUCTIONS_ID,
+  MORE_PANEL_ID,
   QUICK_STRIP_ID,
   HOLDING_BOX_ID,
   SPACERS_ID,
   MAKE_YOUR_OWN_ID,
   ALL_CHOICES_ID,
 ];
+const itemClassNames = [
+  INSTRUCTIONS_ITEM_CLASS,
+  MORE_PANEL_ITEM_CLASS,
+  QUICK_STRIP_ITEM_CLASS,
+  HOLDING_BOX_ITEM_CLASS,
+  SPACER_ITEM_CLASS,
+  MAKE_YOUR_OWN_ITEM_CLASS,
+  ALL_CHOICES_ITEM_CLASS,
+];
 const previousChildElementIndex = [
+  -1, // INSTRUCTIONS_ID
+  -1, // MORE_PANEL_ID
   -1, // QUICK_STRIP_ID
   -1, // HOLDING_BOX_ID
   -1, // SPACERS_ID
@@ -37,42 +54,25 @@ const dialogBtns = [
 
 const focusedOnList = (list: string[]) => list.indexOf(document.activeElement!.id);
 
+const isDialogOpen = () => document.querySelector('.MuiDialog-root') ? true : false;
+
 const indexOfActiveElementWithin = (selector: string) =>
   Array.from(document.querySelectorAll(`.${selector}`)).indexOf(document.activeElement!);
 
 const getParentFocusIndex = () => {
-  const indexOfQuickStripItem = indexOfActiveElementWithin(QUICK_STRIP_ITEM_CLASS);
-  if (indexOfQuickStripItem > -1) {
-    previousChildElementIndex[0] = indexOfQuickStripItem;
-    return 0;
-  }
-  const indexOfHoldingBoxItem = indexOfActiveElementWithin(HOLDING_BOX_ITEM_CLASS);
-  if (indexOfHoldingBoxItem > -1) {
-    previousChildElementIndex[1] = indexOfHoldingBoxItem;
-    return 1;
-  }
-  const indexOfSpacerItem = indexOfActiveElementWithin(SPACER_ITEM_CLASS);
-  if (indexOfSpacerItem > -1) {
-    previousChildElementIndex[2] = indexOfSpacerItem;
-    return 2;
-  }
-  const indexOfMakeYourOwnItem = indexOfActiveElementWithin(MAKE_YOUR_OWN_ITEM_CLASS);
-  if (indexOfMakeYourOwnItem > -1) {
-    previousChildElementIndex[3] = indexOfMakeYourOwnItem;
-    return 3;
-  }
-  const indexOfAllChoicesItem = indexOfActiveElementWithin(ALL_CHOICES_ITEM_CLASS);
-  if (indexOfAllChoicesItem > -1) {
-    previousChildElementIndex[4] = indexOfAllChoicesItem;
-    return 4;
+  const numOfItems = itemClassNames.length;
+  let i = 0;
+  for (; i < numOfItems; i += 1) {
+    const indexOfItem = indexOfActiveElementWithin(itemClassNames[i]);
+    if (indexOfItem > -1) {
+      previousChildElementIndex[i] = indexOfItem;
+      return i;
+    }
   }
   return focusedOnList(mainFocusList);
 };
 
 const tabHandler = () => {
-  if (document.querySelector('.MuiDialog-root')) {
-    return;
-  }
   const currentDOMIndex = getParentFocusIndex();
   const mainFocusListIndex =
     // base tabbing logic
@@ -207,6 +207,19 @@ export function focusFirstHoldingBoxItem() {
 }
 
 export default function keyboardHandler(e: any) {
+  if (
+    document.querySelector('.is-dragging')
+    || (
+      isDialogOpen()
+      && (
+        e.key === 'ArrowLeft'
+        || e.key === 'ArrowRight'
+        || e.key === 'Tab'
+      )
+    )
+  ) {
+    return;
+  }
   if (keyHandlerMap[e.key]) {
     e.preventDefault();
     keyHandlerMap[e.key]();
