@@ -4,7 +4,6 @@ import {
   GRID,
   LABEL,
   HOLDING_BOX_ID,
-  MENU_EVENTS,
   QUICKSTRIP_SPACER_ID,
   VISIBLE_SPACER_ID,
   SPACER_ID,
@@ -36,7 +35,25 @@ export const getMenuItems = (menuEvents: {[key:string]: string}) => {
   return Object.entries(menuEvents).map(([key, value]) => value);
 }
 
-export const reorderItems = (list: ListItemInterface[], startIndex: number, endIndex: number) => {
+export const reorderItems = (
+  list: ListItemInterface[],
+  startIndex: number,
+  endIndex: number,
+  addEmpty?: boolean,
+) => {
+  if (addEmpty) {
+    const startItem = {...list[startIndex]};
+    const endItem = {...list[endIndex]};
+    return list.map((li, i) => {
+      if (i === startIndex) {
+        return endItem;
+      }
+      if (i === endIndex) {
+        return startItem;
+      }
+      return li;
+    });
+  }
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -49,10 +66,30 @@ export const moveItem = (
   droppableSource: any,
   droppableDestination: any,
 ): HoldingBoxState => {
+  const sourceIsMore = droppableSource.droppableId.includes(MORE_PANEL_ID);
+  const destIsMore = droppableDestination.droppableId.includes(MORE_PANEL_ID)
+  if (sourceIsMore && destIsMore) {
+    const sourceItem = {...source[droppableSource.index]};
+    const destItem = {...destination[droppableDestination.index]};
+    return {
+      [droppableSource.droppableId]: source.map((li, i) => {
+        if (i === droppableSource.index) {
+          return destItem;
+        }
+        return li;
+      }),
+      [droppableDestination.droppableId]: destination.map((li, i) => {
+        if (i === droppableDestination.index) {
+          return sourceItem;
+        }
+        return li;
+      }),
+    };
+  }
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
   let removed;
-  if (droppableSource.droppableId.includes(MORE_PANEL_ID)) {
+  if (sourceIsMore) {
     removed = sourceClone.splice(droppableSource.index, 1, {
       description: '',
       label: '',
@@ -92,7 +129,10 @@ export const getUpdatedMorePanelList = (
   : row
 ));
 
-export const getIndexes = (droppableId: string, itemIndex: number): [number | undefined, number] => {
+export const getIndexes = (droppableId: string, itemIndex: number, rowIndex?: number): [number | undefined, number] => {
+  if (typeof rowIndex === 'number') {
+    return [rowIndex, itemIndex];
+  }
   if (!droppableId.includes(MORE_PANEL_ID)) {
     return [undefined, itemIndex];
   }
@@ -107,20 +147,22 @@ export const filterEventsByState = (
   events: string[],
   listTotal: number,
   listItemIndex: number,
+  nextLabel: string,
+  prevLabel: string,
 ) => events.filter(label => {
   if (listTotal === 1) {
-    return label === MENU_EVENTS.QUICK_STRIP.MOVE_LEFT
-      || label === MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT
+    return label === prevLabel
+      || label === nextLabel
       ? false
       : true;
   }
   if (listItemIndex === 0) {
-    return label === MENU_EVENTS.QUICK_STRIP.MOVE_LEFT
+    return label === prevLabel
       ? false
       : true;
   }
   if (listItemIndex === (listTotal - 1)) {
-    return label === MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT
+    return label === nextLabel
       ? false
       : true;
   }
@@ -203,4 +245,10 @@ export function generateMorePanelRow(): ListItemInterface[] {
     label: '',
     id: '',
   }));
+}
+
+export function changeMoreIDRowIndex(droppableId: string, newIndex: number) {
+  return droppableId.split('-').map(
+    (v, i) => i === 1 ? newIndex : v
+  ).join('-');
 }

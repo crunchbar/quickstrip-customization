@@ -20,6 +20,7 @@ import {
 } from '../../constants';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
+  changeMoreIDRowIndex,
   filterEventsByState,
   generateMorePanelRow,
   getMenuItems,
@@ -50,6 +51,7 @@ export interface DragDropContainerProps {
 const menuItems: {[key: string]: string[]} = {
   [QUICK_STRIP_ID]: getMenuItems(MENU_EVENTS.QUICK_STRIP),
   [HOLDING_BOX_ID]: getMenuItems(MENU_EVENTS.HOLDING_BOX),
+  [MORE_PANEL_ID]: getMenuItems(MENU_EVENTS.MORE_PANEL),
 };
 
 const DragDropContainer: React.FC<DragDropContainerProps> = ({
@@ -90,6 +92,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const [isDropDisabled, setIsDropDisabled] = React.useState(false);
   const currentElIsSpacer = currentElDetails && currentElDetails.item.id.includes(QUICKSTRIP_SPACER_ID);
   const currentElIsMYOB = currentElDetails && myobList.some(d => d.buttonName === currentElDetails.item.id);
+  const currentElIsMoreItem = currentElDetails && currentElDetails.droppableId.includes(MORE_PANEL_ID);
   const [myobData, setMYOBData] = React.useState<MYOButtonInterface>();
   const toggleChecked = (id: string, choice?: ListItemInterface) => {
     // add to holding box
@@ -136,12 +139,27 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   }
   const currentMenuItems = currentElDetails.droppableId.includes(HOLDING_BOX_ID)
     ? menuItems[HOLDING_BOX_ID]
-    : filterEventsByState(
+    : currentElIsMoreItem
+    ? filterEventsByState(
+        filterEventsByState(
+        menuItems[MORE_PANEL_ID],
+        morePanelList[currentElDetails.rowIndex].length,
+        currentElDetails.index,
+        MENU_EVENTS.MORE_PANEL.MOVE_RIGHT,
+        MENU_EVENTS.MORE_PANEL.MOVE_LEFT,
+      ),
+      morePanelList.length,
+      currentElDetails.rowIndex,
+      MENU_EVENTS.MORE_PANEL.MOVE_DOWN,
+      MENU_EVENTS.MORE_PANEL.MOVE_UP,
+    ) : filterEventsByState(
       currentElIsSpacer
       ? [MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT, MENU_EVENTS.QUICK_STRIP.MOVE_LEFT]
       : menuItems[QUICK_STRIP_ID],
       quickstripList.length,
-      currentElDetails.index
+      currentElDetails.index,
+      MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT,
+      MENU_EVENTS.QUICK_STRIP.MOVE_LEFT,
     );
   const getList = (id: string): ListItemInterface[] => (
     id === QUICK_STRIP_ID
@@ -164,8 +182,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     if (!destination) {
       return;
     }
-    const [srcRowIndex, srcItemIndex] = getIndexes(source.droppableId, source.index);
-    const [destRowIndex, destItemIndex] = getIndexes(destination.droppableId, destination.index);
+    const [srcRowIndex, srcItemIndex] = getIndexes(source.droppableId, source.index, source.rowIndex);
+    const [destRowIndex, destItemIndex] = getIndexes(destination.droppableId, destination.index, destination.rowIndex);
     const newSpacerItem = source.droppableId === VISIBLE_SPACER_ID
       ? newVisibleSpacer()
       : source.droppableId === SPACER_ID
@@ -189,14 +207,16 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       source.droppableId === destination.droppableId
       || (srcRowIndex !== undefined && srcRowIndex === destRowIndex)
     ) {
+      const isFromMorePanel = source.droppableId.includes(MORE_PANEL_ID);
       const items = reorderItems(
         getList(source.droppableId),
         srcItemIndex,
         destItemIndex,
+        isFromMorePanel,
       );
       if (source.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(items || []);
-      } else if (source.droppableId.includes(MORE_PANEL_ID)) {
+      } else if (isFromMorePanel) {
         setMorePanelList(rows => rows.map((r, i) => i === srcRowIndex ? items : r));
       } else {
         setHoldingBoxList(getUpdatedHBList(source.droppableId, items));
@@ -253,12 +273,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     }
   }
   const handleMenuOpen = (event: any, currentElDetails: any) => {
-    event.preventDefault();
     if (
       event.type === 'contextmenu'
       || event.type === 'dblclick'
       || event.key === 'Enter'
     ) {
+      event.preventDefault();
       setCurrentElDetails(currentElDetails);
       setAnchorEl(event.currentTarget);
     }
@@ -271,6 +291,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     handleMenuCloseClick();
     const source = currentElDetails;
     switch(label) {
+      case MENU_EVENTS.MORE_PANEL.MOVE_TO_QUICK_STRIP:
       case MENU_EVENTS.HOLDING_BOX.MOVE_TO_QUICK_STRIP:
         handleDragEnd({ source, destination: {
           droppableId: QUICK_STRIP_ID,
@@ -278,10 +299,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         }});
         focusFirstQuickStripItem();
         break;
+      case MENU_EVENTS.MORE_PANEL.PUT_BACK_ALL_CHOICES:
       case MENU_EVENTS.QUICK_STRIP.PUT_BACK_ALL_CHOICES:
       case MENU_EVENTS.HOLDING_BOX.REMOVE_FROM_HOLDING_BOX:
         setConfirmDialogOpen(true);
         break;
+      case MENU_EVENTS.MORE_PANEL.MOVE_TO_HOLDING_BOX:
       case MENU_EVENTS.QUICK_STRIP.MOVE_TO_HOLDING_BOX:
         handleDragEnd({ source, destination: {
           droppableId: `${HOLDING_BOX_ID}${0}`,
@@ -289,16 +312,36 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         }});
         focusFirstHoldingBoxItem();
         break;
+      case MENU_EVENTS.MORE_PANEL.MOVE_RIGHT:
       case MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT:
         handleDragEnd({ source, destination: {
           ...source,
           index: source.index + 1,
         }});
         break;
+      case MENU_EVENTS.MORE_PANEL.MOVE_LEFT:
       case MENU_EVENTS.QUICK_STRIP.MOVE_LEFT:
         handleDragEnd({ source, destination: {
           ...source,
           index: source.index - 1,
+        }});
+        break;
+      case MENU_EVENTS.MORE_PANEL.MOVE_DOWN:
+        const nextRowIndex = source.rowIndex + 1;
+        const nextDID = changeMoreIDRowIndex(source.droppableId, nextRowIndex);
+        handleDragEnd({ source, destination: {
+          ...source,
+          rowIndex: nextRowIndex,
+          droppableId: nextDID,
+        }});
+        break;
+      case MENU_EVENTS.MORE_PANEL.MOVE_UP:
+        const prevRowIndex = source.rowIndex - 1;
+        const prevDID = changeMoreIDRowIndex(source.droppableId, prevRowIndex);
+        handleDragEnd({ source, destination: {
+          ...source,
+          rowIndex: prevRowIndex,
+          droppableId: prevDID,
         }});
         break;
       default:
@@ -387,6 +430,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
           open={morePanelOpen}
           editable={!showFinal}
           items={morePanelList}
+          handleMenuOpen={handleMenuOpen}
         />
         <Quickstrip
           {...{

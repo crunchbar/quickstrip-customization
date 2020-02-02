@@ -18,6 +18,7 @@ export interface MorePanelProps {
   open?: boolean;
   editable?: boolean;
   items?: ListItemInterface[][];
+  handleMenuOpen: (e: any, o: any) => void;
 }
 
 const MorePanel: React.FC<MorePanelProps> = ({
@@ -26,6 +27,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
   open = true,
   editable = true,
   items = [],
+  handleMenuOpen,
 }) => {
   return open
     ? (
@@ -64,6 +66,12 @@ const MorePanel: React.FC<MorePanelProps> = ({
             <div className="more-panel-row" key={rowIndex}>
               {row.map((item, index) => {
                 const droppableId = `${MORE_PANEL_ID}-${rowIndex}-${index}`;
+                const openMenu = (e: any) => handleMenuOpen(e, {
+                  droppableId,
+                  index,
+                  item,
+                  rowIndex,
+                });
                 return (
                   <Droppable
                     key={index}
@@ -83,6 +91,9 @@ const MorePanel: React.FC<MorePanelProps> = ({
                             key={item.id}
                             item={item}
                             index={index}
+                            onContextMenu={openMenu}
+                            onKeyPress={openMenu}
+                            onDoubleClick={openMenu}
                           />
                         )}
                         {provided.placeholder}
