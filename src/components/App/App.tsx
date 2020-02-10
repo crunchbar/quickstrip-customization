@@ -7,6 +7,7 @@ import {ReactComponent as Logo} from '../../assets/logo.svg';
 import Container from '@material-ui/core/Container';
 import DragDropContainer, {DragDropContainerProps} from '../DragDropContainer/DragDropContainer';
 import settings from '../../data/settings.json';
+import descriptionData from '../../data/gpii-app-qss-settings_en.json';
 import keyboardHandler from '../../utils/keyboardHandler';
 import {settingsToAllChoicesList} from '../../utils/utils';
 import Instructions from '../Instructions/Instructions';
@@ -25,7 +26,7 @@ const App: React.FC = () => {
     };
   });
   const dragDropContainerProps: DragDropContainerProps = {
-    allChoicesList: settingsToAllChoicesList(settings),
+    allChoicesList: settingsToAllChoicesList(settings, descriptionData),
   };
   return (
     <CookiesProvider>
@@ -33,7 +34,7 @@ const App: React.FC = () => {
         <Container maxWidth={false}>
           <header className="app-header">
             <Logo />
-            v2.2.0
+            v2.2.1
           </header>
           <Instructions />
           <DragDropContainer {...dragDropContainerProps} />

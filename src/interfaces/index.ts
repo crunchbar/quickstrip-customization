@@ -18,6 +18,13 @@ export interface Setting {
   [key: string]: any;
 }
 
+export interface Description {
+  [key: string]: {
+    title: string;
+    tooltip?: string;
+  };
+}
+
 export interface MYOButtonInterface {
   buttonId: string;
   buttonName: string;

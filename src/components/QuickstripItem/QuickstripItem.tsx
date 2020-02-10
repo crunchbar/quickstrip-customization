@@ -79,7 +79,7 @@ const QuickstripItem: React.FC<QuickstripItemProps> = ({
       {(provided, snapshot) => (
         <React.Fragment>
           {optionalPortal((
-            <Tooltip title={item.popupText || item.description}>
+            <Tooltip title={item.popupText || <div dangerouslySetInnerHTML={{__html: item.description}} />}>
               <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}

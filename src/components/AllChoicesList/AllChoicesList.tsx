@@ -178,7 +178,7 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
                             <ScaleText maxFontSize={16}>{label}</ScaleText>
                           </div>
                           <div className="secondary-text">
-                            {description}&nbsp;
+                            <div dangerouslySetInnerHTML={{__html: description}} />
                             {learnMoreLink && (
                               <Link
                                 href={learnMoreLink}

@@ -72,6 +72,16 @@
   padding: 1rem 3rem 1rem 1rem;
 }
 
+.secondary-text,
+.MuiTooltip-tooltip {
+  > div {
+    display: inline;
+    * {
+      margin: 0;
+    }
+  }
+}
+
 .all-choices-clear-filters-btn {
   text-align: center;
   padding: 1rem;

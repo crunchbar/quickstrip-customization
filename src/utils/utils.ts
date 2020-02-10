@@ -14,6 +14,7 @@ import {
   ListItemInterface,
   MYOButtonInterface,
   Setting,
+  Description,
 } from '../interfaces';
 import {deburr, includes, orderBy, startCase} from 'lodash/fp';
 import v4 from 'uuid/v4';
@@ -177,16 +178,22 @@ export const getListStyle = (isDraggingOver: boolean, bgColor?: string, dragBgCo
   height: GRID * 14,
 });
 
-export const settingsToAllChoicesList = (settings: Setting[]): ListItemInterface[] =>
-  settings.filter(({id}) => id && (!id.startsWith('service-') && !id.startsWith('separator')) ? true : false).map(({
+export const settingsToAllChoicesList = (settings: Setting[], descriptionData: Description): ListItemInterface[] => {
+  const descriptionKeys = Object.keys(descriptionData);
+  const returnData = settings.filter(({id}) => id && (!id.startsWith('service-') && !id.startsWith('separator')) ? true : false).map(({
     id = '',
     learnMoreLink = 'https://morphic.world/',
-  }) => ({
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    label: startCase(id),
-    learnMoreLink,
-    id,
-  }));
+  }) => {
+    const dKey = descriptionKeys.find(v => v.includes(id));
+    return {
+      description: (dKey && descriptionData[dKey].tooltip) || '<p>Description not available.</p>',
+      label: startCase(id),
+      learnMoreLink,
+      id,
+    };
+  });
+  return returnData;
+};
 
 export const mYODataToListItem = ({
   buttonName,
