@@ -15,6 +15,7 @@ export interface HoldingBoxState {
 export interface Setting {
   id?: string;
   learnMoreLink?: string;
+  messageKey?: string;
   [key: string]: any;
 }
 

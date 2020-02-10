@@ -178,22 +178,20 @@ export const getListStyle = (isDraggingOver: boolean, bgColor?: string, dragBgCo
   height: GRID * 14,
 });
 
-export const settingsToAllChoicesList = (settings: Setting[], descriptionData: Description): ListItemInterface[] => {
-  const descriptionKeys = Object.keys(descriptionData);
-  const returnData = settings.filter(({id}) => id && (!id.startsWith('service-') && !id.startsWith('separator')) ? true : false).map(({
+export const settingsToAllChoicesList = (settings: Setting[], descriptionData: Description): ListItemInterface[] =>
+  settings.filter(({id}) => id && (!id.startsWith('service-') && !id.startsWith('separator')) ? true : false).map(({
     id = '',
     learnMoreLink = 'https://morphic.world/',
+    messageKey,
   }) => {
-    const dKey = descriptionKeys.find(v => v.includes(id));
+    const d = descriptionData[`gpii_app_qss_settings_${messageKey}`];
     return {
-      description: (dKey && descriptionData[dKey].tooltip) || '<p>Description not available.</p>',
-      label: startCase(id),
+      description: d.tooltip || '<p>Description not available.</p>',
+      label: d.title || startCase(id),
       learnMoreLink,
       id,
     };
   });
-  return returnData;
-};
 
 export const mYODataToListItem = ({
   buttonName,
