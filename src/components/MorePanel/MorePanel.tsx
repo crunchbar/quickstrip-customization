@@ -51,17 +51,17 @@ const MorePanel: React.FC<MorePanelProps> = ({
           </div>
           <div>
             <h3>Things to try</h3>
-            <div className="button">Button 1</div>
-            <div className="button">Button 2</div>
-            <div className="button">Button 3</div>
-            <div className="button">Button 4</div>
+            <div className="button">Drag and Drop</div>
+            <div className="button">Right Click</div>
+            <div className="button">Search</div>
+            <div className="button">Zoom In and Out</div>
           </div>
           <div>
             <h3>Managing settings</h3>
-            <div className="button">Button 5</div>
-            <div className="button">Button 6</div>
-            <div className="button">Button 7</div>
-            <div className="button">Button 8</div>
+            <div className="button">Account</div>
+            <div className="button">Profile</div>
+            <div className="button">Privacy</div>
+            <div className="button">Organization</div>
           </div>
         </div>
         {items.map((row, rowIndex) => {
