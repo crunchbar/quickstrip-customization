@@ -1,4 +1,10 @@
+.quickstrip-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .quickstrip-container {
+  position: relative;
   display: flex;
   flex-direction: row;
   border: 5px solid rgb(11,41,86);
@@ -109,23 +115,5 @@
   svg {
     transform: rotate(-45deg) translateY(-4px);
     color: #405E81;
-  }
-}
-
-.quickstrip-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-}
-
-.quickstrip-absolute-items {
-  display: inline-block;
-  position: absolute;
-  right: 0;
-  top: -25px;
-  cursor: pointer;
-  button {
-    vertical-align: top;
-    padding: 2px 8px;
   }
 }

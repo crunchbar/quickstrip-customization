@@ -14,34 +14,26 @@ import QuickstripItem from '../QuickstripItem/QuickstripItem';
 import {ReactComponent as Logo} from '../../assets/quickstrip-logo.svg';
 import CloseIcon from '@material-ui/icons/Close';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
-import ZoomInIcon from '@material-ui/icons/ZoomIn';
-import ZoomOutIcon from '@material-ui/icons/ZoomOut';
-import Button from '@material-ui/core/Button';
 
 export interface QuickstripProps {
   handleMenuOpen: (e: any, o: any) => void;
-  onSave: () => void;
   quickstripList: ListItemInterface[];
   morePanelOpen?: boolean;
   toggleMorePanel?: () => void;
   showFinal?: boolean;
-  toggleShowFinal?: () => void;
+  setScaleFactor: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Quickstrip: React.FC<QuickstripProps> = ({
   handleMenuOpen,
-  onSave,
   quickstripList,
   morePanelOpen = false,
   toggleMorePanel = () => undefined,
   showFinal = false,
-  toggleShowFinal = () => undefined,
+  setScaleFactor,
 }) => {
   const quickStripRef = React.useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = React.useState(610);
-  const [scaleFactor, setScaleFactor] = React.useState(1);
-  const incrementScaleFactor = () => setScaleFactor(prevState => (prevState + 0.1) >= 1 ? 1 : (prevState + 0.1));
-  const decrementScaleFactor = () => setScaleFactor(prevState => (prevState - 0.1) <= 0.1 ? 0.1 : (prevState - 0.1));
   const calculateNextScaleFactor = (x: number, y: number) => {
     if (x === 0 && y === 0) {
       return;
@@ -78,21 +70,12 @@ const Quickstrip: React.FC<QuickstripProps> = ({
       lastY = clientY;
     };
   })();
-  const quickStripKeyMap: {
-    [key: string]: (e: any) => void
-  } = {
-    '+': incrementScaleFactor,
-    '-': decrementScaleFactor,
-    'π': toggleShowFinal,
-    'p': e => e.ctrlKey && e.altKey && toggleShowFinal(),
-  };
   // make sure quickstrip can fit all items
   React.useEffect(() => {
     const numOfSpacers = quickstripList.filter(i => i.id.includes(QUICKSTRIP_SPACER_ID)).length;
     const numOfItems = (quickstripList.length - (showFinal ? 1 : 0) - numOfSpacers);
     setWidth(501 + (numOfItems * (GRID * 13)) + (numOfSpacers * (GRID * 3)));
   }, [quickstripList, showFinal]);
-
   return (
     <div className="quickstrip-wrapper">
       <Paper
@@ -102,11 +85,8 @@ const Quickstrip: React.FC<QuickstripProps> = ({
         elevation={0}
         square={true}
         style={{
-          transform: `scale(${scaleFactor})`,
-          transformOrigin: 'bottom right',
           width,
         }}
-        onKeyDown={e => quickStripKeyMap[e.key] && quickStripKeyMap[e.key](e)}
       >
         <div className="logo pad-1">
           <Logo />
@@ -166,16 +146,6 @@ const Quickstrip: React.FC<QuickstripProps> = ({
           <DragHandleIcon />
         </div>
       </Paper>
-      <div className="quickstrip-absolute-items">
-        <Button size="small" onClick={toggleShowFinal}>
-          {showFinal ? 'Edit' : 'Preview'}
-        </Button>
-        <Button size="small" onClick={onSave}>
-          Save
-        </Button>
-        <ZoomInIcon onClick={incrementScaleFactor} />
-        <ZoomOutIcon onClick={decrementScaleFactor} />
-      </div>
     </div>
   );
 }

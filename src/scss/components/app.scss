@@ -4,3 +4,21 @@
     width: 200px;
   }
 }
+.quickstrip-more-container {
+  position: relative;
+}
+
+.quickstrip-more-absolute-items {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: -25px;
+  cursor: pointer;
+  button {
+    vertical-align: top;
+    padding: 2px 8px;
+  }
+  svg {
+    margin-top: -0.6rem;
+  }
+}

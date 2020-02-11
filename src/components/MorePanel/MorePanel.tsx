@@ -3,7 +3,6 @@ import {ListItemInterface} from '../../interfaces';
 import {Droppable} from 'react-beautiful-dnd';
 import {
   COMMON_ITEM_CLASS,
-  // GRID,
   MORE_PANEL_ID,
   MORE_PANEL_ITEM_CLASS,
 } from '../../constants/constants';
@@ -31,7 +30,11 @@ const MorePanel: React.FC<MorePanelProps> = ({
 }) => {
   return open
     ? (
-      <div id={MORE_PANEL_ID} tabIndex={0} className="more-panel">
+      <div
+        id={MORE_PANEL_ID}
+        tabIndex={0}
+        className="more-panel"
+      >
         <div className="static-row">
           <div className="tell-me-more-box">
             Tell me more about

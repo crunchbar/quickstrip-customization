@@ -4,7 +4,7 @@ import {DragDropContext, DragStart} from 'react-beautiful-dnd';
 import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
 import {chunk, startCase} from 'lodash/fp';
 import useWindowSize from '../../hooks/useWindowSize';
-import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
+import {Button, Grid, Link, Menu, MenuItem} from '@material-ui/core';
 import {
   ALL_CHOICES_ID,
   BUTTON_LIST,
@@ -43,6 +43,8 @@ import AllChoicesList from '../AllChoicesList/AllChoicesList';
 import MakeYourOwn from '../MakeYourOwn/MakeYourOwn';
 import MorePanel from '../MorePanel/MorePanel';
 import Spacers from '../Spacers/Spacers';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 export interface DragDropContainerProps {
   allChoicesList: ListItemInterface[];
@@ -57,6 +59,9 @@ const menuItems: {[key: string]: string[]} = {
 const DragDropContainer: React.FC<DragDropContainerProps> = ({
   allChoicesList: acl = [],
 }) => {
+  const [scaleFactor, setScaleFactor] = React.useState(1);
+  const incrementScaleFactor = () => setScaleFactor(prevState => (prevState + 0.1) >= 1 ? 1 : (prevState + 0.1));
+  const decrementScaleFactor = () => setScaleFactor(prevState => (prevState - 0.1) <= 0.1 ? 0.1 : (prevState - 0.1));
   const [showFinal, setShowFinal] = React.useState(false);
   const [morePanelOpen, setMorePanelOpen] = React.useState(true);
   const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[][]>([generateMorePanelRow()])
@@ -421,29 +426,61 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const toggleMorePanel = () => setMorePanelOpen(prevState => !prevState);
   const toggleShowFinal = () => setShowFinal(prevState => !prevState);
   const addMorePanelRow = () => setMorePanelList(prevState => [...prevState, generateMorePanelRow()]);
+  const quickStripKeyMap: {
+    [key: string]: (e: any) => void
+  } = {
+    '+': incrementScaleFactor,
+    '-': decrementScaleFactor,
+    'π': toggleShowFinal,
+    'p': e => e.ctrlKey && e.altKey && toggleShowFinal(),
+  };
   return (
     <div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <MorePanel
-          isDropDisabled={isDropDisabled}
-          onAddRow={addMorePanelRow}
-          open={morePanelOpen}
-          editable={!showFinal}
-          items={morePanelList}
-          handleMenuOpen={handleMenuOpen}
-        />
-        <Quickstrip
-          {...{
-            handleMenuOpen,
-            morePanelList,
-            morePanelOpen,
-            toggleMorePanel,
-            onSave,
-            quickstripList,
-            showFinal,
-            toggleShowFinal,
-          }}
-        />
+        <div className="quickstrip-more-container">
+          <div
+            style={{
+              transform: `scale(${scaleFactor})`,
+              transformOrigin: 'bottom right',
+            }}
+            onKeyDown={e => quickStripKeyMap[e.key] && quickStripKeyMap[e.key](e)}
+          >
+            <MorePanel
+              isDropDisabled={isDropDisabled}
+              onAddRow={addMorePanelRow}
+              open={morePanelOpen}
+              editable={!showFinal}
+              items={morePanelList}
+              handleMenuOpen={handleMenuOpen}
+            />
+            <Quickstrip
+              handleMenuOpen={handleMenuOpen}
+              morePanelOpen={morePanelOpen}
+              toggleMorePanel={toggleMorePanel}
+              quickstripList={quickstripList}
+              showFinal={showFinal}
+              setScaleFactor={setScaleFactor}
+            />
+          </div>
+          <div className="quickstrip-more-absolute-items">
+            <Button size="small" onClick={toggleShowFinal}>
+              {showFinal ? 'Edit' : 'Preview'}
+            </Button>
+            <Button size="small" onClick={onSave}>
+              Save and Exit
+            </Button>
+            <ZoomInIcon
+              onClick={incrementScaleFactor}
+              fontSize="large"
+              color={scaleFactor === 1 ? 'disabled' : undefined}
+            />
+            <ZoomOutIcon
+              onClick={decrementScaleFactor}
+              fontSize="large"
+              color={scaleFactor === 0.1 ? 'disabled' : undefined}
+            />
+          </div>
+        </div>
         <Grid container spacing={2}>
           <Grid item xs={7}>
             <HoldingBox {...{handleMenuOpen, holdingBoxChunks, isDropDisabled}} />
