@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
+  Chip,
   Button,
-  Checkbox,
   FormControlLabel,
   Grid,
   Link,
@@ -18,6 +18,7 @@ import ScaleText from 'react-scale-text';
 import {ListItemInterface} from '../../interfaces';
 import SearchBar from '../SearchBar/SearchBar';
 import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import {
   ALL_CHOICES_ID,
   ALL_CHOICES_ITEM_CLASS,
@@ -52,6 +53,9 @@ export interface AllChoicesListProps {
   checked: string[];
   onToggle: (id: string) => void;
   isDropDisabled?: boolean;
+  isInMorePanel: (id: string) => boolean;
+  isInQuickstripList: (id: string) => boolean;
+  isInHoldingBox: (id: string) => boolean;
 }
 
 const AllChoicesList: React.FC<AllChoicesListProps> = ({
@@ -59,6 +63,9 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
   checked,
   onToggle,
   isDropDisabled = false,
+  isInMorePanel,
+  isInQuickstripList,
+  isInHoldingBox,
 }) => {
   const [searchValue, setSearchValue] = React.useState('');
   const [sortOrder, setSortOrder] = React.useState(ASCENDING);
@@ -96,7 +103,7 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
               </Grid>
               <Grid item xs={12} sm={12} md>
                 <Typography align="center" variant="h5" component="h1" className="pad-1">
-                  All Choices List
+                  Morphic Button List
                 </Typography>
               </Grid>
               <Grid item xs className={classes.mobileOrder}>
@@ -135,49 +142,61 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
                 if (isChecked && hideSelected) {
                   return <React.Fragment key={id} />;
                 }
+                const handleClick = (e: any) => {
+                  const t: any = e.nativeEvent!.target.parentElement.parentElement;
+                  if (!isChecked) {
+                    const buttonLikeEl = t.querySelector('.button-like');
+                    buttonLikeEl.classList.add('flyUp');
+                    setTimeout(() => {
+                      buttonLikeEl.classList.remove('flyUp');
+                      if (hideSelected) {
+                        onToggle(id);
+                      }
+                    }, hideSelected ? 200 : 750);
+                  } else {
+                    return;
+                  }
+                  if (!hideSelected) {
+                    onToggle(id);
+                  }
+                  if (hideSelected && t.nextSibling) {
+                    t.nextSibling.focus();
+                  }
+                };
                 return (
                   <ListItem
                     className={commonClassName}
                     key={id}
                     role={undefined}
                     dense
-                    button
-                    onClick={e => {
-                      const t: any = e.nativeEvent!.target;
-                      if (!isChecked) {
-                        const buttonLikeEl = t.querySelector('.button-like');
-                        buttonLikeEl.classList.add('flyUp');
-                        setTimeout(() => {
-                          buttonLikeEl.classList.remove('flyUp');
-                          if (hideSelected) {
-                            onToggle(id);
-                          }
-                        }, hideSelected ? 200 : 750);
-                      }
-                      if (!hideSelected) {
-                        onToggle(id);
-                      }
-                      if (hideSelected && t.nextSibling) {
-                        t.nextSibling.focus();
-                      }
-                    }}
                   >
                     <ListItemIcon>
-                      <Checkbox
-                        edge="start"
-                        checked={isChecked}
-                        tabIndex={-1}
-                        disableRipple
-                        color="primary"
-                      />
+                      {isChecked ? <div className="add-spacer" /> : (
+                        <Button
+                          className="add-button"
+                          onClick={handleClick}
+                          startIcon={<ArrowUpwardIcon />}
+                          variant="outlined"
+                          size="small"
+                        >
+                          Add to My Choices
+                        </Button>
+                      )}
                     </ListItemIcon>
                     <ListItemText
                       primary={
                         <div className="all-choices-list-item">
-                          <div className="button-like">
+                          <div
+                            className="button-like"
+                            onClick={handleClick}
+                            style={{cursor: isChecked ? 'auto': 'pointer'}}
+                          >
                             <ScaleText maxFontSize={16}>{label}</ScaleText>
                           </div>
                           <div className="secondary-text">
+                            {isInHoldingBox(id) && <Chip label="In My Choices" className="my-choices-chip" size="small" />}
+                            {isInQuickstripList(id) && <Chip label="In QuickStrip" className="quickstrip-chip" size="small" />}
+                            {isInMorePanel(id) && <Chip label="In More Panel" className="more-panel-chip" size="small" />}
                             <div dangerouslySetInnerHTML={{__html: description}} />
                             {learnMoreLink && (
                               <Link

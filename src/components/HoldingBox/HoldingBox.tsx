@@ -4,6 +4,7 @@ import {ListItemInterface} from '../../interfaces';
 import {Paper, Typography} from '@material-ui/core';
 import {some} from 'lodash/fp';
 import {
+  ALL_CHOICES_ID,
   COMMON_ITEM_CLASS,
   HOLDING_BOX_ID,
   HOLDING_BOX_ITEM_CLASS,
@@ -15,12 +16,14 @@ export interface HoldingBoxProps {
   holdingBoxChunks: ListItemInterface[][];
   handleMenuOpen: (e: any, o: any) => void;
   isDropDisabled?: boolean;
+  holdingBoxHasItems: boolean;
 }
 
 const HoldingBox: React.FC<HoldingBoxProps> = ({
   holdingBoxChunks,
   handleMenuOpen,
   isDropDisabled = false,
+  holdingBoxHasItems,
 }) => {
   const [
     holdingBoxDragMap,
@@ -32,6 +35,11 @@ const HoldingBox: React.FC<HoldingBoxProps> = ({
       <Typography variant="h5" component="h1" className="pad-1">
         My Choices
       </Typography>
+      {!holdingBoxHasItems && (
+        <div className="holding-add-button-text">
+          Add buttons from the <a href={`#${ALL_CHOICES_ID}`}>Morphic Button Catalog</a> below.
+        </div>
+      )}
       {holdingBoxChunks.map((chunk, chunkIndex) => {
         const droppableId = `${HOLDING_BOX_ID}${chunkIndex}`;
         return (

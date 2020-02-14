@@ -404,10 +404,10 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       return;
     }
     setMYOBList(prevState => [...prevState, buttonData]);
-    setAllChoicesList(prevState => ([
-      listItem,
-      ...prevState,
-    ]));
+    // setAllChoicesList(prevState => ([
+    //   listItem,
+    //   ...prevState,
+    // ]));
     toggleChecked(listItem.id, listItem);
     focusFirstHoldingBoxItem();
   };
@@ -434,6 +434,10 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     'π': toggleShowFinal,
     'p': e => e.ctrlKey && e.altKey && toggleShowFinal(),
   };
+  const isInMorePanel = (id:string) => morePanelList.some(list => list.some(item => item.id === id));
+  const isInHoldingBox = (id:string) => holdingBoxList.some(item => item.id === id);
+  const isInQuickstripList = (id:string) => quickstripList.some(item => item.id === id);
+  const holdingBoxHasItems = holdingBoxList.length > 0;
   return (
     <div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -483,7 +487,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
         </div>
         <Grid container spacing={2}>
           <Grid item xs={7}>
-            <HoldingBox {...{handleMenuOpen, holdingBoxChunks, isDropDisabled}} />
+            <HoldingBox {...{holdingBoxHasItems, handleMenuOpen, holdingBoxChunks, isDropDisabled}} />
           </Grid>
           <Grid item xs={2}>
             <Spacers />
@@ -496,7 +500,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
             />
           </Grid>
         </Grid>
-        <AllChoicesList {...{checked, isDropDisabled, list: allChoicesList, onToggle: toggleChecked}} />
+        <AllChoicesList {...{checked, isInHoldingBox, isInQuickstripList, isInMorePanel, isDropDisabled, list: allChoicesList, onToggle: toggleChecked}} />
       </DragDropContext>
       <Menu
         id="quickstrip-item-menu"
