@@ -40,6 +40,10 @@ const HoldingBox: React.FC<HoldingBoxProps> = ({
           Add buttons from the <a href={`#${ALL_CHOICES_ID}`}>Morphic Button Catalog</a> below.
         </div>
       )}
+      {/* <div className="holding-move-to-quickstrip-text">
+        Drag buttons from here to the More Panel or QuickStrip (above).<br /><br />
+        (All actions can also be done from keyboard and using right-click.)
+      </div> */}
       {holdingBoxChunks.map((chunk, chunkIndex) => {
         const droppableId = `${HOLDING_BOX_ID}${chunkIndex}`;
         return (

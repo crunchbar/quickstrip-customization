@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Fillr';
+  src: url('../assets/fillr.ttf')  format('truetype'),
+       url('../assets/fillr.otf') format('opentype');
+}
+
 * {
   box-sizing: border-box;
 }

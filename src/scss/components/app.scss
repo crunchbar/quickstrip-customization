@@ -17,8 +17,20 @@
   button {
     vertical-align: top;
     padding: 2px 8px;
+    margin-right: 5px;
   }
   svg {
     margin-top: -0.6rem;
+  }
+}
+
+.save-and-exit-button-container {
+  display: inline-block;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  button {
+    color: #0b2956;
+    border-color: #0b2956;
   }
 }

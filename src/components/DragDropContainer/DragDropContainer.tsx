@@ -470,9 +470,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
             <Button size="small" onClick={toggleShowFinal}>
               {showFinal ? 'Edit' : 'Preview'}
             </Button>
-            <Button size="small" onClick={onSave}>
-              Save and Exit
-            </Button>
             <ZoomInIcon
               onClick={incrementScaleFactor}
               fontSize="large"
@@ -483,6 +480,11 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
               fontSize="large"
               color={scaleFactor === 0.1 ? 'disabled' : undefined}
             />
+          </div>
+          <div className="save-and-exit-button-container">
+            <Button variant="outlined" size="large" onClick={onSave}>
+              Save and Exit
+            </Button>
           </div>
         </div>
         <Grid container spacing={2}>
