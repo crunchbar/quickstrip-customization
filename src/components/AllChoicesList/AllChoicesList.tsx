@@ -97,13 +97,13 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
                   className="pad-1"
                   inputClassName={commonClassName}
                   label="Filter"
-                  placeholder="Search for choices"
+                  placeholder="Search for Buttons"
                   value={searchValue}
                   onChange={setSearchValue} />
               </Grid>
               <Grid item xs={12} sm={12} md>
                 <Typography align="center" variant="h5" component="h1" className="pad-1">
-                  Morphic Button List
+                  Morphic Button Catalog
                 </Typography>
               </Grid>
               <Grid item xs className={classes.mobileOrder}>
