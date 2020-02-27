@@ -43,6 +43,7 @@ import AllChoicesList from '../AllChoicesList/AllChoicesList';
 import MakeYourOwn from '../MakeYourOwn/MakeYourOwn';
 import MorePanel from '../MorePanel/MorePanel';
 import Spacers from '../Spacers/Spacers';
+import Save from '../Save/Save';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
@@ -488,11 +489,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
               color={scaleFactor === 0.1 ? 'disabled' : undefined}
             />
           </div>
-          <div className="save-and-exit-button-container">
-            <Button variant="outlined" size="large" onClick={onSave}>
-              Save and Exit
-            </Button>
-          </div>
+          <Save onSave={onSave} />
         </div>
         <Grid container spacing={2}>
           <Grid item xs={7}>

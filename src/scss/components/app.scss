@@ -23,37 +23,3 @@
     margin-top: -0.6rem;
   }
 }
-
-.save-and-exit-button-container {
-  display: inline-block;
-  position: absolute;
-  left: 100px;
-  top: 100px;
-  button {
-    color: #FFF;
-    border-color: #0b2956;
-    background-color: #0b2956 !important;
-  }
-}
-
-@media screen and (max-width: 1170px) {
-  .save-and-exit-button-container {
-    left: 50px;
-  }
-}
-
-@media screen and (max-width: 1070px) {
-  .save-and-exit-button-container {
-    left: 10px;
-  }
-}
-
-@media screen and (max-width: 1020px) {
-  .save-and-exit-button-container {
-    top: -45px;
-    left: 0;
-  }
-  #instructionsId {
-    margin-bottom: 4rem;
-  }
-}

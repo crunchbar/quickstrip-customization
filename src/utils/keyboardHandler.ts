@@ -17,11 +17,14 @@ import {
   ALL_CHOICES_ITEM_CLASS,
   SPACERS_ID,
   SPACER_ITEM_CLASS,
+  SAVE_ID,
+  SAVE_ITEM_CLASS,
   MYOB_DIALOG_CLASS,
 } from '../constants/constants';
 
 const mainFocusList = [
   INSTRUCTIONS_ID,
+  SAVE_ID,
   MORE_PANEL_ID,
   QUICK_STRIP_ID,
   HOLDING_BOX_ID,
@@ -31,6 +34,7 @@ const mainFocusList = [
 ];
 const itemClassNames = [
   INSTRUCTIONS_ITEM_CLASS,
+  SAVE_ITEM_CLASS,
   MORE_PANEL_ITEM_CLASS,
   QUICK_STRIP_ITEM_CLASS,
   HOLDING_BOX_ITEM_CLASS,
@@ -40,6 +44,7 @@ const itemClassNames = [
 ];
 const previousChildElementIndex = [
   -1, // INSTRUCTIONS_ID
+  -1, // SAVE_ID
   -1, // MORE_PANEL_ID
   -1, // QUICK_STRIP_ID
   -1, // HOLDING_BOX_ID
