@@ -20,8 +20,8 @@ const Save: React.FC<ISave> = ({onSave}) => {
       <iframe
         tabIndex={0}
         title="Video: Getting Started"
-        width="360"
-        height="202"
+        width="320"
+        height="180"
         src="https://www.youtube.com/embed/P_u10xGejlg"
         frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
@@ -31,7 +31,6 @@ const Save: React.FC<ISave> = ({onSave}) => {
       <Button
         className={commonClassName}
         variant="outlined"
-        size="large"
         onClick={onSave}
       >
         Save and Exit

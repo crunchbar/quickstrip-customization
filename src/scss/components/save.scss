@@ -3,33 +3,35 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 400px;
-  height: 400px;
+  width: 348px;
+  height: 348px;
   text-align: center;
   margin: 0;
   button {
     color: #FFF;
     border-color: #0b2956;
     background-color: #0b2956 !important;
-    margin: .5rem auto 1rem;
+    margin: 20px auto 0;
   }
   h1 {
     background: white;
+    padding: 10px;
   }
   iframe {
     margin-top: 1rem;
   }
   p {
     text-align: left;
-    padding-left: 20px;
+    padding-left: 10px;
+    margin: 10px 0 0;
   }
 }
 
-@media screen and (max-width: 1240px) {
+@media screen and (max-width: 1188px) {
   #save {
-    top: -440px;
+    top: -388px;
   }
   #instructionsId {
-    margin-bottom: calc(1rem + 440px);
+    margin-bottom: calc(1rem + 388px);
   }
 }
