@@ -169,6 +169,13 @@ const AllChoicesList: React.FC<AllChoicesListProps> = ({
                     key={id}
                     role={undefined}
                     dense
+                    tabIndex={0}
+                    onKeyPress={e => {
+                      if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        handleClick(e);
+                      }
+                    }}
                   >
                     <ListItemIcon>
                       {isChecked ? <div className="add-spacer" /> : (

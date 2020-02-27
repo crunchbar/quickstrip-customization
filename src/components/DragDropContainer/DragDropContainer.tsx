@@ -183,6 +183,13 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   ).flat();
   const handleDragEnd = (result: any) => {
     const { source, destination } = result;
+    if (
+      !destination
+      && source.droppableId === QUICK_STRIP_ID
+      && quickstripList[source.index].id.includes(SPACER_ID)
+    ) {
+      setQuickstripList(prevState => prevState.filter((f, i) => i !== source.index))
+    }
     // dropped outside the list
     if (!destination) {
       return;

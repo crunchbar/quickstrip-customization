@@ -58,6 +58,13 @@
   padding: 2px 0;
 }
 
+.allChoicesListItem {
+  &:focus {
+    outline: 0;
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
 .button-like {
   text-align: center;
   overflow: hidden;
