@@ -64,15 +64,32 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const incrementScaleFactor = () => setScaleFactor(prevState => (prevState + 0.1) >= 1 ? 1 : (prevState + 0.1));
   const decrementScaleFactor = () => setScaleFactor(prevState => (prevState - 0.1) <= 0.1 ? 0.1 : (prevState - 0.1));
   const [showFinal, setShowFinal] = React.useState(false);
-  const [morePanelOpen, setMorePanelOpen] = React.useState(true);
+  const [
+    morePanelOpen,
+    // setMorePanelOpen
+  ] = React.useState(true);
   const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[][]>([generateMorePanelRow()])
   const [cookies, setCookie] = useCookies([BUTTON_LIST]);
-  const [buttonListCookie] = React.useState(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && !b.startsWith('service-')) : []);
-  const [serviceButtonList] = React.useState(cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-')) : []);
-  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>(buttonListCookie.filter((b: any) => typeof b !== 'string'));
-  const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>([...acl, ...myobList.map(m => mYODataToListItem(m))]);
+  const [buttonListCookie] = React.useState(
+    cookies[BUTTON_LIST]
+    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' ? !b.startsWith('service-') : true)
+    : []
+  );
+  const [serviceButtonList] = React.useState(
+    cookies[BUTTON_LIST]
+    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-'))
+    : []
+  );
+  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>(
+    buttonListCookie.filter((b: any) => typeof b !== 'string')
+  );
+  const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>(
+    [...acl, ...myobList.map(m => mYODataToListItem(m))]
+  );
   const [holdingBoxList, setHoldingBoxList] = React.useState<ListItemInterface[]>([]);
-  const [checked, setChecked] = React.useState<string[]>(buttonListCookie.map((b: any) => typeof b === 'string' ? b : b.buttonName));
+  const [checked, setChecked] = React.useState<string[]>(
+    buttonListCookie.map((b: any) => typeof b === 'string' ? b : b.buttonName)
+  );
   const [
     quickstripList,
     setQuickstripList
@@ -431,7 +448,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     handleMenuCloseClick();
     setMYOBData(myobList.find(d => d.buttonName === currentElDetails.item.id));
   };
-  const toggleMorePanel = () => setMorePanelOpen(prevState => !prevState);
+  // const toggleMorePanel = () => setMorePanelOpen(prevState => !prevState);
   const toggleShowFinal = () => setShowFinal(prevState => !prevState);
   const addMorePanelRow = () => setMorePanelList(prevState => [...prevState, generateMorePanelRow()]);
   const quickStripKeyMap: {
@@ -468,7 +485,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
             <Quickstrip
               handleMenuOpen={handleMenuOpen}
               morePanelOpen={morePanelOpen}
-              toggleMorePanel={toggleMorePanel}
+              // toggleMorePanel={toggleMorePanel}
               quickstripList={quickstripList}
               showFinal={showFinal}
               setScaleFactor={setScaleFactor}
