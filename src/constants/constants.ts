@@ -38,7 +38,9 @@ export const KEY_MODIFIERS = [
   'Shift',
 ];
 export const BUTTON_LIST = 'buttonList';
+export const MORE_PANEL_LIST = 'morePanelList';
+export const MY_CHOICES_LIST = 'myChoicesList';
 export const COOKIE_OPTIONS = {
-  domain: window.location.hostname === 'localhost' ? 'localhost' : '.morphic.xyz',
+  domain: window.location.hostname === 'localhost' ? 'localhost' : '.morphic.org',
   path: '/',
 };

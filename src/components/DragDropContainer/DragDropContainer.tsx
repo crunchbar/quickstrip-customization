@@ -8,6 +8,8 @@ import {Button, Grid, Link, Menu, MenuItem} from '@material-ui/core';
 import {
   ALL_CHOICES_ID,
   BUTTON_LIST,
+  MORE_PANEL_LIST,
+  MY_CHOICES_LIST,
   COOKIE_OPTIONS,
   GRID,
   HOLDING_BOX_ID,
@@ -60,6 +62,14 @@ const menuItems: {[key: string]: string[]} = {
 const DragDropContainer: React.FC<DragDropContainerProps> = ({
   allChoicesList: acl = [],
 }) => {
+  const [cookies, setCookie] = useCookies([BUTTON_LIST, MORE_PANEL_LIST, MY_CHOICES_LIST]);
+  const [buttonListCookie] = React.useState(
+    cookies[BUTTON_LIST]
+    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' ? !b.startsWith('service-') : true)
+    : []
+  );
+  const [holdingBoxListCookie] = React.useState(cookies[MY_CHOICES_LIST] || []);
+  const [morePanelListCookie] = React.useState(cookies[MORE_PANEL_LIST] || []);
   const [scaleFactor, setScaleFactor] = React.useState(1);
   const incrementScaleFactor = () => setScaleFactor(prevState => (prevState + 0.1) >= 1 ? 1 : (prevState + 0.1));
   const decrementScaleFactor = () => setScaleFactor(prevState => (prevState - 0.1) <= 0.1 ? 0.1 : (prevState - 0.1));
@@ -68,32 +78,30 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     morePanelOpen,
     // setMorePanelOpen
   ] = React.useState(true);
-  const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[][]>([generateMorePanelRow()])
-  const [cookies, setCookie] = useCookies([BUTTON_LIST]);
-  const [buttonListCookie] = React.useState(
-    cookies[BUTTON_LIST]
-    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' ? !b.startsWith('service-') : true)
-    : []
-  );
   const [serviceButtonList] = React.useState(
     cookies[BUTTON_LIST]
     ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-'))
     : []
   );
-  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>(
-    buttonListCookie.filter((b: any) => typeof b !== 'string')
-  );
+  const filterOutStrings = (b: any) => typeof b !== 'string';
+  const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>([
+    ...buttonListCookie.filter(filterOutStrings),
+    ...holdingBoxListCookie.filter(filterOutStrings),
+    ...morePanelListCookie.flat().filter(filterOutStrings),
+  ]);
   const [allChoicesList, setAllChoicesList] = React.useState<ListItemInterface[]>(
     [...acl, ...myobList.map(m => mYODataToListItem(m))]
   );
-  const [holdingBoxList, setHoldingBoxList] = React.useState<ListItemInterface[]>([]);
-  const [checked, setChecked] = React.useState<string[]>(
-    buttonListCookie.map((b: any) => typeof b === 'string' ? b : b.buttonName)
-  );
-  const [
-    quickstripList,
-    setQuickstripList
-  ] = React.useState<ListItemInterface[]>(checked.map(c =>
+  const cookieToStringMapper = (b: any) => typeof b === 'string' ? b : b.buttonName;
+  const [checkedButtonList] = React.useState<string[]>(buttonListCookie.map(cookieToStringMapper))
+  const [checkedHoldingBoxList] = React.useState<string[]>(holdingBoxListCookie.map(cookieToStringMapper))
+  const [checkedMorePanelList] = React.useState<string[]>(morePanelListCookie.map((i: any) => i.map(cookieToStringMapper)))
+  const [checked, setChecked] = React.useState<string[]>([
+    ...checkedButtonList,
+    ...checkedHoldingBoxList,
+    ...checkedMorePanelList.flat().filter(i => i !== ''),
+  ]);
+  const stringToListItemMapper = (c: string) =>
     allChoicesList.find(a => a.id === c)
     || (c.includes(VISIBLE_SPACER_ID) && newVisibleSpacer())
     || (c.includes(SPACER_ID) && newSpacer())
@@ -102,7 +110,13 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       label: startCase(c),
       description: 'Button Not Available Within Settings',
     })
-  ));
+  const [quickstripList, setQuickstripList] = React.useState<ListItemInterface[]>(checkedButtonList.map(stringToListItemMapper));
+  const [holdingBoxList, setHoldingBoxList] = React.useState<ListItemInterface[]>(checkedHoldingBoxList.map(stringToListItemMapper));
+  const [morePanelList, setMorePanelList] = React.useState<ListItemInterface[][]>(
+    checkedMorePanelList.length > 0
+    ? checkedMorePanelList.map((i: any) => i.map(stringToListItemMapper))
+    : [generateMorePanelRow()]
+  )
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
@@ -384,11 +398,17 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     handleConfirmDialogClose();
   };
   const focusMenuItem = (el: any) => Boolean(anchorEl) && el && el.focus();
+  const saveButtonMapper = (item: ListItemInterface) => {
+    const myob = myobList.find(m => m.buttonName === item.id);
+    return myob ? myob : (item.id.includes(QUICKSTRIP_SPACER_ID) ? item.id.split(' ')[1] : item.id);
+  };
   const onSave = () => {
-    setCookie(BUTTON_LIST, [...quickstripList.map(item => {
-      const myob = myobList.find(m => m.buttonName === item.id);
-      return myob ? myob : (item.id.includes(QUICKSTRIP_SPACER_ID) ? item.id.split(' ')[1] : item.id);
-    }), ...serviceButtonList], COOKIE_OPTIONS);
+    setCookie(BUTTON_LIST, [
+      ...quickstripList.map(saveButtonMapper),
+      ...serviceButtonList,
+    ], COOKIE_OPTIONS);
+    setCookie(MY_CHOICES_LIST, holdingBoxList.map(saveButtonMapper), COOKIE_OPTIONS);
+    setCookie(MORE_PANEL_LIST, morePanelList.map(i => i.map(saveButtonMapper)), COOKIE_OPTIONS);
     window.close();
   };
   const handleMakeYourOwnSubmit = (buttonData?: MYOButtonInterface) => {
@@ -523,7 +543,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
             />
           </Grid>
         </Grid>
-        <AllChoicesList {...{checked, isInHoldingBox, isInQuickstripList, isInMorePanel, isDropDisabled, list: allChoicesList, onToggle: toggleChecked}} />
+        <AllChoicesList {...{checked, isInHoldingBox, isInQuickstripList, isInMorePanel, isDropDisabled, list: acl, onToggle: toggleChecked}} />
       </DragDropContext>
       <Menu
         id="quickstrip-item-menu"
