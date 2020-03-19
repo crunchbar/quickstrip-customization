@@ -37,44 +37,57 @@ const Instructions: React.FC<InstructionsProps> = () => {
         <Divider />
         <Typography className="pad-1" component="div">
           <strong>How to change the buttons on the QuickStrip (and the MORE Panel)</strong>
+          <br />
+          <br />
+          If you just want to <strong>re-arrange or move buttons</strong> on or between the <strong>QuickStrip</strong> or <strong>More Panel</strong>
+          <ul>
+            <li>Simply drag the buttons to where you want them.</li>
+            <li>Drag any buttons you don’t want to the <strong>My Choices</strong> box - or to the <strong>Morphic Button Catalog</strong></li>
+            <li>(You can also move the buttons about completely using the keyboard. See accessibility note below.)</li>
+          </ul>
+          If you want to <strong>explore</strong> or <strong>add new buttons</strong> 
           <ol>
-            <li>Put buttons you think you want to use into My Choices
+            <li>Start with the <strong>Morphic Button Catalog</strong> at the bottom of this page
               <ul>
-                <li>Add an existing button
-                  <ul>
-                    <li>Look through the list of buttons in the Morphic Button Catalog at the bottom of the page</li>
-                    <li>For buttons you want to use, click “Add to My Choices” next to those buttons</li>
-                  </ul>
-                </li>
-                <li>Make a new button
-                  <ul>
-                    <li>You can also make your own buttons by using one of the three options in the Make Your Own Button panel.</li>
-                  </ul>
-                </li>
+                <li>Each button is described - including a link to learn more about the button or see a video of the button in use.</li>
+                <li>Click the button on each one you want to include in your <strong>QuickStrip</strong> or <strong>More Panel</strong> -  The button will move up to the <strong>My Choices</strong> box</li>
+                <li>Keep exploring til you have found and moved all of the new buttons of interest up to the My Choices Box.</li>
               </ul>
             </li>
-            <li>From My Choices, drag buttons into the QuickStrip or the More Panel.
+            <li>Make your own button(s) if you like
               <ul>
-                <li>The buttons in My Choices are buttons you made or pulled from the Catalog but haven’t added to the QuickStrip or More Panel
-                  <ul>
-                    <li>Any buttons you decide not to use you can to leave there for convenience</li>
-                    <li>Or you can return them to the Morphic Button Catalog.</li>
-                  </ul>
-                </li>
+                <li>You can also make your own buttons using one of the three options in the <strong>Make Your Own Button</strong> panel</li>
+                <li>"<strong>Make Your Own</strong>" buttons can open applications, open web pages, or type key combinations or strings.</li>
+              </ul>
+            </li>
+            <li>Now decide which buttons you want on your QuickStrip or More Panel.
+              <ul>
+                <li>You can now drag the buttons around between your <strong>QuickStrip</strong> the <strong>More Panel</strong> and the <strong>My Choices</strong> box.</li>
                 <li>The QuickStrip will resize automatically as you add buttons.</li>
               </ul>
             </li>
-            <li>When you are done - click SAVE & EXIT button (don’t confuse this with the Save button in the QuickStrip!)
+            <li>Finally - you can change the behavior of the QuickStrip using the [put button name here]
+              <ul>
+                <li>You can change the size of the strip, whether it is shown or hidden when you start the computer, and more.</li>
+              </ul>
+            </li>
+            <li>When you have things as you want them - click SAVE & EXIT button (don’t confuse this with the Save button in the QuickStrip!)
               <ul>
                 <li>The next time you sign in or apply your preferences you will see your new QuickStrip.</li>
               </ul>
             </li>
           </ol>
-          Accessibility Note: Everything that can be done by "drag and drop” can also be done by:
+          NOTES:
           <ul>
-            <li>Using the left- and right-click buttons on the mouse/touch screen</li>
+            <li>You can have different QuickStrips for use at different time. Just save them all using different names.</li>
+            <li>You can also save different QuickStrips of different preference sets - if you have them.</li>
+            <li>Anything you leave in the My Choices box will be there next time you sign in.  If you no longer want them drag them back to the Button Catalog.</li>
+          </ul>
+          Accessibility Note: Everything that can be done by "drag and drop” can also be done:
+          <ul>
+            <li>Without Drag and drop — using the left- and right-click buttons on the mouse or touch screen</li>
             OR
-            <li>Using the keyboard only, by using arrow, tab, spacebar, and return keys.</li>
+            <li>Using the keyboard only — by using arrow, tab, spacebar, and return keys.</li>
           </ul>
         </Typography>
       </Collapse>

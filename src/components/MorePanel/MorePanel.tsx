@@ -97,6 +97,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
                             onContextMenu={openMenu}
                             onKeyPress={openMenu}
                             onDoubleClick={openMenu}
+                            usePortal={true}
                           />
                         )}
                         {provided.placeholder}
