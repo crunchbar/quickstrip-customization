@@ -5,6 +5,7 @@ export const INSTRUCTIONS_ITEM_CLASS = 'instructionsItem';
 export const MORE_PANEL_ID = 'morePanel';
 export const MORE_PANEL_ITEM_CLASS = 'morePanelItem';
 export const QUICK_STRIP_ID = 'quickstripList';
+export const QUICK_STRIP_SPACER_LIST_ID = 'quickstripSpacerList';
 export const ALL_CHOICES_ID = 'allChoicesList';
 export const ALL_CHOICES_SEARCH_FIELD_ID = 'all-choices-search-field';
 export const COMMON_ITEM_CLASS = 'commonListItem';

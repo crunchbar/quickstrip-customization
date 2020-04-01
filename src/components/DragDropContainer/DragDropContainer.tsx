@@ -19,6 +19,7 @@ import {
   QUICKSTRIP_SPACER_ID,
   VISIBLE_SPACER_ID,
   SPACER_ID,
+  QUICK_STRIP_SPACER_LIST_ID,
 } from '../../constants';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -63,9 +64,29 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   allChoicesList: acl = [],
 }) => {
   const [cookies, setCookie] = useCookies([BUTTON_LIST, MORE_PANEL_LIST, MY_CHOICES_LIST]);
+  const serviceMoreIndex = cookies[BUTTON_LIST] ? cookies[BUTTON_LIST].findIndex((b: any) => b === 'service-more') : -1;
+  const hasServiceMore = serviceMoreIndex > -1;
   const [buttonListCookie] = React.useState(
     cookies[BUTTON_LIST]
-    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' ? !b.startsWith('service-') : true)
+    ? cookies[BUTTON_LIST].filter((b: any, i: number) =>
+      typeof b === 'string'
+      ? hasServiceMore
+      ? i < serviceMoreIndex && !b.startsWith('service-')
+      : !b.startsWith('service-')
+      : true
+    )
+    : []
+  );
+  const [serviceListCookie] = React.useState<string[]>(
+    cookies[BUTTON_LIST]
+    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-'))
+    : []
+  );
+  const [moreSpacerCookie] = React.useState<string[]>(
+    cookies[BUTTON_LIST] && hasServiceMore
+    ? cookies[BUTTON_LIST].filter((b: any, i: number) =>
+      i > serviceMoreIndex && typeof b === 'string' && b.includes(SPACER_ID)
+    )
     : []
   );
   const [holdingBoxListCookie] = React.useState(cookies[MY_CHOICES_LIST] || []);
@@ -78,11 +99,6 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     morePanelOpen,
     // setMorePanelOpen
   ] = React.useState(true);
-  const [serviceButtonList] = React.useState(
-    cookies[BUTTON_LIST]
-    ? cookies[BUTTON_LIST].filter((b: any) => typeof b === 'string' && b.startsWith('service-'))
-    : []
-  );
   const filterOutStrings = (b: any) => typeof b !== 'string';
   const [myobList, setMYOBList] = React.useState<MYOButtonInterface[]>([
     ...buttonListCookie.filter(filterOutStrings),
@@ -117,6 +133,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
     ? checkedMorePanelList.map((i: any) => i.map(stringToListItemMapper))
     : [generateMorePanelRow()]
   )
+  const [moreSpacerList, setMoreSpacerList] = React.useState<ListItemInterface[]>(moreSpacerCookie.map(stringToListItemMapper));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
   const [currentMenuItem, setCurrentMenuItem] = React.useState('');
@@ -130,6 +147,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const currentElIsSpacer = currentElDetails && currentElDetails.item.id.includes(QUICKSTRIP_SPACER_ID);
   const currentElIsMYOB = currentElDetails && myobList.some(d => d.buttonName === currentElDetails.item.id);
   const currentElIsMoreItem = currentElDetails && currentElDetails.droppableId.includes(MORE_PANEL_ID);
+  const currentElIsMoreSpacerItem = currentElDetails && currentElDetails.droppableId.includes(QUICK_STRIP_SPACER_LIST_ID);
   const [myobData, setMYOBData] = React.useState<MYOButtonInterface>();
   const toggleChecked = (id: string, choice?: ListItemInterface) => {
     // add to holding box
@@ -193,7 +211,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       currentElIsSpacer
       ? [MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT, MENU_EVENTS.QUICK_STRIP.MOVE_LEFT]
       : menuItems[QUICK_STRIP_ID],
-      quickstripList.length,
+      (currentElIsMoreSpacerItem ? moreSpacerList : quickstripList).length,
       currentElDetails.index,
       MENU_EVENTS.QUICK_STRIP.MOVE_RIGHT,
       MENU_EVENTS.QUICK_STRIP.MOVE_LEFT,
@@ -201,6 +219,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const getList = (id: string): ListItemInterface[] => (
     id === QUICK_STRIP_ID
     ? quickstripList
+    : id === QUICK_STRIP_SPACER_LIST_ID
+    ? moreSpacerList
     : id.includes(MORE_PANEL_ID)
     ? morePanelList[Number(id.split('-')[1])]
     : holdingBoxChunks[Number(id.split(HOLDING_BOX_ID).pop())]
@@ -220,7 +240,14 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       && source.droppableId === QUICK_STRIP_ID
       && quickstripList[source.index].id.includes(SPACER_ID)
     ) {
-      setQuickstripList(prevState => prevState.filter((f, i) => i !== source.index))
+      setQuickstripList(prevState => prevState.filter((f, i) => i !== source.index));
+    }
+    if (
+      !destination
+      && source.droppableId === QUICK_STRIP_SPACER_LIST_ID
+      && moreSpacerList[source.index].id.includes(SPACER_ID)
+    ) {
+      setMoreSpacerList(prevState => prevState.filter((f, i) => i !== source.index));
     }
     // dropped outside the list
     if (!destination) {
@@ -235,6 +262,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       : null;
     // add spacer to quickstrip
     if (newSpacerItem) {
+      if (destination.droppableId === QUICK_STRIP_SPACER_LIST_ID) {
+        const spacerListClone = Array.from(moreSpacerList);
+        spacerListClone.splice(destination.index, 0, newSpacerItem);
+        setMoreSpacerList(spacerListClone);
+        return;
+      }
       const quickstripClone = Array.from(quickstripList);
       quickstripClone.splice(destination.index, 0, newSpacerItem);
       setQuickstripList(quickstripClone);
@@ -260,6 +293,8 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       );
       if (source.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(items || []);
+      } else if (source.droppableId === QUICK_STRIP_SPACER_LIST_ID) {
+        setMoreSpacerList(items || []);
       } else if (isFromMorePanel) {
         setMorePanelList(rows => rows.map((r, i) => i === srcRowIndex ? items : r));
       } else {
@@ -313,6 +348,12 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       }
       if (destination.droppableId === QUICK_STRIP_ID) {
         setQuickstripList(result[destination.droppableId] || []);
+      }
+      if (source.droppableId === QUICK_STRIP_SPACER_LIST_ID) {
+        setMoreSpacerList(result[source.droppableId] || []);
+      }
+      if (destination.droppableId === QUICK_STRIP_SPACER_LIST_ID) {
+        setMoreSpacerList(result[destination.droppableId] || []);
       }
     }
   }
@@ -405,7 +446,9 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const onSave = () => {
     setCookie(BUTTON_LIST, [
       ...quickstripList.map(saveButtonMapper),
-      ...serviceButtonList,
+      serviceListCookie[0],
+      ...moreSpacerList.map(saveButtonMapper),
+      ...serviceListCookie.slice(1, serviceListCookie.length),
     ], COOKIE_OPTIONS);
     setCookie(MY_CHOICES_LIST, holdingBoxList.map(saveButtonMapper), COOKIE_OPTIONS);
     setCookie(MORE_PANEL_LIST, morePanelList.map(i => i.map(saveButtonMapper)), COOKIE_OPTIONS);
@@ -461,6 +504,10 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   };
   const removeCurrentElementFromQuickstrip = () => {
     handleMenuCloseClick();
+    if (currentElIsMoreSpacerItem) {
+      setMoreSpacerList(prevState => prevState.filter(i => i.id !== currentElDetails.item.id));
+      return;
+    }
     setQuickstripList(prevState => prevState.filter(i => i.id !== currentElDetails.item.id));
     focusFirstQuickStripItem();
   };
@@ -509,6 +556,9 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
               quickstripList={quickstripList}
               showFinal={showFinal}
               setScaleFactor={setScaleFactor}
+              serviceList={serviceListCookie}
+              moreSpacerList={moreSpacerList}
+              isSpacerDropDisabled={!isDropDisabled}
             />
           </div>
           <div className="quickstrip-more-absolute-items">
