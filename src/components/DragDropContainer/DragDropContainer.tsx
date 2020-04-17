@@ -387,7 +387,11 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       case MENU_EVENTS.MORE_PANEL.PUT_BACK_ALL_CHOICES:
       case MENU_EVENTS.QUICK_STRIP.PUT_BACK_ALL_CHOICES:
       case MENU_EVENTS.HOLDING_BOX.REMOVE_FROM_HOLDING_BOX:
-        setConfirmDialogOpen(true);
+        if (currentElIsMYOB) {
+          setConfirmDialogOpen(true);
+        } else {
+          toggleChecked(currentElDetails.item.id);
+        }
         break;
       case MENU_EVENTS.MORE_PANEL.MOVE_TO_HOLDING_BOX:
       case MENU_EVENTS.QUICK_STRIP.MOVE_TO_HOLDING_BOX:
