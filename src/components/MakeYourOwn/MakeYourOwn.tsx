@@ -102,10 +102,10 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     onSubmit(values);
     resetForm();
   };
-  const handleDeleteChip = (chip: string) => {
+  const handleDeleteChip = (chip: string, index: number) => {
     setValues(v => ({
       ...v,
-      buttonData: v.buttonData && v.buttonData.split('+').filter(s => s !== chip).join('+'),
+      buttonData: v.buttonData && v.buttonData.split('+').filter((s, i) => i !== index).join('+'),
     }));
   };
   const handleHotKeys = (e: any) => {
