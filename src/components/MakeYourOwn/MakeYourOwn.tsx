@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -118,7 +119,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       : e.key;
     const isKeyModifier = KEY_MODIFIERS.includes(key);
     if (isKeyModifier) {
-      keyStore.current += `${key}-`;
+      // keyStore.current += `${key}-`;
       return;
     }
     keyStore.current += key;
@@ -130,6 +131,14 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       };
     });
     keyStore.current = '';
+  };
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, checked} = event.target;
+    if (checked) {
+      keyStore.current += `${name}-`;
+    } else {
+      keyStore.current = keyStore.current.replace(`${name}-`, '');
+    }
   };
   const handleButtonTypeClick = (buttonType: string) => {
     resetForm();
@@ -265,21 +274,38 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
               />
             )}
             {values.buttonType === BUTTON_TYPE_KEYBOARD && (
-              <ChipInput
-                className="input-container"
-                error={dirty && !values.buttonData}
-                fullWidth={true}
-                InputLabelProps={{ shrink: true }}
-                label='Keyboard Shortcut'
-                onDelete={handleDeleteChip}
-                onKeyDown={handleHotKeys}
-                placeholder="Press a key to add it to the shortcut"
-                required
-                value={values.buttonData ? values.buttonData.split('+') : []}
-                InputProps={{
-                  inputProps: {className: commonClassName},
-                }}
-              />
+              <React.Fragment>
+                <ChipInput
+                  className="input-container"
+                  error={dirty && !values.buttonData}
+                  fullWidth={true}
+                  InputLabelProps={{ shrink: true }}
+                  label='Keyboard Shortcut'
+                  onDelete={handleDeleteChip}
+                  onKeyDown={handleHotKeys}
+                  placeholder="Press a key to add it to the shortcut"
+                  required
+                  value={values.buttonData ? values.buttonData.split('+') : []}
+                  InputProps={{
+                    inputProps: {className: commonClassName},
+                  }}
+                />
+                <React.Fragment key={values.buttonData}>
+                  {['Shift', 'Ctrl', 'Alt/Option', 'Win/Cmd'].map(i => (
+                    <FormControlLabel
+                      key={i}
+                      control={
+                        <Checkbox
+                          onChange={handleCheckboxChange}
+                          name={i}
+                          color="primary"
+                        />
+                      }
+                      label={i}
+                    />
+                  ))}
+                </React.Fragment>
+              </React.Fragment>
             )}
             <MYOTextField
               id="popup-text"

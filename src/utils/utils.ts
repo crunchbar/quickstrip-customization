@@ -8,6 +8,7 @@ import {
   VISIBLE_SPACER_ID,
   SPACER_ID,
   MORE_PANEL_ID,
+  DEFAULT_GRID_ID,
 } from '../constants';
 import {
   HoldingBoxState,
@@ -94,7 +95,7 @@ export const moveItem = (
     removed = sourceClone.splice(droppableSource.index, 1, {
       description: '',
       label: '',
-      id: '',
+      id: DEFAULT_GRID_ID,
     })[0];
   } else {
     removed = sourceClone.splice(droppableSource.index, 1)[0];
@@ -248,7 +249,7 @@ export function generateMorePanelRow(): ListItemInterface[] {
   return Array.from(Array(10).keys()).map(() => ({
     description: '',
     label: '',
-    id: '',
+    id: DEFAULT_GRID_ID,
   }));
 }
 

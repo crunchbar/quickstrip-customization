@@ -20,6 +20,8 @@ import {
   VISIBLE_SPACER_ID,
   SPACER_ID,
   QUICK_STRIP_SPACER_LIST_ID,
+  DEFAULT_GRID_ID,
+  ALL_GRID_IDS,
 } from '../../constants';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -119,8 +121,13 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   ]);
   const stringToListItemMapper = (c: string) =>
     allChoicesList.find(a => a.id === c)
-    || (c.includes(VISIBLE_SPACER_ID) && newVisibleSpacer())
-    || (c.includes(SPACER_ID) && newSpacer())
+    || ([VISIBLE_SPACER_ID, '||'].includes(c) && newVisibleSpacer())
+    || ([SPACER_ID, '|'].includes(c) && newSpacer())
+    || (ALL_GRID_IDS.includes(c) && ({
+        description: '',
+        label: '',
+        id: c,
+      }))
     || ({
       id: c,
       label: startCase(c),
@@ -166,7 +173,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
       setMorePanelList(prevMorePanelList => prevMorePanelList.map(row => row.map(item => item.id !== id ? item : ({
         description: '',
         label: '',
-        id: '',
+        id: DEFAULT_GRID_ID,
       }))));
     }
     setChecked(prevChecked => {

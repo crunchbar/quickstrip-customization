@@ -5,6 +5,7 @@ import {
   COMMON_ITEM_CLASS,
   MORE_PANEL_ID,
   MORE_PANEL_ITEM_CLASS,
+  ALL_GRID_IDS,
 } from '../../constants/constants';
 import {getListStyle} from '../../utils/utils';
 import QuickstripItem from '../QuickstripItem/QuickstripItem';
@@ -69,6 +70,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
             <div className="more-panel-row" key={rowIndex}>
               {row.map((item, index) => {
                 const droppableId = `${MORE_PANEL_ID}-${rowIndex}-${index}`;
+                const isGridSpacer = ALL_GRID_IDS.includes(item.id);
                 const openMenu = (e: any) => handleMenuOpen(e, {
                   droppableId,
                   index,
@@ -80,7 +82,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
                     key={index}
                     droppableId={droppableId}
                     direction="horizontal"
-                    isDropDisabled={!!item.id || isDropDisabled || !editable}>
+                    isDropDisabled={(!isGridSpacer && !!item.id) || isDropDisabled || !editable}>
                     {(provided, snapshot) => (
                       <div
                         id={droppableId}
@@ -88,7 +90,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
                         style={getListStyle(snapshot.isDraggingOver, 'white')}
                         className={`more-panel-droppable${!editable ? ' show-final' : ''}`}
                         {...provided.droppableProps}>
-                        {item.id && (
+                        {item.id && !isGridSpacer && (
                           <QuickstripItem
                             className={`${COMMON_ITEM_CLASS} ${MORE_PANEL_ITEM_CLASS}`}
                             key={item.id}

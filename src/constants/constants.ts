@@ -22,7 +22,7 @@ export const CONFIRM_DIALOG_NO_BTN_ID = 'confirm-dialog-no-btn';
 export const CONFIRM_DIALOG_YES_BTN_ID = 'confirm-dialog-yes-btn';
 export const BUTTON_TYPE_APP = 'APP';
 export const BUTTON_TYPE_WEB = 'WEB';
-export const BUTTON_TYPE_KEYBOARD = 'KEYBOARD';
+export const BUTTON_TYPE_KEYBOARD = 'KEY';
 export const OTHER = 'Other';
 export const QUICKSTRIP_SPACER_ID = 'quickStripSpacer';
 export const SPACERS_ID = 'spacers';
@@ -32,6 +32,10 @@ export const SAVE_ITEM_CLASS = 'saveItem';
 export const VISIBLE_SPACER_ID = 'separator-visible';
 export const SPACER_ID = 'separator';
 export const MYOB_DIALOG_CLASS = 'myo-dialog';
+export const VISIBLE_GRID_ID = ['grid-visible', 'x'];
+export const GRID_ID = ['grid', '-'];
+export const ALL_GRID_IDS = [...GRID_ID, ...VISIBLE_GRID_ID];
+export const DEFAULT_GRID_ID = GRID_ID[0];
 export const KEY_MODIFIERS = [
   'Control',
   'Command',
