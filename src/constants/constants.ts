@@ -42,6 +42,14 @@ export const KEY_MODIFIERS = [
   'Alt',
   'Shift',
 ];
+export const KEY_BUTTONS = [
+  'Backspace',
+  'Tab',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+];
 export const BUTTON_LIST = 'buttonList';
 export const MORE_PANEL_LIST = 'morePanelList';
 export const MY_CHOICES_LIST = 'myChoicesList';

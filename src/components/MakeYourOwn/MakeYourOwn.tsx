@@ -13,6 +13,7 @@ import {
   Select,
   Switch,
   Typography,
+  SvgIconProps,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import MYOTextField from './MYOTextField';
@@ -22,6 +23,7 @@ import {
   BUTTON_TYPE_WEB,
   COMMON_ITEM_CLASS,
   KEY_MODIFIERS,
+  KEY_BUTTONS,
   MYOB_DIALOG_CLASS,
   MAKE_YOUR_OWN_ID,
   MAKE_YOUR_OWN_ITEM_CLASS,
@@ -31,6 +33,12 @@ import {MYOButtonInterface} from '../../interfaces';
 import ChipInput from 'material-ui-chip-input';
 import React from 'react';
 import ScaleText from 'react-scale-text';
+import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const baseData: MYOButtonInterface = Object.freeze({
   buttonName: '',
@@ -54,6 +62,15 @@ const programList = [
   {name: 'Notepad', path: 'C:\\Windows\\System32\\notepad.exe'},
 ];
 
+const keyButtonIcons: {[key: string]: (props: SvgIconProps) => JSX.Element} = {
+  Backspace: BackspaceIcon,
+  Tab: KeyboardTabIcon,
+  ArrowLeft: KeyboardArrowLeftIcon,
+  ArrowRight: KeyboardArrowRightIcon,
+  ArrowUp: KeyboardArrowUpIcon,
+  ArrowDown: KeyboardArrowDownIcon,
+};
+
 export interface MakeYourOwnProps {
   data?: MYOButtonInterface,
   names?: string[];
@@ -67,10 +84,12 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
 }) => {
   const keyStore = React.useRef('');
   const firstInputRef = React.useRef(null);
+  const chipInputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState<MYOButtonInterface>({...baseData});
   const [dirty, setDirty] = React.useState(false);
   const commonClassName = `${COMMON_ITEM_CLASS} ${MAKE_YOUR_OWN_ITEM_CLASS}`;
+  const chipInputClassName = `${commonClassName} chip-checkbox-input`;
   const isNameTaken = !data && names.indexOf(values.buttonName) > -1;
   const selectedProgram = programList.find(p => p.path === values.buttonData);
   const isOtherProgram = selectedProgram === undefined && values.buttonData !== undefined;
@@ -109,19 +128,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       buttonData: v.buttonData && v.buttonData.split('+').filter((s, i) => i !== index).join('+'),
     }));
   };
-  const handleHotKeys = (e: any) => {
-    e.preventDefault();
-    const key =
-      e.key === 'Meta'
-      ? 'Command'
-      : e.key === ' '
-      ? 'Space'
-      : e.key;
-    const isKeyModifier = KEY_MODIFIERS.includes(key);
-    if (isKeyModifier) {
-      // keyStore.current += `${key}-`;
-      return;
-    }
+  const handleChipInputUpdate = (key: string) => {
     keyStore.current += key;
     setValues(v => {
       const chips = v.buttonData ? v.buttonData.split('+') : [];
@@ -132,6 +139,25 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     });
     keyStore.current = '';
   };
+  const handleHotKeys = (e: any) => {
+    const key =
+      e.key === 'Meta'
+      ? 'Command'
+      : e.key === ' '
+      ? 'Space'
+      : e.key;
+    if ([...KEY_MODIFIERS, ...KEY_BUTTONS].includes(key)) {
+      // keyStore.current += `${key}-`;
+      return;
+    }
+    e.preventDefault();
+    handleChipInputUpdate(key);
+  };
+  const handleChipInputFocus = () => {
+    if (chipInputRef.current) {
+      chipInputRef.current.focus();
+    }
+  };
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, checked} = event.target;
     if (checked) {
@@ -139,6 +165,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     } else {
       keyStore.current = keyStore.current.replace(`${name}-`, '');
     }
+    handleChipInputFocus();
   };
   const handleButtonTypeClick = (buttonType: string) => {
     resetForm();
@@ -276,6 +303,10 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
             {values.buttonType === BUTTON_TYPE_KEYBOARD && (
               <React.Fragment>
                 <ChipInput
+                  // @ts-ignore
+                  inputRef={r => chipInputRef.current = r}
+                  allowDuplicates={true}
+                  clearInputValueOnChange={true}
                   className="input-container"
                   error={dirty && !values.buttonData}
                   fullWidth={true}
@@ -299,11 +330,27 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
                           onChange={handleCheckboxChange}
                           name={i}
                           color="primary"
+                          inputProps={{className: chipInputClassName}}
                         />
                       }
                       label={i}
                     />
                   ))}
+                  <div>
+                    {KEY_BUTTONS.map(label => {
+                      const Icon = keyButtonIcons[label];
+                      return (
+                        <IconButton
+                          key={label}
+                          aria-label={label}
+                          className={commonClassName}
+                          onClick={() => {handleChipInputUpdate(label);handleChipInputFocus();}}
+                        >
+                          <Icon />
+                        </IconButton>
+                      );
+                    })}
+                  </div>
                 </React.Fragment>
               </React.Fragment>
             )}
