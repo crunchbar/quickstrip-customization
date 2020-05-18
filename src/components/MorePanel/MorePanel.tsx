@@ -35,6 +35,7 @@ const MorePanel: React.FC<MorePanelProps> = ({
         id={MORE_PANEL_ID}
         tabIndex={0}
         className="more-panel"
+        style={{marginBottom: !editable && items.length === 1 ? 40 : 7}}
       >
         <div className="static-row">
           <div className="tell-me-more-box">

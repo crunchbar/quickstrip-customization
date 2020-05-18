@@ -1,22 +1,38 @@
-#save {
+.save-container {
   position: absolute;
   left: 0;
   top: 0;
-  width: 348px;
-  height: 328px;
+  width: 250px;
   text-align: center;
   margin: 0;
-  button {
-    color: #FFF;
-    border-color: #0b2956;
-    background-color: #0b2956 !important;
-    margin: 15px auto 0;
-  }
   h1 {
-    padding: 10px;
+    text-align: left;
   }
   iframe {
     border: 1px solid rgba(0, 0, 0, 0.87);
+    margin-bottom: 5px;
+  }
+}
+#save {
+  margin-top: 10px;
+  .buttons-container {
+    background: lightgrey;
+    padding: .5rem;
+    button {
+      display: block;
+      border-width: 2px;
+      border-color: #0b2956;
+      width: 100%;
+      &:first-child {
+        background-color: #fff !important;
+        color: #0b2956;
+        margin-bottom: 10px;
+      }
+      &:last-child {
+        background-color: #0b2956 !important;
+        color: #FFF;
+      }
+    }
   }
   p {
     text-align: left;
@@ -25,8 +41,8 @@
   }
 }
 
-@media screen and (max-width: 1188px) {
-  #save {
+@media screen and (max-width: 1088px) {
+  .save-container {
     top: -368px;
   }
   #instructionsId {

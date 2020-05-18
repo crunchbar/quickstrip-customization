@@ -4,7 +4,7 @@ import {DragDropContext, DragStart} from 'react-beautiful-dnd';
 import {ListItemInterface, MYOButtonInterface} from '../../interfaces';
 import {chunk, startCase} from 'lodash/fp';
 import useWindowSize from '../../hooks/useWindowSize';
-import {Button, Grid, Link, Menu, MenuItem} from '@material-ui/core';
+import {Grid, Link, Menu, MenuItem} from '@material-ui/core';
 import {
   ALL_CHOICES_ID,
   BUTTON_LIST,
@@ -573,9 +573,9 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
             />
           </div>
           <div className="quickstrip-more-absolute-items">
-            <Button size="small" onClick={toggleShowFinal}>
+            {/* <Button size="small" onClick={toggleShowFinal}>
               {showFinal ? 'Edit' : 'Preview'}
-            </Button>
+            </Button> */}
             <ZoomInIcon
               onClick={incrementScaleFactor}
               fontSize="large"
@@ -587,7 +587,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
               color={scaleFactor === 0.1 ? 'disabled' : undefined}
             />
           </div>
-          <Save onSave={onSave} />
+          <Save onSave={onSave} showFinal={showFinal} toggleShowFinal={toggleShowFinal} />
         </div>
         <Grid container spacing={2}>
           <Grid item xs={7}>
