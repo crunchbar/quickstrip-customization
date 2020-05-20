@@ -6,16 +6,19 @@ import {
 } from '../../constants/constants';
 
 const MYOTextField: React.FC<TextFieldProps> = React.forwardRef(({
+  InputLabelProps = {},
   inputProps = {},
   ...restProps
 }, ref) => {
   const commonClassName = `${COMMON_ITEM_CLASS} ${MAKE_YOUR_OWN_ITEM_CLASS}`;
   return (
     <TextField
+      className={restProps.variant === 'outlined' ? 'myob-outlined' : undefined}
       inputRef={ref}
       margin="normal"
       fullWidth
       InputLabelProps={{
+        ...InputLabelProps,
         shrink: true,
       }}
       inputProps={{

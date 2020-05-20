@@ -66,6 +66,13 @@
   }
 }
 
+.myob-outlined {
+  margin-top: 24px !important;
+  > label {
+    pointer-events: auto;
+  }
+}
+
 .chip-checkbox-input {
   top: 0;
   left: 0;

@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   IconButton,
   InputLabel,
+  Link,
   MenuItem,
   Paper,
   Select,
@@ -39,6 +40,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import {getMappedKey, splitButtonData} from '../../utils/utils';
 
 const baseData: MYOButtonInterface = Object.freeze({
   buttonName: '',
@@ -88,6 +90,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState<MYOButtonInterface>({...baseData});
   const [dirty, setDirty] = React.useState(false);
+  const [advanced, setAdvanced] = React.useState(false);
   const commonClassName = `${COMMON_ITEM_CLASS} ${MAKE_YOUR_OWN_ITEM_CLASS}`;
   const chipInputClassName = `${commonClassName} chip-checkbox-input`;
   const isNameTaken = !data && names.indexOf(values.buttonName) > -1;
@@ -99,6 +102,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       buttonType: prevState.buttonType,
     }));
     setDirty(false);
+    setAdvanced(false);
   };
   const handleClose = () => {
     setOpen(false);
@@ -125,33 +129,31 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
   const handleDeleteChip = (chip: string, index: number) => {
     setValues(v => ({
       ...v,
-      buttonData: v.buttonData && v.buttonData.split('+').filter((s, i) => i !== index).join('+'),
+      buttonData: v.buttonData && splitButtonData(v.buttonData).filter((s, i) => i !== index).join(''),
+    }));
+  };
+  const handleAdvancedInput = (e: any) => {
+    e.preventDefault();
+    setValues(v => ({
+      ...v,
+      buttonData: (v.buttonData || '') + e.key,
     }));
   };
   const handleChipInputUpdate = (key: string) => {
-    keyStore.current += key;
-    setValues(v => {
-      const chips = v.buttonData ? v.buttonData.split('+') : [];
-      return {
-        ...v,
-        buttonData: [...chips, keyStore.current].join('+'),
-      };
-    });
+    keyStore.current += getMappedKey(key);
+    setValues(v => ({
+      ...v,
+      buttonData: (v.buttonData || '') + keyStore.current,
+    }));
     keyStore.current = '';
   };
   const handleHotKeys = (e: any) => {
-    const key =
-      e.key === 'Meta'
-      ? 'Command'
-      : e.key === ' '
-      ? 'Space'
-      : e.key;
-    if ([...KEY_MODIFIERS, ...KEY_BUTTONS].includes(key)) {
+    if ([...KEY_MODIFIERS, ...KEY_BUTTONS].includes(e.key)) {
       // keyStore.current += `${key}-`;
       return;
     }
     e.preventDefault();
-    handleChipInputUpdate(key);
+    handleChipInputUpdate(e.key);
   };
   const handleChipInputFocus = () => {
     if (chipInputRef.current) {
@@ -160,10 +162,11 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
   };
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, checked} = event.target;
+    const key = getMappedKey(name);
     if (checked) {
-      keyStore.current += `${name}-`;
+      keyStore.current += key;
     } else {
-      keyStore.current = keyStore.current.replace(`${name}-`, '');
+      keyStore.current = keyStore.current.slice(0, -1);
     }
     handleChipInputFocus();
   };
@@ -172,6 +175,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
     handleChange('buttonType')({target: {value: buttonType}});
     setOpen(true);
   };
+  const handleAdvancedToggle = () => setAdvanced(prevState => !prevState);
   React.useEffect(() => {
     if (data) {
       setValues({...data});
@@ -302,56 +306,120 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
             )}
             {values.buttonType === BUTTON_TYPE_KEYBOARD && (
               <React.Fragment>
-                <ChipInput
-                  // @ts-ignore
-                  inputRef={r => chipInputRef.current = r}
-                  allowDuplicates={true}
-                  clearInputValueOnChange={true}
-                  className="input-container"
-                  error={dirty && !values.buttonData}
-                  fullWidth={true}
-                  InputLabelProps={{ shrink: true }}
-                  label='Keyboard Shortcut'
-                  onDelete={handleDeleteChip}
-                  onKeyDown={handleHotKeys}
-                  placeholder="Press a key to add it to the shortcut"
-                  required
-                  value={values.buttonData ? values.buttonData.split('+') : []}
-                  InputProps={{
-                    inputProps: {className: commonClassName},
-                  }}
-                />
-                <React.Fragment key={values.buttonData}>
-                  {['Shift', 'Ctrl', 'Alt/Option', 'Win/Cmd'].map(i => (
-                    <FormControlLabel
-                      key={i}
-                      control={
-                        <Checkbox
-                          onChange={handleCheckboxChange}
-                          name={i}
-                          color="primary"
-                          inputProps={{className: chipInputClassName}}
-                        />
-                      }
-                      label={i}
-                    />
-                  ))}
-                  <div>
-                    {KEY_BUTTONS.map(label => {
-                      const Icon = keyButtonIcons[label];
-                      return (
-                        <IconButton
-                          key={label}
-                          aria-label={label}
+                {
+                  advanced
+                  ? (
+                    <React.Fragment>
+                      <MYOTextField
+                        // @ts-ignore
+                        inputRef={r => chipInputRef.current = r}
+                        InputLabelProps={{ required: false }}
+                        label={(
+                          <span>
+                            Keyboard Shortcut
+                            <span className="MuiFormLabel-asterisk MuiInputLabel-asterisk">&thinsp;*</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            (
+                              <span
+                                className="link"
+                                onClick={handleAdvancedToggle}
+                              >
+                                Switch to basic mode
+                              </span>
+                            )
+                          </span>
+                        )}
+                        required
+                        multiline
+                        rows={4}
+                        value={values.buttonData}
+                        onKeyDown={handleAdvancedInput}
+                        variant="outlined"
+                      />
+                      <Typography variant="body2">
+                        In advanced mode, you need to enter your keystrokes in a special syntax. You can learn more about&nbsp;
+                        <Link
+                          href="https://github.com/GPII/windows/blob/master/gpii/node_modules/gpii-userInput/README.md"
+                          variant="body2"
+                          target="_blank"
+                          rel="noopener"
                           className={commonClassName}
-                          onClick={() => {handleChipInputUpdate(label);handleChipInputFocus();}}
                         >
-                          <Icon />
-                        </IconButton>
-                      );
-                    })}
-                  </div>
-                </React.Fragment>
+                          using advanced mode here
+                        </Link>
+                        .
+                      </Typography>
+                      <br />
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <ChipInput
+                        // @ts-ignore
+                        inputRef={r => chipInputRef.current = r}
+                        allowDuplicates={true}
+                        clearInputValueOnChange={true}
+                        className="input-container"
+                        error={dirty && !values.buttonData}
+                        fullWidth={true}
+                        InputLabelProps={{ shrink: true, required: false }}
+                        label={(
+                          <span>
+                            Keyboard Shortcut
+                            <span className="MuiFormLabel-asterisk MuiInputLabel-asterisk">&thinsp;*</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            (
+                              <span
+                                className="link"
+                                onClick={handleAdvancedToggle}
+                              >
+                                Switch to advanced mode
+                              </span>
+                            )
+                          </span>
+                        )}
+                        onDelete={handleDeleteChip}
+                        onKeyDown={handleHotKeys}
+                        placeholder="Press a key to add it to the shortcut"
+                        required
+                        value={values.buttonData ? splitButtonData(values.buttonData) : []}
+                        InputProps={{
+                          inputProps: {className: commonClassName},
+                        }}
+                      />
+                      <React.Fragment key={values.buttonData}>
+                        {['Shift', 'Ctrl', 'Alt/Option', 'Win/Cmd'].map(i => (
+                          <FormControlLabel
+                            key={i}
+                            control={
+                              <Checkbox
+                                onChange={handleCheckboxChange}
+                                name={i}
+                                color="primary"
+                                inputProps={{className: chipInputClassName}}
+                              />
+                            }
+                            label={i}
+                          />
+                        ))}
+                        <div>
+                          {KEY_BUTTONS.map(label => {
+                            const Icon = keyButtonIcons[label];
+                            return (
+                              <IconButton
+                                key={label}
+                                aria-label={label}
+                                className={commonClassName}
+                                onClick={() => {handleChipInputUpdate(label);handleChipInputFocus();}}
+                              >
+                                <Icon />
+                              </IconButton>
+                            );
+                          })}
+                        </div>
+                      </React.Fragment>
+                    </React.Fragment>
+                  )
+                }
               </React.Fragment>
             )}
             <MYOTextField

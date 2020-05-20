@@ -40,7 +40,7 @@ export const ALL_GRID_IDS = [...GRID_ID, ...VISIBLE_GRID_ID];
 export const DEFAULT_GRID_ID = GRID_ID[0];
 export const KEY_MODIFIERS = [
   'Control',
-  'Command',
+  'Meta',
   'Alt',
   'Shift',
 ];
@@ -52,6 +52,25 @@ export const KEY_BUTTONS = [
   'ArrowUp',
   'ArrowDown',
 ];
+export const MOD_KEY_MAP: {[key: string]: string} = {
+  Alt: '!',
+  'Alt/Option': '!',
+  Shift: '+',
+  Control: '^',
+  Ctrl:  '^',
+  Meta: "'",
+  'Win/Cmd': "'",
+};
+export const KEY_MAP: {[key: string]: string} = {
+  ' ': 'Space',
+  Backspace: 'BackSpace',
+  CapsLock: 'Capital',
+  ArrowLeft: 'Left',
+  ArrowRight: 'Right',
+  ArrowUp: 'Up',
+  ArrowDown: 'Down',
+};
+export const CHIP_SEPARATOR = '}';
 export const BUTTON_LIST = 'buttonList';
 export const MORE_PANEL_LIST = 'morePanelList';
 export const MY_CHOICES_LIST = 'myChoicesList';

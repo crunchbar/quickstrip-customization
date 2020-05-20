@@ -9,6 +9,9 @@ import {
   SPACER_ID,
   MORE_PANEL_ID,
   DEFAULT_GRID_ID,
+  MOD_KEY_MAP,
+  KEY_MAP,
+  CHIP_SEPARATOR,
 } from '../constants';
 import {
   HoldingBoxState,
@@ -257,4 +260,12 @@ export function changeMoreIDRowIndex(droppableId: string, newIndex: number) {
   return droppableId.split('-').map(
     (v, i) => i === 1 ? newIndex : v
   ).join('-');
+}
+
+export function getMappedKey(key: string) {
+  return MOD_KEY_MAP[key] || `{${KEY_MAP[key] || key}}`;
+}
+
+export function splitButtonData(buttonData: string) {
+  return buttonData.split(CHIP_SEPARATOR).filter(s => s !== '').map(s => s.includes('{') ? `${s}}` : s);
 }
