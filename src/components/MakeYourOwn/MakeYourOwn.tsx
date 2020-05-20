@@ -132,13 +132,10 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
       buttonData: v.buttonData && splitButtonData(v.buttonData).filter((s, i) => i !== index).join(''),
     }));
   };
-  const handleAdvancedInput = (e: any) => {
-    e.preventDefault();
-    setValues(v => ({
-      ...v,
-      buttonData: (v.buttonData || '') + e.key,
-    }));
-  };
+  const handleAdvancedInput = ({target: {value: buttonData = ''}}) => setValues(v => ({
+    ...v,
+    buttonData
+  }));
   const handleChipInputUpdate = (key: string) => {
     keyStore.current += getMappedKey(key);
     setValues(v => ({
@@ -333,7 +330,7 @@ const MakeYourOwn: React.FC<MakeYourOwnProps> = ({
                         multiline
                         rows={4}
                         value={values.buttonData}
-                        onKeyDown={handleAdvancedInput}
+                        onChange={handleAdvancedInput}
                         variant="outlined"
                       />
                       <Typography variant="body2">
