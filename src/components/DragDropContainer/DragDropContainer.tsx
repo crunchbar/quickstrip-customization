@@ -457,7 +457,7 @@ const DragDropContainer: React.FC<DragDropContainerProps> = ({
   const onSave = () => {
     setCookie(BUTTON_LIST, [
       ...quickstripList.map(saveButtonMapper),
-      serviceListCookie[0],
+      ...(serviceListCookie[0] ? [serviceListCookie[0]] : []),
       ...moreSpacerList.map(saveButtonMapper),
       ...serviceListCookie.slice(1, serviceListCookie.length),
     ], COOKIE_OPTIONS);
