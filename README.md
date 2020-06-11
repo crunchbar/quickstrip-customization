@@ -7,6 +7,24 @@ Morphic QCT is a react web app for making changes to your QuickStrip. Technologi
   - [Material-UI](https://material-ui.com/)
   - [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd)
 
+# Architecture
+
+The app's source code is housed within the `src` folder. Below is the folder structure of the project with descriptions for folders. Tests are co-located along with their respective files.
+
+```
+quickstrip-customization
+└───src
+|   index.tsx (entry point for app)
+│   └───assets (where images, fonts and other assets are located)
+│   └───components (location of all components used within the app)
+│   └───constants
+│   └───data (location of init data for app)
+│   └───hooks (custom react hooks)
+│   └───interfaces (location of TS interfaces)
+│   └───scss (location of styles)
+│   └───utils (keyboard and data utils)
+```
+
 # Getting Started
 
 The following scripts are available to be run within the project root directory:
@@ -38,22 +56,3 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Serves the build folder using a static server.<br>
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
-
-
-# Architecture
-
-The app's source code is housed within the `src` folder. Below is the folder structure of the project with descriptions for folders. Tests are co-located along with their respective files.
-
-```
-quickstrip-customization
-└───src
-|   index.tsx (entry point for app)
-│   └───assets (where images, fonts and other assets are located)
-│   └───components (location of all components used within the app)
-│   └───constants
-│   └───data (location of init data for app)
-│   └───hooks (custom react hooks)
-│   └───interfaces (location of TS interfaces)
-│   └───scss (location of styles)
-│   └───utils (keyboard and data utils)
-```
