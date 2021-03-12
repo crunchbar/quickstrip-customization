@@ -50,7 +50,7 @@
     "react-app-polyfill": "^1.0.2",
     "react-beautiful-dnd": "12.2.0",
     "react-cookie": "^4.0.1",
-    "react-dev-utils": "^9.0.3",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.9.0",
     "react-scale-text": "^1.2.2",
     "resolve": "1.12.0",
